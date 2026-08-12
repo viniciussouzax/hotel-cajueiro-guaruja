@@ -5,12 +5,12 @@
     "title": "Hospedagem",
     "lead": "A 100 metros da Praia do Tombo no Guarujá",
     "booking": {
-      "labelDestino": "Destino",
-      "valueDestino": "Hotel Cajueiro, Guarujá",
       "labelCheckin": "Check-in",
       "labelCheckout": "Check-out",
-      "labelHospedes": "Hóspedes",
-      "valueHospedes": "1 quarto, 2 adultos, 0 crianças",
+      "labelAdultos": "Adultos",
+      "labelCriancas": "Crianças",
+      "labelCupom": "Cupom",
+      "placeholderCupom": "Código promocional",
       "cta": "Buscar"
     },
     "banner": {
