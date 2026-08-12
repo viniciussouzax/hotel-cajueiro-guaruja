@@ -35,12 +35,18 @@ const faq = home.faq || [];
     <div class="container-x pt-28 md:pt-36 pb-36 md:pb-44">
       {hero.eyebrow && <p class="mono uppercase text-white/75 mb-4">{hero.eyebrow}</p>}
       <h1 class="font-display text-4xl md:text-6xl font-semibold tracking-tight text-white leading-[1.03] max-w-3xl mb-4">
-        {hero.title}<span class="text-primary-soft">.</span>
+        {hero.title}
       </h1>
       {hero.lead && <p class="text-lg md:text-xl text-white/90 leading-relaxed max-w-2xl mb-9">{hero.lead}</p>}
 
       <!-- Barra de busca horizontal -->
-      <form action="#reservar" class="booking-bar bg-surface rounded-lg shadow-2xl p-2 flex flex-col lg:flex-row lg:items-stretch gap-1 lg:gap-0 max-w-5xl">
+      <form
+        id="booking-form"
+        data-engine={booking.engineUrl}
+        data-company={booking.companyId}
+        data-newtab={booking.openInNewTab ? '1' : '0'}
+        class="booking-bar bg-surface rounded-lg shadow-2xl p-2 flex flex-col lg:flex-row lg:items-stretch gap-1 lg:gap-0 w-full"
+      >
         <!-- Check-in -->
         <label for="checkin" class="flex items-center gap-3 flex-1 px-4 py-2.5 rounded-md hover:bg-elev transition cursor-pointer">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-ink-faint shrink-0" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
@@ -105,22 +111,63 @@ const faq = home.faq || [];
       </form>
       <script is:inline>
         (function () {
+          var form = document.getElementById('booking-form');
           var ci = document.getElementById('checkin');
           var co = document.getElementById('checkout');
-          if (!ci || !co) return;
-          var fmt = function (d) {
+          if (!form || !ci || !co) return;
+
+          // yyyy-mm-dd (input date) -> Date / formatos
+          var iso = function (d) {
             return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
           };
+          // yyyy-mm-dd -> dd/mm/yyyy (formato que o motor hbook espera)
+          var toBR = function (v) {
+            var p = (v || '').split('-');
+            return p.length === 3 ? p[2] + '/' + p[1] + '/' + p[0] : '';
+          };
+
+          // Pré-preenche: check-in amanhã, check-out depois de amanhã (1 diária).
           var today = new Date(); today.setHours(0, 0, 0, 0);
           var next = new Date(today); next.setDate(today.getDate() + 1);
           var after = new Date(today); after.setDate(today.getDate() + 2);
-          ci.min = fmt(today); ci.value = fmt(next);
-          co.min = fmt(after); co.value = fmt(after);
+          ci.min = iso(today); ci.value = iso(next);
+          co.min = iso(after); co.value = iso(after);
+
+          // Check-out sempre depois do check-in.
           ci.addEventListener('change', function () {
             var c = new Date(ci.value + 'T00:00:00');
             var minOut = new Date(c); minOut.setDate(c.getDate() + 1);
-            co.min = fmt(minOut);
-            if (new Date(co.value + 'T00:00:00') <= c) co.value = fmt(minOut);
+            co.min = iso(minOut);
+            if (new Date(co.value + 'T00:00:00') <= c) co.value = iso(minOut);
+          });
+
+          // Ao buscar: monta a URL do motor de reservas com os parâmetros.
+          form.addEventListener('submit', function (e) {
+            e.preventDefault();
+            var base = form.getAttribute('data-engine') || '';
+            var company = form.getAttribute('data-company') || '';
+            var adultos = (document.getElementById('adultos') || {}).value || '2';
+            var criancas = (document.getElementById('criancas') || {}).value || '0';
+            var cupom = ((document.getElementById('cupom') || {}).value || '').trim();
+
+            var params = new URLSearchParams();
+            if (company) params.set('companyId', company);
+            params.set('checkin', toBR(ci.value));
+            params.set('checkout', toBR(co.value));
+            params.set('adults', adultos);
+            params.set('children', criancas);
+            if (cupom) params.set('promoCode', cupom);
+
+            // URLSearchParams codifica "/" como %2F; o motor aceita a barra crua,
+            // então repõe pra ficar igual ao link nativo (dd/mm/aaaa).
+            var query = params.toString().replace(/%2F/gi, '/');
+            var url = base + '?' + query;
+
+            if (form.getAttribute('data-newtab') === '1') {
+              window.open(url, '_blank', 'noopener');
+            } else {
+              window.location.href = url;
+            }
           });
         })();
       </script>

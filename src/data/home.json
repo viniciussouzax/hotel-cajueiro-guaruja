@@ -11,7 +11,10 @@
       "labelCriancas": "Crianças",
       "labelCupom": "Cupom",
       "placeholderCupom": "Código promocional",
-      "cta": "Buscar"
+      "cta": "Buscar",
+      "engineUrl": "https://hbook.hsystem.com.br/Booking",
+      "companyId": "684c884a465ca753a717e043",
+      "openInNewTab": true
     },
     "banner": {
       "eyebrow": "Temporada 2026",
