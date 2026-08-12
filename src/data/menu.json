@@ -5,20 +5,20 @@
             "href": "/"
         },
         {
-            "label": "Serviços",
-            "href": "/servicos"
+            "label": "Suítes",
+            "href": "/suites"
         },
         {
-            "label": "Quem somos",
-            "href": "/quem-somos"
-        },
-        {
-            "label": "Contato",
-            "href": "/contato"
+            "label": "O Hotel",
+            "href": "/hotel"
         },
         {
             "label": "Blog",
             "href": "/blog"
+        },
+        {
+            "label": "Contato",
+            "href": "/contato"
         }
     ]
 }

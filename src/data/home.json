@@ -1,7 +1,104 @@
 {
   "hero": {
-    "eyebrow": "scaffold msia",
-    "title": "Seu blog começa aqui.",
-    "lead": "Cinco passos pra deixar este scaffold seu. Cada bloco é um capítulo do manual."
-  }
+    "eyebrow": "Praia do Tombo · Guarujá · SP",
+    "title": "A poucos passos do mar, o seu descanso começa aqui",
+    "lead": "O Hotel Cajueiro fica a apenas 100 metros da Praia do Tombo, o ponto perfeito para explorar a praia, a paisagem e também os restaurantes, bares e atrações do Guarujá.",
+    "booking": {
+      "labelDestino": "Destino",
+      "valueDestino": "Hotel Cajueiro Guarujá",
+      "labelCheckin": "Check-in",
+      "labelCheckout": "Check-out",
+      "labelHospedes": "Hóspedes",
+      "valueHospedes": "2 adultos · 1 quarto",
+      "cta": "Verificar"
+    }
+  },
+  "banner": {
+    "eyebrow": "Temporada 2026",
+    "title": "Aproveite o melhor do Guarujá",
+    "text": "Excelente localização e todo conforto moderno. Aqui você aproveita a praia o ano todo, com atendimento impecável e a tranquilidade de quem pensa em todos os detalhes.",
+    "cta": "Reservar pelo melhor preço"
+  },
+  "features": [
+    {
+      "icon": "waves",
+      "title": "A 1 quadra da praia",
+      "text": "Apenas 100 metros da Praia do Tombo, uma das praias mais tranquilas do Guarujá."
+    },
+    {
+      "icon": "sun",
+      "title": "Piscina com bar",
+      "text": "Relaxe na piscina com um drink preparado na hora depois de um dia de praia."
+    },
+    {
+      "icon": "coffee",
+      "title": "Café da manhã artesanal",
+      "text": "Um café da manhã delicioso, preparado artesanalmente todos os dias."
+    }
+  ],
+  "intro": {
+    "title": "Hotel Cajueiro na Praia do Tombo, Guarujá",
+    "text": "Na praia do Tombo, Guarujá, existe um destino ideal para os amantes de praia, belezas naturais e do puro prazer de desfrutar momentos de conforto em um hotel moderno.\n\nAqui você pode aproveitar a praia o ano todo. Casais encontram no Cajueiro um retiro perfeito para desfrutar de momentos a dois. Descanse em nossa piscina com drinks preparados na hora depois de um dia de praia e fique muito bem instalado em uma de nossas suítes, sempre impecáveis."
+  },
+  "suitesTeaser": {
+    "eyebrow": "Acomodações",
+    "title": "Perfeitas para dias de descanso no Guarujá",
+    "text": "Nossas suítes foram construídas para oferecer todas as comodidades com espaço. Ar-condicionado para noites agradáveis, camas confortáveis e um atendimento gentil e preparado.\n\nRelaxe, respire fundo e aproveite a praia. Quando você fica hospedado conosco, não precisa se preocupar com nada, pensamos em todos os detalhes para garantir uma estada agradável e prazerosa. Nosso objetivo é receber você muito bem!",
+    "cta": "Escolha a sua"
+  },
+  "piscina": {
+    "title": "Relaxe depois de um dia de praia",
+    "text": "Nada mais gostoso que relaxar na piscina, com um drink preparado na hora depois de uma praia. Aqui você desfruta de uma infraestrutura com mesas à beira da piscina, para relaxar, ler um livro ou simplesmente desfrutar de um restinho de sol.",
+    "cta": "Saiba mais"
+  },
+  "localizacao": {
+    "title": "Localização perfeita, apenas 1 quadra da praia",
+    "text": "A Praia do Tombo fica entre a Praia das Astúrias e a Praia do Guaiúba. Você desfruta de uma grande faixa de areia branquinha e a Praia do Tombo é uma das praias mais tranquilas do Guarujá.\n\nA vista da praia é muito convidativa, à sua direita você avista o morro dos Andrades. Na areia você conta com quiosques, banheiros, chuveiros e barracas que fornecem tudo que precisa para um dia de praia agradável."
+  },
+  "diferenciais": {
+    "title": "Por que reservar no Cajueiro?",
+    "subtitle": "Conforto, atendimento impecável e a melhor localização.",
+    "cta": "Nós garantimos o melhor preço!",
+    "items": [
+      { "title": "Restaurantes", "text": "Veja nossas dicas de lugares deliciosos para desfrutar da culinária local!" },
+      { "title": "Piscina", "text": "Desfrute de uma tarde agradável com um drink à beira da piscina." },
+      { "title": "Praia", "text": "A Praia do Tombo é famosa por sua beleza. Descanse em barracas na praia com todo o conforto que merece." },
+      { "title": "Varanda", "text": "Escolha suíte com varanda para mais espaço." },
+      { "title": "Café da Manhã", "text": "Nosso café da manhã é preparado artesanalmente todos os dias." },
+      { "title": "Sol", "text": "É sem dúvida o protagonista de qualquer viagem para o Guarujá." }
+    ]
+  },
+  "depoimentos": [
+    {
+      "text": "O hotel é muito novo, piscina com estrutura de bar. Muito limpo e com funcionários super solícitos. O quarto é bom e atende todas as expectativas. A localização é excelente, apenas uma quadra da Praia do Tombo.",
+      "author": "Amanda F."
+    }
+  ],
+  "cta": {
+    "title": "Sua próxima estadia no Guarujá começa aqui",
+    "subtitle": "Conforto, atendimento impecável e a melhor localização. Reserve pelo nosso site e garanta sempre o melhor preço.",
+    "button": "Reservar agora"
+  },
+  "faq": [
+    {
+      "q": "O hotel fica perto da praia?",
+      "a": "Sim. O Hotel Cajueiro fica a apenas 100 metros (cerca de 1 quadra) da Praia do Tombo, uma das praias mais tranquilas do Guarujá."
+    },
+    {
+      "q": "O hotel tem estacionamento?",
+      "a": "Oferecemos 15 vagas rotativas aos hóspedes. Você também pode usar o estacionamento em frente com desconto exclusivo, ou parar na calçada do hotel."
+    },
+    {
+      "q": "O café da manhã está incluso?",
+      "a": "Sim, servimos um café da manhã delicioso, preparado artesanalmente todos os dias."
+    },
+    {
+      "q": "As suítes têm ar-condicionado?",
+      "a": "Todas as suítes contam com ar-condicionado, frigobar, camas box confortáveis, bancada e Smart TV de 32\"."
+    },
+    {
+      "q": "Como consigo o melhor preço?",
+      "a": "Reservando direto pelo nosso site você sempre garante o melhor preço, sem intermediários."
+    }
+  ]
 }

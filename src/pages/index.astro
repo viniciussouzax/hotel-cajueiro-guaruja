@@ -1,11 +1,200 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import LocalHome from '../components/local/LocalHome.astro';
 import { readData } from '../lib/readData';
 
 const siteConfig = readData('siteConfig.json');
+const home = readData('home.json', {}) as any;
+
+const hero = home.hero || {};
+const booking = hero.booking || {};
+const banner = home.banner || {};
+const features = home.features || [];
+const intro = home.intro || {};
+const suitesTeaser = home.suitesTeaser || {};
+const piscina = home.piscina || {};
+const localizacao = home.localizacao || {};
+const diferenciais = home.diferenciais || {};
+const depoimentos = home.depoimentos || [];
+const cta = home.cta || {};
+const faq = home.faq || [];
 ---
 
 <BaseLayout title={siteConfig.name} description={siteConfig.description}>
-  <LocalHome />
+
+  <!-- ===== HERO + BUSCA DE RESERVA (bg imagem) ===== -->
+  <section class="relative">
+    <div class="container-x pt-20 md:pt-28 pb-16 md:pb-24">
+      {hero.eyebrow && <p class="mono uppercase text-ink-faint mb-5">{hero.eyebrow}</p>}
+      <h1 class="font-display text-4xl md:text-6xl font-normal tracking-tight text-ink leading-[1.05] max-w-4xl mb-6">
+        {hero.title}
+      </h1>
+      {hero.lead && <p class="text-lg md:text-xl text-ink-muted leading-relaxed max-w-2xl mb-10">{hero.lead}</p>}
+
+      <!-- Box de reserva -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 max-w-4xl border border-rule rounded p-4 bg-elev">
+        <div>
+          <p class="mono uppercase text-ink-faint mb-1">{booking.labelCheckin}</p>
+          <input type="date" class="w-full bg-transparent border border-rule rounded px-3 py-2 text-ink" aria-label={booking.labelCheckin} />
+        </div>
+        <div>
+          <p class="mono uppercase text-ink-faint mb-1">{booking.labelCheckout}</p>
+          <input type="date" class="w-full bg-transparent border border-rule rounded px-3 py-2 text-ink" aria-label={booking.labelCheckout} />
+        </div>
+        <div>
+          <p class="mono uppercase text-ink-faint mb-1">{booking.labelHospedes}</p>
+          <input type="text" value={booking.valueHospedes} class="w-full bg-transparent border border-rule rounded px-3 py-2 text-ink" aria-label={booking.labelHospedes} />
+        </div>
+        <div class="flex items-end">
+          <a href="#reservar" class="w-full text-center bg-ink text-bg rounded px-4 py-2 font-semibold hover:opacity-90 transition">{booking.cta}</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== BANNER (bg imagem) ===== -->
+  {(banner.title || banner.text) && (
+    <section class="border-t border-rule">
+      <div class="container-x py-16 md:py-24">
+        <div class="max-w-2xl">
+          {banner.eyebrow && <p class="mono uppercase text-ink-faint mb-4">{banner.eyebrow}</p>}
+          <h2 class="font-display text-3xl md:text-4xl font-normal tracking-tight text-ink leading-[1.1] mb-5">{banner.title}</h2>
+          {banner.text && <p class="text-lg text-ink-muted leading-relaxed mb-8">{banner.text}</p>}
+          {banner.cta && <a href="#reservar" class="inline-block bg-ink text-bg rounded px-6 py-3 font-semibold hover:opacity-90 transition">{banner.cta}</a>}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- ===== 3 FEATURES (icone + texto) ===== -->
+  {features.length > 0 && (
+    <section class="border-t border-rule">
+      <div class="container-x py-14 md:py-20">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-10">
+          {features.map((f: any) => (
+            <div>
+              <div class="w-11 h-11 rounded border border-rule flex items-center justify-center mb-4 text-ink" aria-hidden="true">
+                <span class="mono uppercase text-ink-faint text-xs">{f.icon}</span>
+              </div>
+              <h3 class="font-sans font-semibold text-lg text-ink mb-2">{f.title}</h3>
+              <p class="text-base text-ink-muted leading-relaxed">{f.text}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- ===== INTRO ===== -->
+  {(intro.title || intro.text) && (
+    <section class="border-t border-rule">
+      <div class="container-x py-16 md:py-24">
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-12">
+          <div class="md:col-span-5">
+            <h2 class="font-display text-2xl md:text-3xl font-normal leading-[1.1] tracking-tight text-ink">{intro.title}</h2>
+          </div>
+          <div class="md:col-span-6 md:col-start-7">
+            {intro.text && <div class="text-lg text-ink-muted leading-relaxed space-y-4">{intro.text.split('\n\n').map((p: string) => <p>{p}</p>)}</div>}
+          </div>
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- ===== ACOMODAÇÕES (teaser) ===== -->
+  {(suitesTeaser.title || suitesTeaser.text) && (
+    <section class="border-t border-rule">
+      <div class="container-x py-16 md:py-24">
+        {suitesTeaser.eyebrow && <p class="mono uppercase text-ink-faint mb-4">{suitesTeaser.eyebrow}</p>}
+        <h2 class="font-display text-3xl md:text-4xl font-normal tracking-tight text-ink leading-[1.1] max-w-2xl mb-6">{suitesTeaser.title}</h2>
+        {suitesTeaser.text && <div class="text-lg text-ink-muted leading-relaxed max-w-2xl space-y-4 mb-8">{suitesTeaser.text.split('\n\n').map((p: string) => <p>{p}</p>)}</div>}
+        {suitesTeaser.cta && <a href="/suites" class="inline-block border border-ink text-ink rounded px-6 py-3 font-semibold hover:bg-ink hover:text-bg transition">{suitesTeaser.cta}</a>}
+      </div>
+    </section>
+  )}
+
+  <!-- ===== PISCINA + LOCALIZAÇÃO ===== -->
+  <section class="border-t border-rule">
+    <div class="container-x py-16 md:py-24 grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16">
+      {(piscina.title || piscina.text) && (
+        <div>
+          <h2 class="font-display text-2xl md:text-3xl font-normal tracking-tight text-ink leading-[1.1] mb-4">{piscina.title}</h2>
+          {piscina.text && <p class="text-lg text-ink-muted leading-relaxed mb-6">{piscina.text}</p>}
+          {piscina.cta && <a href="/hotel" class="mono uppercase text-ink-faint hover:text-ink transition">{piscina.cta} →</a>}
+        </div>
+      )}
+      {(localizacao.title || localizacao.text) && (
+        <div>
+          <h2 class="font-display text-2xl md:text-3xl font-normal tracking-tight text-ink leading-[1.1] mb-4">{localizacao.title}</h2>
+          {localizacao.text && <div class="text-lg text-ink-muted leading-relaxed space-y-4">{localizacao.text.split('\n\n').map((p: string) => <p>{p}</p>)}</div>}
+        </div>
+      )}
+    </div>
+  </section>
+
+  <!-- ===== DIFERENCIAIS ===== -->
+  {diferenciais.items && diferenciais.items.length > 0 && (
+    <section class="border-t border-rule">
+      <div class="container-x py-16 md:py-24">
+        <div class="max-w-2xl mb-12">
+          <h2 class="font-display text-3xl md:text-4xl font-normal tracking-tight text-ink leading-[1.1] mb-4">{diferenciais.title}</h2>
+          {diferenciais.subtitle && <p class="text-lg text-ink-muted leading-relaxed mb-6">{diferenciais.subtitle}</p>}
+          {diferenciais.cta && <a href="#reservar" class="inline-block bg-ink text-bg rounded px-6 py-3 font-semibold hover:opacity-90 transition">{diferenciais.cta}</a>}
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+          {diferenciais.items.map((it: any) => (
+            <div class="border-t border-rule pt-5">
+              <h3 class="font-sans font-semibold text-lg text-ink mb-2">{it.title}</h3>
+              <p class="text-base text-ink-muted leading-relaxed">{it.text}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- ===== DEPOIMENTOS ===== -->
+  {depoimentos.length > 0 && (
+    <section class="border-t border-rule">
+      <div class="container-x py-16 md:py-24">
+        {depoimentos.map((d: any) => (
+          <figure class="max-w-3xl">
+            <blockquote class="font-display text-2xl md:text-3xl font-normal text-ink leading-[1.25] mb-6">"{d.text}"</blockquote>
+            <figcaption class="mono uppercase text-ink-faint">— {d.author}</figcaption>
+          </figure>
+        ))}
+      </div>
+    </section>
+  )}
+
+  <!-- ===== FAQ ===== -->
+  {faq.length > 0 && (
+    <section class="border-t border-rule">
+      <div class="container-x py-16 md:py-24">
+        <h2 class="font-display text-3xl md:text-4xl font-normal tracking-tight text-ink leading-[1.1] mb-10">Perguntas frequentes</h2>
+        <div class="max-w-3xl divide-y divide-rule border-t border-rule">
+          {faq.map((item: any) => (
+            <details class="group py-5">
+              <summary class="cursor-pointer font-sans font-semibold text-lg text-ink list-none flex justify-between items-center">
+                {item.q}
+                <span class="text-ink-faint group-open:rotate-45 transition-transform" aria-hidden="true">+</span>
+              </summary>
+              <p class="text-base text-ink-muted leading-relaxed mt-3">{item.a}</p>
+            </details>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- ===== CTA FINAL ===== -->
+  {(cta.title || cta.button) && (
+    <section id="reservar" class="border-t border-rule">
+      <div class="container-x py-20 md:py-28 text-center">
+        <h2 class="font-display text-3xl md:text-5xl font-normal tracking-tight text-ink leading-[1.05] max-w-3xl mx-auto mb-5">{cta.title}</h2>
+        {cta.subtitle && <p class="text-lg text-ink-muted leading-relaxed max-w-2xl mx-auto mb-8">{cta.subtitle}</p>}
+        {cta.button && <a href="/contato" class="inline-block bg-ink text-bg rounded px-8 py-4 font-semibold text-lg hover:opacity-90 transition">{cta.button}</a>}
+      </div>
+    </section>
+  )}
+
 </BaseLayout>

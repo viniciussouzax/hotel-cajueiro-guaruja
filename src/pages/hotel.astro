@@ -1,0 +1,70 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { readData } from '../lib/readData';
+
+const siteConfig = readData('siteConfig.json');
+const hotel = readData('hotel.json', {}) as any;
+
+const hero = hotel.hero || {};
+const intro = hotel.intro || {};
+const estrutura = hotel.estrutura || [];
+const promocoes = hotel.promocoes || {};
+---
+
+<BaseLayout title={`O Hotel · ${siteConfig.name}`} description={hero.lead || 'Conheça o Hotel Cajueiro na Praia do Tombo, Guarujá.'}>
+
+  <!-- ===== HERO ===== -->
+  <section>
+    <div class="container-x pt-16 md:pt-24 pb-12 md:pb-16">
+      {hero.eyebrow && <p class="mono uppercase text-ink-faint mb-5">{hero.eyebrow}</p>}
+      <h1 class="font-display text-3xl md:text-5xl font-normal tracking-tight text-ink leading-[1.05] max-w-3xl mb-6">{hero.title}</h1>
+      {hero.lead && <p class="text-lg md:text-xl text-ink-muted leading-relaxed max-w-2xl">{hero.lead}</p>}
+    </div>
+  </section>
+
+  <!-- ===== INTRO ===== -->
+  {(intro.title || intro.text) && (
+    <section class="border-t border-rule">
+      <div class="container-x py-14 md:py-20">
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-12">
+          <div class="md:col-span-5">
+            <h2 class="font-display text-2xl md:text-3xl font-normal leading-[1.1] tracking-tight text-ink">{intro.title}</h2>
+          </div>
+          <div class="md:col-span-6 md:col-start-7">
+            {intro.text && <div class="text-lg text-ink-muted leading-relaxed space-y-4">{intro.text.split('\n\n').map((p: string) => <p>{p}</p>)}</div>}
+          </div>
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- ===== ESTRUTURA ===== -->
+  {estrutura.length > 0 && (
+    <section class="border-t border-rule">
+      <div class="container-x py-14 md:py-20">
+        <p class="mono uppercase text-ink-faint mb-10">estrutura</p>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-12">
+          {estrutura.map((e: any) => (
+            <div class="border-t border-rule pt-5">
+              <h3 class="font-sans font-semibold text-lg text-ink mb-1">{e.titulo}</h3>
+              {e.subtitulo && <p class="mono uppercase text-ink-faint mb-3">{e.subtitulo}</p>}
+              <p class="text-base text-ink-muted leading-relaxed">{e.texto}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- ===== PROMOÇÕES ===== -->
+  {(promocoes.titulo || promocoes.texto) && (
+    <section class="border-t border-rule">
+      <div class="container-x py-16 md:py-24 text-center">
+        <h2 class="font-display text-3xl md:text-4xl font-normal tracking-tight text-ink leading-[1.1] mb-4">{promocoes.titulo}</h2>
+        {promocoes.texto && <p class="text-lg text-ink-muted leading-relaxed max-w-2xl mx-auto mb-8">{promocoes.texto}</p>}
+        <a href="/contato" class="inline-block bg-ink text-bg rounded px-8 py-4 font-semibold hover:opacity-90 transition">Reservar pelo melhor preço</a>
+      </div>
+    </section>
+  )}
+
+</BaseLayout>

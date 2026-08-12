@@ -168,9 +168,9 @@ const menuHover = siteConfig.menuHoverEnabled !== false;
         if (e.key !== 'Tab') return;
         const focusable = Array.from(
           popup.querySelectorAll('button, input, [href], [tabindex]:not([tabindex="-1"])')
-        ).filter(el => !(el as HTMLElement).hasAttribute('disabled'));
-        const first = focusable[0] as HTMLElement;
-        const last  = focusable[focusable.length - 1] as HTMLElement;
+        ).filter(el => !el.hasAttribute('disabled'));
+        const first = focusable[0];
+        const last  = focusable[focusable.length - 1];
         if (e.shiftKey) {
           if (document.activeElement === first) { e.preventDefault(); last.focus(); }
         } else {

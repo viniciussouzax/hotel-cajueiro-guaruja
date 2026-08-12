@@ -1,0 +1,37 @@
+{
+  "hero": {
+    "eyebrow": "Acomodações",
+    "title": "Suítes confortáveis e modernas",
+    "lead": "Smart TV na sua suíte, uma cama superconfortável, ar-condicionado com controle remoto, frigobar e tudo limpíssimo e impecável. E o melhor? Em nosso site, você sempre garante o melhor preço!"
+  },
+  "amenidades": [
+    "Ar-condicionado",
+    "Frigobar",
+    "Camas box confortáveis",
+    "Bancada",
+    "Smart TV de 32\""
+  ],
+  "quartos": [
+    {
+      "nome": "Suíte Luxo",
+      "local": "Localizadas no Térreo, 1º e 2º andares",
+      "descricao": "Nossas Suítes Luxo foram construídas para oferecer todas as comodidades. Comportam até 4 pessoas e estão disponíveis em versões single, tripla e quádrupla.\n\nConte com ar-condicionado para noites agradáveis, frigobar, camas box confortáveis, bancada e Smart TV de 32\". Você pode optar pela vista interna para nosso pátio, ou externa.",
+      "capacidade": "Até 4 pessoas · single, tripla e quádrupla",
+      "cta": "Reserve pelo melhor preço"
+    },
+    {
+      "nome": "Suíte Luxo com Sacada",
+      "local": "Localizadas no 2º andar",
+      "descricao": "A Suíte Luxo com Sacada se diferencia por uma pequena sacada com vista para a piscina, equipada com mesa e cadeiras. Atendem somente casais.\n\nConte com ar-condicionado para noites agradáveis, frigobar, camas box confortáveis, bancada e Smart TV de 32\". Você pode optar pela vista interna para nosso pátio, ou externa.",
+      "capacidade": "Casais · sacada com vista para a piscina",
+      "cta": "Reserve pelo melhor preço"
+    },
+    {
+      "nome": "Standard",
+      "local": "Novas e modernas",
+      "descricao": "Completas e aconchegantes, estão disponíveis nas versões single, casal, tripla ou quádrupla.\n\nConte com ar-condicionado para noites agradáveis, frigobar, camas box confortáveis, bancada e Smart TV de 32\".",
+      "capacidade": "single, casal, tripla ou quádrupla",
+      "cta": "Reserve pelo melhor preço"
+    }
+  ]
+}

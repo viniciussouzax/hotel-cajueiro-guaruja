@@ -1,3 +1,18 @@
 {
-  "intro": "Tem ideia, parceria ou dúvida? Manda mensagem que respondemos."
+  "intro": "Teremos prazer em tirar todas as suas dúvidas!",
+  "telefone": "(13) 3324-1331",
+  "whatsapp": "(13) 99143-9331",
+  "email": "contato@hotelcajueiroguaruja.com.br",
+  "endereco": "Rua Avedis Simonian, 1177 - Guaiuba, Guarujá/SP, CEP 11421-060",
+  "horarios": {
+    "atendimentoExterno": "Atendimento externo: das 07h às 22h",
+    "recepcao": "Recepção do hotel: 24h"
+  },
+  "regiao": {
+    "titulo": "Tudo pertinho de você",
+    "texto": "A área próxima ao hotel é repleta de restaurantes e serviços, com opções deliciosas para todos os gostos a poucos passos da recepção."
+  },
+  "form": {
+    "confirmacao": "Recebemos seu contato!"
+  }
 }

@@ -1,0 +1,52 @@
+{
+  "hero": {
+    "eyebrow": "O Hotel",
+    "title": "Conheça mais sobre o Hotel Cajueiro na Praia do Tombo, Guarujá",
+    "lead": "O Hotel Cajueiro Guarujá oferece uma estrutura física de 1.500 m² em seus três andares e serviços que proporcionam uma ótima experiência a seus hóspedes. Estacionamento, proximidade com a praia, piscina, bar e atendimento impecável, confira em detalhes e garanta a sua reserva pelo melhor preço!"
+  },
+  "intro": {
+    "title": "Hotel Cajueiro na Praia do Tombo, Guarujá",
+    "text": "Na praia do Tombo, Guarujá, existe um destino ideal para os amantes de praia, belezas naturais e do puro prazer de desfrutar momentos de conforto em um hotel moderno. O Hotel Cajueiro fica a poucos minutos da praia do Tombo, o ponto perfeito para explorar a praia, a paisagem e também os restaurantes, bares e atrações do Guarujá.\n\nAqui você pode aproveitar a praia o ano todo. Casais encontram no Cajueiro um retiro perfeito para desfrutar de momentos a dois. Descanse em nossa piscina com drinks preparados na hora depois de um dia de praia e fique muito bem instalado em uma de nossas suítes, sempre impecáveis."
+  },
+  "estrutura": [
+    {
+      "titulo": "Piscina",
+      "subtitulo": "Sob o sol do Guarujá",
+      "texto": "Em nossa área comum você conta com nossa piscina, perfeita para relaxar depois de um dia de praia."
+    },
+    {
+      "titulo": "Bar à beira da piscina",
+      "subtitulo": "",
+      "texto": "Seja muito bem recebido em nosso bar da piscina e desfrute de nossos deliciosos drinks. Temos um cardápio variado de drinks para você desfrutar com todo o conforto à beira da piscina."
+    },
+    {
+      "titulo": "Atendimento impecável",
+      "subtitulo": "Relaxe de verdade",
+      "texto": "Nossa equipe é atenciosa e treinada e está sempre disponível para ajudar você. Seja muito bem recebido no Guarujá e não se preocupe com nada."
+    },
+    {
+      "titulo": "A 1 quadra da praia",
+      "subtitulo": "",
+      "texto": "Sem dúvida nossa localização é um ponto alto do hotel, estamos literalmente ao lado da maravilhosa praia do Tombo. Quando você fica hospedado com a gente, pode deixar o carro no estacionamento e aproveitar a praia, a orla e a natureza a pé, sem se preocupar com mais nada."
+    },
+    {
+      "titulo": "Estacionamento",
+      "subtitulo": "15 vagas rotativas",
+      "texto": "Oferecemos 15 vagas rotativas aos hóspedes. Você também pode usufruir do estacionamento em frente com um desconto exclusivo para nossos hóspedes, ou parar o carro na calçada do hotel."
+    },
+    {
+      "titulo": "Nossas suítes",
+      "subtitulo": "",
+      "texto": "Smart TV, camas confortáveis e ar-condicionado em todas as suítes, sempre impecáveis."
+    },
+    {
+      "titulo": "Café da manhã",
+      "subtitulo": "",
+      "texto": "Um café da manhã delicioso, preparado artesanalmente todos os dias."
+    }
+  ],
+  "promocoes": {
+    "titulo": "Promoções",
+    "texto": "Aproveite as praias, o sol e tudo que a cidade do Guarujá tem a oferecer!"
+  }
+}
