@@ -214,13 +214,11 @@ const faq = home.faq || [];
   {(banner.title || banner.text) && (
     <section class="border-t border-rule">
       <div class="container-x py-12 md:py-16">
-        <div class="bg-elev rounded-lg border border-rule/60 p-6 md:p-10 flex flex-col md:flex-row md:items-center gap-6 md:gap-10">
-          <div class="flex-1">
-            {banner.eyebrow && <p class="mono uppercase text-primary mb-3">{banner.eyebrow}</p>}
-            <h2 class="font-display text-2xl md:text-3xl font-semibold tracking-tight text-ink leading-[1.15] mb-3">{banner.title}</h2>
-            {banner.text && <p class="text-base md:text-lg text-ink-muted leading-relaxed max-w-2xl">{banner.text}</p>}
-          </div>
-          {banner.cta && <a href="#reservar" class="shrink-0 inline-flex items-center justify-center bg-primary text-white rounded-md px-7 py-4 font-semibold hover:opacity-90 transition">{banner.cta}</a>}
+        <div class="bg-elev rounded-lg border border-rule/60 p-6 md:p-10">
+          {banner.eyebrow && <p class="mono uppercase text-primary mb-3">{banner.eyebrow}</p>}
+          <h2 class="font-display text-2xl md:text-3xl font-semibold tracking-tight text-ink leading-[1.15] mb-3">{banner.title}</h2>
+          {banner.text && <p class="text-base md:text-lg text-ink-muted leading-relaxed max-w-2xl">{banner.text}</p>}
+          {banner.cta && <a href="#reservar" class="mt-6 inline-flex items-center justify-center bg-primary text-white rounded-md px-7 py-4 font-semibold hover:opacity-90 transition">{banner.cta}</a>}
         </div>
       </div>
     </section>
