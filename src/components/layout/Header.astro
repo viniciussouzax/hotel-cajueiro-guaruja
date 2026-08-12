@@ -31,12 +31,9 @@ const { transparent = false } = Astro.props;
 
 <header id="site-header" class="site-header z-40" data-transparent={transparent ? 'true' : undefined}>
   <div class="container-x flex items-center justify-between h-[68px] gap-6">
-    <a href="/" class="flex items-baseline gap-3 no-underline" aria-label="Home">
-      {siteConfig.logo ? (
-        <img src={siteConfig.logo} alt={siteConfig.name} style={`height: ${siteConfig.logoHeight ?? 40}px`} class="w-auto" />
-      ) : (
-        <span class="nav-brand font-display text-lg font-bold tracking-tight">{siteConfig.name}</span>
-      )}
+    <a href="/" class="flex items-center no-underline" aria-label="Home">
+      <img src="/images/logo-preto.png" alt={siteConfig.name} class="logo logo-dark w-auto" style="height: 40px" />
+      <img src="/images/logo-branco.png" alt="" aria-hidden="true" class="logo logo-light w-auto" style="height: 40px" />
     </a>
 
     <nav class="hidden lg:flex items-center gap-7 flex-1 justify-center" aria-label="Principal">
@@ -122,6 +119,11 @@ const { transparent = false } = Astro.props;
   .site-header .nav-link.is-current { color: rgb(var(--c-ink)); }
   .site-header .nav-icon { color: rgb(var(--c-ink-muted)); }
   .site-header .nav-icon:hover { color: rgb(var(--c-ink)); background: rgb(var(--c-ink) / 0.06); }
+  /* Logo: preto no modo sólido (padrão/scroll), branco no transparente (sobre a hero) */
+  .site-header .logo-light { display: none; }
+  .site-header .logo-dark { display: block; }
+  .site-header[data-transparent]:not(.is-solid) .logo-light { display: block; }
+  .site-header[data-transparent]:not(.is-solid) .logo-dark { display: none; }
 
   /* Transparente sobre a hero (home no topo). */
   .site-header[data-transparent]:not(.is-solid) {
