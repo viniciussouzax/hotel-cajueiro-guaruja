@@ -32,7 +32,7 @@ const faq = home.faq || [];
         : 'background-image: linear-gradient(155deg, #16344f 0%, #235a80 48%, #3d86ac 100%)'}
     ></div>
 
-    <div class="container-x pt-28 md:pt-36 pb-36 md:pb-44">
+    <div class="container-x pt-28 md:pt-36 pb-20 md:pb-[212px]">
       {hero.eyebrow && <p class="mono uppercase text-white/75 mb-4">{hero.eyebrow}</p>}
       <h1 class="font-display text-4xl md:text-6xl font-semibold tracking-tight text-white leading-[1.03] max-w-3xl mb-4">
         {hero.title}
@@ -45,8 +45,9 @@ const faq = home.faq || [];
         data-engine={booking.engineUrl}
         data-company={booking.companyId}
         data-newtab={booking.openInNewTab ? '1' : '0'}
-        class="booking-bar bg-surface rounded-lg shadow-2xl p-2 flex flex-col lg:flex-row lg:items-stretch gap-1 lg:gap-0 w-full"
+        class="booking-bar bg-surface rounded-lg shadow-2xl p-2 flex flex-col gap-1 w-full"
       >
+       <div class="flex flex-col lg:flex-row lg:items-stretch gap-1 lg:gap-0 w-full">
         <!-- Check-in -->
         <label for="checkin" class="flex items-center gap-3 flex-1 px-4 py-2.5 rounded-md hover:bg-elev transition cursor-pointer">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-ink-faint shrink-0" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
@@ -108,6 +109,12 @@ const faq = home.faq || [];
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
           {booking.cta}
         </button>
+       </div>
+
+        <!-- Idades das crianças (aparecem conforme a quantidade selecionada) -->
+        <div id="children-ages" class="hidden flex-wrap items-center gap-3 px-4 pt-2 pb-1 border-t border-rule/50">
+          <span class="mono uppercase text-ink-faint text-xs">Idade das crianças</span>
+        </div>
       </form>
       <script is:inline>
         (function () {
@@ -141,6 +148,37 @@ const faq = home.faq || [];
             if (new Date(co.value + 'T00:00:00') <= c) co.value = iso(minOut);
           });
 
+          // ---- Idade das crianças: renderiza N selects (0–17) conforme a quantidade ----
+          var criancasSel = document.getElementById('criancas');
+          var agesBox = document.getElementById('children-ages');
+          function renderAges() {
+            if (!criancasSel || !agesBox) return;
+            var n = parseInt(criancasSel.value, 10) || 0;
+            agesBox.querySelectorAll('label.child-age-item').forEach(function (el) { el.remove(); });
+            for (var i = 0; i < n; i++) {
+              var wrap = document.createElement('label');
+              wrap.className = 'child-age-item flex items-center gap-2 text-sm text-ink';
+              var lbl = document.createElement('span');
+              lbl.className = 'text-ink-muted';
+              lbl.textContent = 'Criança ' + (i + 1) + ':';
+              var sel = document.createElement('select');
+              sel.className = 'child-age bg-transparent border border-rule rounded px-2 py-1 text-ink font-medium cursor-pointer';
+              sel.setAttribute('aria-label', 'Idade da criança ' + (i + 1));
+              for (var age = 0; age <= 17; age++) {
+                var opt = document.createElement('option');
+                opt.value = String(age);
+                opt.textContent = age === 0 ? 'menos de 1 ano' : age + (age === 1 ? ' ano' : ' anos');
+                if (age === 8) opt.selected = true;
+                sel.appendChild(opt);
+              }
+              wrap.appendChild(lbl); wrap.appendChild(sel);
+              agesBox.appendChild(wrap);
+            }
+            agesBox.classList.toggle('hidden', n === 0);
+            agesBox.classList.toggle('flex', n > 0);
+          }
+          if (criancasSel) criancasSel.addEventListener('change', renderAges);
+
           // Ao buscar: monta a URL do motor de reservas com os parâmetros.
           form.addEventListener('submit', function (e) {
             e.preventDefault();
@@ -156,7 +194,13 @@ const faq = home.faq || [];
             params.set('checkout', toBR(co.value));
             params.set('adults', adultos);
             params.set('children', criancas);
-            if (cupom) params.set('promoCode', cupom);
+            // uma idade por criança: childrenage repetido (childrenage=15&childrenage=17...)
+            if (agesBox) {
+              agesBox.querySelectorAll('select.child-age').forEach(function (s) {
+                params.append('childrenage', s.value);
+              });
+            }
+            if (cupom) params.set('promocode', cupom);
 
             // URLSearchParams codifica "/" como %2F; o motor aceita a barra crua,
             // então repõe pra ficar igual ao link nativo (dd/mm/aaaa).
@@ -173,10 +217,13 @@ const faq = home.faq || [];
       </script>
     </div>
 
-    <!-- Banner: seção da própria hero, sobreposta à base da imagem -->
-    {(banner.title || banner.text) && (
-      <div class="container-x">
-        <div class="-mt-24 md:-mt-28 mb-16 md:mb-20 bg-surface rounded-lg shadow-lg border border-rule/40 p-6 md:p-10 flex flex-col md:flex-row md:items-center gap-6 md:gap-10">
+  </section>
+
+  <!-- ===== BANNER (abaixo da hero) ===== -->
+  {(banner.title || banner.text) && (
+    <section class="border-t border-rule">
+      <div class="container-x py-12 md:py-16">
+        <div class="bg-elev rounded-lg border border-rule/60 p-6 md:p-10 flex flex-col md:flex-row md:items-center gap-6 md:gap-10">
           <div class="flex-1">
             {banner.eyebrow && <p class="mono uppercase text-primary mb-3">{banner.eyebrow}</p>}
             <h2 class="font-display text-2xl md:text-3xl font-semibold tracking-tight text-ink leading-[1.15] mb-3">{banner.title}</h2>
@@ -185,8 +232,8 @@ const faq = home.faq || [];
           {banner.cta && <a href="#reservar" class="shrink-0 inline-flex items-center justify-center bg-primary text-white rounded-md px-7 py-4 font-semibold hover:opacity-90 transition">{banner.cta}</a>}
         </div>
       </div>
-    )}
-  </section>
+    </section>
+  )}
 
   <!-- ===== 3 FEATURES (icone + texto) ===== -->
   {features.length > 0 && (
