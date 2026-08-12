@@ -178,7 +178,7 @@
 
 @layer components {
   .container-x {
-    max-width: 1280px;
+    max-width: 1152px;
     margin-inline: auto;
     padding-inline: 1.5rem;
   }
