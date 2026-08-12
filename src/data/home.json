@@ -1,23 +1,24 @@
 {
   "hero": {
+    "image": "",
     "eyebrow": "Praia do Tombo · Guarujá · SP",
     "title": "A poucos passos do mar, o seu descanso começa aqui",
-    "lead": "O Hotel Cajueiro fica a apenas 100 metros da Praia do Tombo, o ponto perfeito para explorar a praia, a paisagem e também os restaurantes, bares e atrações do Guarujá.",
+    "lead": "A 100 metros da Praia do Tombo, no Guarujá.",
     "booking": {
       "labelDestino": "Destino",
-      "valueDestino": "Hotel Cajueiro Guarujá",
+      "valueDestino": "Hotel Cajueiro, Guarujá",
       "labelCheckin": "Check-in",
       "labelCheckout": "Check-out",
       "labelHospedes": "Hóspedes",
-      "valueHospedes": "2 adultos · 1 quarto",
-      "cta": "Verificar"
+      "valueHospedes": "1 quarto, 2 adultos, 0 crianças",
+      "cta": "Buscar"
+    },
+    "banner": {
+      "eyebrow": "Temporada 2026",
+      "title": "Aproveite o melhor do Guarujá com o melhor preço",
+      "text": "Excelente localização e todo conforto moderno. Reserve direto pelo nosso site e garanta sempre a melhor tarifa, sem intermediários.",
+      "cta": "Reservar pelo melhor preço"
     }
-  },
-  "banner": {
-    "eyebrow": "Temporada 2026",
-    "title": "Aproveite o melhor do Guarujá",
-    "text": "Excelente localização e todo conforto moderno. Aqui você aproveita a praia o ano todo, com atendimento impecável e a tranquilidade de quem pensa em todos os detalhes.",
-    "cta": "Reservar pelo melhor preço"
   },
   "features": [
     {

@@ -7,7 +7,8 @@ const home = readData('home.json', {}) as any;
 
 const hero = home.hero || {};
 const booking = hero.booking || {};
-const banner = home.banner || {};
+const banner = hero.banner || {};
+const heroImage = hero.image || '';
 const features = home.features || [];
 const intro = home.intro || {};
 const suitesTeaser = home.suitesTeaser || {};
@@ -21,49 +22,78 @@ const faq = home.faq || [];
 
 <BaseLayout title={siteConfig.name} description={siteConfig.description}>
 
-  <!-- ===== HERO + BUSCA DE RESERVA (bg imagem) ===== -->
-  <section class="relative">
-    <div class="container-x pt-20 md:pt-28 pb-16 md:pb-24">
-      {hero.eyebrow && <p class="mono uppercase text-ink-faint mb-5">{hero.eyebrow}</p>}
-      <h1 class="font-display text-4xl md:text-6xl font-normal tracking-tight text-ink leading-[1.05] max-w-4xl mb-6">
-        {hero.title}
+  <!-- ===== HERO estilo Trip.com: imagem + headline + barra de busca + banner sobreposto ===== -->
+  <section class="relative isolate">
+    <!-- Fundo: foto (se houver) com overlay, ou gradiente oceânico -->
+    <div
+      class="absolute inset-0 -z-10 bg-cover bg-center"
+      style={heroImage
+        ? `background-image: linear-gradient(180deg, rgba(15,33,55,.35), rgba(15,33,55,.68)), url('${heroImage}')`
+        : 'background-image: linear-gradient(155deg, #16344f 0%, #235a80 48%, #3d86ac 100%)'}
+    ></div>
+
+    <div class="container-x pt-14 md:pt-20 pb-36 md:pb-44">
+      {hero.eyebrow && <p class="mono uppercase text-white/75 mb-4">{hero.eyebrow}</p>}
+      <h1 class="font-display text-4xl md:text-6xl font-semibold tracking-tight text-white leading-[1.03] max-w-3xl mb-4">
+        {hero.title}<span class="text-primary-soft">.</span>
       </h1>
-      {hero.lead && <p class="text-lg md:text-xl text-ink-muted leading-relaxed max-w-2xl mb-10">{hero.lead}</p>}
+      {hero.lead && <p class="text-lg md:text-xl text-white/90 leading-relaxed max-w-2xl mb-9">{hero.lead}</p>}
 
-      <!-- Box de reserva -->
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 max-w-4xl border border-rule rounded p-4 bg-elev">
-        <div>
-          <p class="mono uppercase text-ink-faint mb-1">{booking.labelCheckin}</p>
-          <input type="date" class="w-full bg-transparent border border-rule rounded px-3 py-2 text-ink" aria-label={booking.labelCheckin} />
-        </div>
-        <div>
-          <p class="mono uppercase text-ink-faint mb-1">{booking.labelCheckout}</p>
-          <input type="date" class="w-full bg-transparent border border-rule rounded px-3 py-2 text-ink" aria-label={booking.labelCheckout} />
-        </div>
-        <div>
-          <p class="mono uppercase text-ink-faint mb-1">{booking.labelHospedes}</p>
-          <input type="text" value={booking.valueHospedes} class="w-full bg-transparent border border-rule rounded px-3 py-2 text-ink" aria-label={booking.labelHospedes} />
-        </div>
-        <div class="flex items-end">
-          <a href="#reservar" class="w-full text-center bg-ink text-bg rounded px-4 py-2 font-semibold hover:opacity-90 transition">{booking.cta}</a>
-        </div>
-      </div>
+      <!-- Barra de busca horizontal -->
+      <form action="#reservar" class="bg-surface rounded-lg shadow-2xl p-2 flex flex-col lg:flex-row lg:items-stretch gap-1 lg:gap-0 max-w-5xl">
+        <!-- Destino -->
+        <label class="flex items-center gap-3 flex-1 px-4 py-2.5 rounded-md hover:bg-elev transition cursor-text">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-ink-faint shrink-0" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          <span class="flex flex-col min-w-0">
+            <span class="mono uppercase text-ink-faint text-xs">{booking.labelDestino}</span>
+            <input type="text" value={booking.valueDestino} class="bg-transparent outline-none text-ink font-medium truncate" aria-label={booking.labelDestino} />
+          </span>
+        </label>
+        <div class="hidden lg:block w-px bg-rule/60 my-2"></div>
+        <!-- Datas -->
+        <label class="flex items-center gap-3 px-4 py-2.5 rounded-md hover:bg-elev transition cursor-pointer">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-ink-faint shrink-0" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          <span class="flex flex-col">
+            <span class="mono uppercase text-ink-faint text-xs">{booking.labelCheckin}</span>
+            <input type="date" class="bg-transparent outline-none text-ink font-medium" aria-label={booking.labelCheckin} />
+          </span>
+          <span class="text-ink-faint px-1" aria-hidden="true">→</span>
+          <span class="flex flex-col">
+            <span class="mono uppercase text-ink-faint text-xs">{booking.labelCheckout}</span>
+            <input type="date" class="bg-transparent outline-none text-ink font-medium" aria-label={booking.labelCheckout} />
+          </span>
+        </label>
+        <div class="hidden lg:block w-px bg-rule/60 my-2"></div>
+        <!-- Hóspedes -->
+        <label class="flex items-center gap-3 px-4 py-2.5 rounded-md hover:bg-elev transition cursor-pointer">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-ink-faint shrink-0" aria-hidden="true"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+          <span class="flex flex-col">
+            <span class="mono uppercase text-ink-faint text-xs">{booking.labelHospedes}</span>
+            <input type="text" value={booking.valueHospedes} class="bg-transparent outline-none text-ink font-medium min-w-[13rem]" aria-label={booking.labelHospedes} />
+          </span>
+        </label>
+        <!-- Buscar -->
+        <button type="submit" class="flex items-center justify-center gap-2 bg-primary text-white font-semibold rounded-md px-8 py-3.5 lg:my-0 mt-1 hover:opacity-90 transition">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          {booking.cta}
+        </button>
+      </form>
     </div>
-  </section>
 
-  <!-- ===== BANNER (bg imagem) ===== -->
-  {(banner.title || banner.text) && (
-    <section class="border-t border-rule">
-      <div class="container-x py-16 md:py-24">
-        <div class="max-w-2xl">
-          {banner.eyebrow && <p class="mono uppercase text-ink-faint mb-4">{banner.eyebrow}</p>}
-          <h2 class="font-display text-3xl md:text-4xl font-normal tracking-tight text-ink leading-[1.1] mb-5">{banner.title}</h2>
-          {banner.text && <p class="text-lg text-ink-muted leading-relaxed mb-8">{banner.text}</p>}
-          {banner.cta && <a href="#reservar" class="inline-block bg-ink text-bg rounded px-6 py-3 font-semibold hover:opacity-90 transition">{banner.cta}</a>}
+    <!-- Banner: seção da própria hero, sobreposta à base da imagem -->
+    {(banner.title || banner.text) && (
+      <div class="container-x">
+        <div class="-mt-24 md:-mt-28 mb-16 md:mb-20 bg-surface rounded-lg shadow-lg border border-rule/40 p-6 md:p-10 flex flex-col md:flex-row md:items-center gap-6 md:gap-10">
+          <div class="flex-1">
+            {banner.eyebrow && <p class="mono uppercase text-primary mb-3">{banner.eyebrow}</p>}
+            <h2 class="font-display text-2xl md:text-3xl font-semibold tracking-tight text-ink leading-[1.15] mb-3">{banner.title}</h2>
+            {banner.text && <p class="text-base md:text-lg text-ink-muted leading-relaxed max-w-2xl">{banner.text}</p>}
+          </div>
+          {banner.cta && <a href="#reservar" class="shrink-0 inline-flex items-center justify-center bg-primary text-white rounded-md px-7 py-4 font-semibold hover:opacity-90 transition">{banner.cta}</a>}
         </div>
       </div>
-    </section>
-  )}
+    )}
+  </section>
 
   <!-- ===== 3 FEATURES (icone + texto) ===== -->
   {features.length > 0 && (
