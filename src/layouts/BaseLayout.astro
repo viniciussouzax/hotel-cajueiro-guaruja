@@ -84,6 +84,7 @@ interface Props {
   image?: string;
   type?: 'website' | 'article';
   bodyClass?: string;
+  transparentHeader?: boolean;
 }
 
 const defaultTitle = siteConfig.seo?.title || siteConfig.name;
@@ -93,6 +94,7 @@ const {
   image = '',
   type = 'website',
   bodyClass = '',
+  transparentHeader = false,
 } = Astro.props;
 
 const formattedTitle = title === defaultTitle ? title : `${title} | ${siteConfig.name}`;
@@ -164,7 +166,7 @@ import CustomCodeBodyStart from '../plugins/custom-code/CustomCodeBodyStart.astr
     pular pro conteúdo
   </a>
 
-  <Header />
+  <Header transparent={transparentHeader} />
 
   <main id="main">
     <slot />
