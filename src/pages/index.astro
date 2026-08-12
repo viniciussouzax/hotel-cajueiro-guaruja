@@ -223,7 +223,7 @@ const faq = home.faq || [];
             {banner.cta && <a href="#reservar" class="mt-6 inline-flex items-center justify-center bg-primary text-white rounded-md px-7 py-4 font-semibold hover:opacity-90 transition">{banner.cta}</a>}
           </div>
           <!-- Imagem (30%) -->
-          <div class="md:w-[30%] min-h-[200px] md:min-h-0 bg-cover bg-center border-t md:border-t-0 md:border-l border-rule/60 flex items-center justify-center"
+          <div class="md:w-[30%] min-h-[200px] md:min-h-0 bg-cover bg-center flex items-center justify-center"
                style={banner.image ? `background-image: url('${banner.image}')` : ''}>
             {!banner.image && <span class="mono uppercase text-ink-faint text-xs">imagem</span>}
           </div>
