@@ -5,12 +5,12 @@
             "href": "/"
         },
         {
-            "label": "Suítes",
-            "href": "/suites"
+            "label": "Grupos e Excursões",
+            "href": "/grupos-e-excursoes"
         },
         {
-            "label": "O Hotel",
-            "href": "/hotel"
+            "label": "Corporativo",
+            "href": "/corporativo"
         },
         {
             "label": "Blog",
