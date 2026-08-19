@@ -355,11 +355,14 @@ const faq = home.faq || [];
 
   <!-- ===== CTA FINAL ===== -->
   {(cta.title || cta.button) && (
-    <section id="reservar" class="border-t border-rule">
-      <div class="container-x py-20 md:py-28 text-center">
-        <h2 class="font-display text-3xl md:text-5xl font-normal tracking-tight text-ink leading-[1.05] max-w-3xl mx-auto mb-5">{cta.title}</h2>
-        {cta.subtitle && <p class="text-lg text-ink-muted leading-relaxed max-w-2xl mx-auto mb-8">{cta.subtitle}</p>}
-        {cta.button && <a href="/contato" class="inline-flex items-center justify-center gap-2.5 min-h-[52px] px-8 rounded-[20px] bg-[#cf3a23] text-bg text-[15px] font-semibold uppercase tracking-wide no-underline hover:brightness-95 transition-[filter]">{cta.button}</a>}
+    <section id="reservar" class="relative overflow-hidden" style="background:#55703A;">
+      <!-- círculos decorativos -->
+      <div aria-hidden="true" class="absolute -top-28 -left-24 w-[26rem] h-[26rem] rounded-full" style="background:rgba(255,255,255,0.06);"></div>
+      <div aria-hidden="true" class="absolute -bottom-32 -right-20 w-[24rem] h-[24rem] rounded-full" style="background:rgba(0,0,0,0.10);"></div>
+      <div class="container-x py-20 md:py-28 text-center relative">
+        <h2 class="font-display text-3xl md:text-5xl font-normal tracking-tight text-white leading-[1.05] max-w-3xl mx-auto mb-5">{cta.title}</h2>
+        {cta.subtitle && <p class="text-lg leading-relaxed max-w-2xl mx-auto mb-8" style="color:rgba(255,255,255,0.82);">{cta.subtitle}</p>}
+        {cta.button && <a href="/contato" class="inline-flex items-center justify-center gap-2.5 min-h-[52px] px-8 rounded-[20px] bg-[#cf3a23] text-white text-[15px] font-semibold uppercase tracking-wide no-underline hover:brightness-95 transition-[filter]">{cta.button}</a>}
       </div>
     </section>
   )}

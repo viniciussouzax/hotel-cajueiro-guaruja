@@ -38,8 +38,8 @@ const igProfile = siteConfig.social?.instagram || '';
   <div class="container-x py-14 md:py-20">
     <div class="grid grid-cols-1 md:grid-cols-12 gap-10 mb-14">
       <div class="md:col-span-5">
-        <a href="/" class="font-display text-2xl font-bold tracking-tight no-underline inline-block mb-3" style="color:#e8ead9;">
-          {siteConfig.name}
+        <a href="/" class="inline-block mb-4 no-underline" aria-label="Home">
+          <img src="/images/logo-branco.png" alt={siteConfig.name} class="w-auto" style="height: 46px" />
         </a>
         <p class="text-sm leading-relaxed max-w-sm" style="color:#9aa089;">
           {siteConfig.footer?.description || siteConfig.description}
