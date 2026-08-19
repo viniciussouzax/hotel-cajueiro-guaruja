@@ -34,33 +34,33 @@ const igItems = (Array.isArray(siteConfig.instagramFeed) ? siteConfig.instagramF
 const igProfile = siteConfig.social?.instagram || '';
 ---
 
-<footer class="mt-24">
+<footer style="background:#26331C; color:#c3c8b6;">
   <div class="container-x py-14 md:py-20">
     <div class="grid grid-cols-1 md:grid-cols-12 gap-10 mb-14">
       <div class="md:col-span-5">
-        <a href="/" class="font-display text-2xl font-bold text-ink tracking-tight no-underline inline-block mb-3">
+        <a href="/" class="font-display text-2xl font-bold tracking-tight no-underline inline-block mb-3" style="color:#e8ead9;">
           {siteConfig.name}
         </a>
-        <p class="text-sm text-ink-muted leading-relaxed max-w-sm">
+        <p class="text-sm leading-relaxed max-w-sm" style="color:#9aa089;">
           {siteConfig.footer?.description || siteConfig.description}
         </p>
       </div>
 
       <div class="md:col-span-3">
-        <div class="mono uppercase text-ink-faint mb-4 pb-3">navegação</div>
+        <div class="mono uppercase mb-4 pb-3" style="color:#8a9179;">navegação</div>
         <ul class="space-y-2.5 text-sm">
           {menuItems.map((item: any) => (
-            <li><a href={item.href} class="text-ink-muted hover:text-ink transition-colors">{item.label}</a></li>
+            <li><a href={item.href} class="transition-colors hover:!text-[#FFEAB0]" style="color:#c3c8b6;">{item.label}</a></li>
           ))}
         </ul>
       </div>
 
       {allCategories.length > 0 && (
         <div class="md:col-span-2">
-          <div class="mono uppercase text-ink-faint mb-4 pb-3">tópicos</div>
+          <div class="mono uppercase mb-4 pb-3" style="color:#8a9179;">tópicos</div>
           <ul class="space-y-2.5 text-sm">
             {allCategories.map((cat) => (
-              <li><a href={`/categoria/${cat.slug}`} class="text-ink-muted hover:text-ink transition-colors">{cat.name}</a></li>
+              <li><a href={`/categoria/${cat.slug}`} class="transition-colors hover:!text-[#FFEAB0]" style="color:#c3c8b6;">{cat.name}</a></li>
             ))}
           </ul>
         </div>
@@ -68,11 +68,11 @@ const igProfile = siteConfig.social?.instagram || '';
 
       {socials.length > 0 && (
         <div class="md:col-span-2">
-          <div class="mono uppercase text-ink-faint mb-4 pb-3">social</div>
+          <div class="mono uppercase mb-4 pb-3" style="color:#8a9179;">social</div>
           <ul class="space-y-2.5 text-sm">
             {socials.map(([_, label, href]: any) => (
               <li>
-                <a href={href} target="_blank" rel="noopener" class="text-ink-muted hover:text-ink transition-colors inline-flex items-center gap-1.5">
+                <a href={href} target="_blank" rel="noopener" class="transition-colors hover:!text-[#FFEAB0] inline-flex items-center gap-1.5" style="color:#c3c8b6;">
                   {label}
                   <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
                 </a>
@@ -85,10 +85,10 @@ const igProfile = siteConfig.social?.instagram || '';
 
     {igItems.length > 0 && (
       <div class="pt-10 mb-10">
-        <div class="mono uppercase text-ink-faint mb-4">instagram</div>
+        <div class="mono uppercase mb-4" style="color:#8a9179;">instagram</div>
         <div class="grid grid-cols-3 sm:grid-cols-6 gap-2 md:gap-3">
           {igItems.map((item: any) => (
-            <a href={item.link || igProfile || '#'} target="_blank" rel="noopener" class="block aspect-square overflow-hidden rounded-md bg-elev group" aria-label="Ver no Instagram">
+            <a href={item.link || igProfile || '#'} target="_blank" rel="noopener" class="block aspect-square overflow-hidden rounded-md group" style="background:#33402a;" aria-label="Ver no Instagram">
               <img src={item.src} alt="Instagram" loading="lazy" class="w-full h-full object-cover group-hover:opacity-85 transition-opacity" />
             </a>
           ))}
@@ -96,11 +96,11 @@ const igProfile = siteConfig.social?.instagram || '';
       </div>
     )}
 
-    <div class="pt-6 flex items-center justify-between flex-wrap gap-3 text-xs">
-      <span class="mono text-ink-faint">© {year} {siteConfig.footer?.copyright || siteConfig.name}</span>
+    <div class="pt-6 flex items-center justify-between flex-wrap gap-3 text-xs" style="border-top:1px solid #3a4732;">
+      <span class="mono" style="color:#8a9179;">© {year} {siteConfig.footer?.copyright || siteConfig.name}</span>
       <div class="flex gap-5">
-        <a href="/privacidade" class="text-ink-faint hover:text-ink transition-colors">privacidade</a>
-        <a href="/termos" class="text-ink-faint hover:text-ink transition-colors">termos</a>
+        <a href="/privacidade" class="transition-colors hover:!text-[#FFEAB0]" style="color:#8a9179;">privacidade</a>
+        <a href="/termos" class="transition-colors hover:!text-[#FFEAB0]" style="color:#8a9179;">termos</a>
       </div>
     </div>
   </div>
