@@ -70,21 +70,21 @@
 
 @layer base {
   :root {
-    /* ===== Base canvas (light, warm off-white) ===== */
-    --c-bg:          250 248 244;     /* oklch(97% 0.008 80) — warm off-white */
-    --c-surface:     255 254 251;     /* essentially white, microtinted */
-    --c-elev:        244 240 232;     /* oklch(94% 0.012 80) — subtle elev */
-    --c-border:      224 218 206;     /* oklch(86% 0.014 80) */
-    --c-rule:        212 204 188;     /* oklch(81% 0.014 80) — divisores */
+    /* ===== Base canvas (light, warm off-white) — paleta Corporativo ===== */
+    --c-bg:          252 251 247;     /* #FCFBF7 canvas quase branco */
+    --c-surface:     255 255 255;     /* #FFFFFF cards */
+    --c-elev:        243 236 220;     /* #F3ECDC faixa areia */
+    --c-border:      224 217 201;     /* #E0D9C9 */
+    --c-rule:        211 202 184;     /* #D3CAB8 — divisores */
 
     /* ===== Ink on light ===== */
-    --c-ink:           20  20  24;    /* oklch(15% 0.008 80) — deep ink */
-    --c-ink-muted:     76  74  82;    /* oklch(40% 0.012 80) */
-    --c-ink-faint:    136 130 130;    /* oklch(60% 0.014 80) */
+    --c-ink:           38  35  28;    /* #26231C — deep ink */
+    --c-ink-muted:    104  98  86;    /* #686256 */
+    --c-ink-faint:    120 112  89;    /* #787059 (AA em fundo claro) */
 
-    /* ===== Primary (override CMS color) ===== */
-    --c-primary:      139  74  54;   /* oklch(45% 0.080 35) — coral-terra */
-    --c-primary-soft: 237 216 207;   /* oklch(88% 0.025 35) — coral-wash */
+    /* ===== Primary — verde-oliva Corporativo ===== */
+    --c-primary:       85 112  58;   /* #55703A verde-oliva (AA em branco) */
+    --c-primary-soft: 220 228 204;   /* #DCE4CC sage wash */
 
     /* ===== 5 CATEGORIA COLORS (OKLCH committed) — SAME PALETTE =====
        Funcionam tanto em light quanto dark — só o contraste muda. */

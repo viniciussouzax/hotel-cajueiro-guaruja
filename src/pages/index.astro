@@ -96,7 +96,7 @@ const faq = home.faq || [];
           </span>
         </label>
         <!-- Buscar -->
-        <button type="submit" class="flex items-center justify-center gap-2 bg-primary text-white font-semibold rounded-md px-8 py-3 lg:my-0 mt-1 hover:opacity-90 transition shrink-0">
+        <button type="submit" class="flex items-center justify-center gap-2 bg-primary text-bg font-medium rounded-[3px] px-8 py-3 lg:my-0 mt-1 hover:brightness-90 transition shrink-0">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
           {booking.cta}
         </button>
@@ -220,7 +220,7 @@ const faq = home.faq || [];
             {banner.eyebrow && <p class="mono uppercase text-primary mb-3">{banner.eyebrow}</p>}
             <h2 class="font-display text-2xl md:text-3xl font-semibold tracking-tight text-ink leading-[1.15] mb-3">{banner.title}</h2>
             {banner.text && <p class="text-base md:text-lg text-ink-muted leading-relaxed">{banner.text}</p>}
-            {banner.cta && <a href="#reservar" class="mt-6 inline-flex items-center justify-center bg-primary text-white rounded-md px-7 py-4 font-semibold hover:opacity-90 transition">{banner.cta}</a>}
+            {banner.cta && <a href="#reservar" class="mt-6 inline-flex items-center justify-center bg-primary text-bg rounded-[3px] px-7 py-4 font-medium hover:brightness-90 transition">{banner.cta}</a>}
           </div>
           <!-- Imagem (30%) -->
           <div class="md:w-[30%] min-h-[200px] md:min-h-0 bg-cover bg-center flex items-center justify-center"
@@ -274,7 +274,7 @@ const faq = home.faq || [];
         {suitesTeaser.eyebrow && <p class="mono uppercase text-ink-faint mb-4">{suitesTeaser.eyebrow}</p>}
         <h2 class="font-display text-3xl md:text-4xl font-normal tracking-tight text-ink leading-[1.1] max-w-2xl mb-6">{suitesTeaser.title}</h2>
         {suitesTeaser.text && <div class="text-lg text-ink-muted leading-relaxed max-w-2xl space-y-4 mb-8">{suitesTeaser.text.split('\n\n').map((p: string) => <p>{p}</p>)}</div>}
-        {suitesTeaser.cta && <a href="/suites" class="inline-block border border-ink text-ink rounded px-6 py-3 font-semibold hover:bg-ink hover:text-bg transition">{suitesTeaser.cta}</a>}
+        {suitesTeaser.cta && <a href="/suites" class="inline-block border border-border text-ink rounded-[3px] px-6 py-3 font-medium hover:border-ink transition">{suitesTeaser.cta}</a>}
       </div>
     </section>
   )}
@@ -305,7 +305,7 @@ const faq = home.faq || [];
         <div class="max-w-2xl mb-12">
           <h2 class="font-display text-3xl md:text-4xl font-normal tracking-tight text-ink leading-[1.1] mb-4">{diferenciais.title}</h2>
           {diferenciais.subtitle && <p class="text-lg text-ink-muted leading-relaxed mb-6">{diferenciais.subtitle}</p>}
-          {diferenciais.cta && <a href="#reservar" class="inline-block bg-ink text-bg rounded px-6 py-3 font-semibold hover:opacity-90 transition">{diferenciais.cta}</a>}
+          {diferenciais.cta && <a href="#reservar" class="inline-block bg-primary text-bg rounded-[3px] px-6 py-3 font-medium hover:brightness-90 transition">{diferenciais.cta}</a>}
         </div>
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {diferenciais.items.map((it: any) => (
@@ -359,7 +359,7 @@ const faq = home.faq || [];
       <div class="container-x py-20 md:py-28 text-center">
         <h2 class="font-display text-3xl md:text-5xl font-normal tracking-tight text-ink leading-[1.05] max-w-3xl mx-auto mb-5">{cta.title}</h2>
         {cta.subtitle && <p class="text-lg text-ink-muted leading-relaxed max-w-2xl mx-auto mb-8">{cta.subtitle}</p>}
-        {cta.button && <a href="/contato" class="inline-block bg-ink text-bg rounded px-8 py-4 font-semibold text-lg hover:opacity-90 transition">{cta.button}</a>}
+        {cta.button && <a href="/contato" class="inline-block bg-primary text-bg rounded-[3px] px-8 py-4 font-medium text-lg hover:brightness-90 transition">{cta.button}</a>}
       </div>
     </section>
   )}

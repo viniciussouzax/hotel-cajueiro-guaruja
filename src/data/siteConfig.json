@@ -6,11 +6,11 @@
   "language": "pt-BR",
   "logo": "",
   "theme": {
-    "primary": "#2196F3",
-    "dark": "#0D2137",
+    "primary": "#55703A",
+    "dark": "#3C5128",
     "fontDisplay": "Fraunces",
     "fontBody": "Karla",
-    "accent": "#64B5F6",
+    "accent": "#55703A",
     "font": "default"
   },
   "social": {
