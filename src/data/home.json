@@ -47,9 +47,21 @@
   },
   "suitesTeaser": {
     "eyebrow": "Acomodações",
-    "title": "Perfeitas para dias de descanso no Guarujá",
-    "text": "Nossas suítes foram construídas para oferecer todas as comodidades com espaço. Ar-condicionado para noites agradáveis, camas confortáveis e um atendimento gentil e preparado.\n\nRelaxe, respire fundo e aproveite a praia. Quando você fica hospedado conosco, não precisa se preocupar com nada, pensamos em todos os detalhes para garantir uma estada agradável e prazerosa. Nosso objetivo é receber você muito bem!",
-    "cta": "Escolha a sua"
+    "title": "Suítes pensadas para descansar de verdade",
+    "text": "O hotel conta com 62 suítes, todas com ar-condicionado, enxoval completo, Wi-Fi e frigobar. Escolha a acomodação ideal para a sua viagem, de casal a tripla.",
+    "cta": "Escolha a sua",
+    "suites": [
+      { "nome": "Suíte com varanda", "img": "/images/suite-2.jpg", "desc": "Cama de casal e uma varanda exclusiva, para quem prefere mais espaço e um ambiente para relaxar ao fim do dia." },
+      { "nome": "Suíte casal", "img": "/images/suite-3.jpg", "desc": "Cama de casal em um ambiente aconchegante, ideal para uma estadia confortável e uma boa noite de sono." },
+      { "nome": "Suíte dupla", "img": "/images/suite-4.jpg", "desc": "Duas camas de solteiro, ideal para quem viaja acompanhado, prática e confortável para o dia a dia." },
+      { "nome": "Suíte dupla com varanda", "img": "/images/suite-5.jpg", "desc": "Duas camas de solteiro com a vantagem de uma varanda exclusiva, para relaxar ao ar livre." },
+      { "nome": "Suíte tripla", "img": "/images/suite-6.jpg", "desc": "Três camas em um ambiente amplo, ideal para acomodar todos juntos, com todo o conforto para o descanso." }
+    ],
+    "destaque": {
+      "title": "Não encontrou a ideal?",
+      "text": "Temos suítes para todos os perfis, de casal a tripla, com e sem varanda. Fale com a gente e reserve a sua pelo melhor preço, direto pelo nosso site.",
+      "cta": "Reservar agora"
+    }
   },
   "piscina": {
     "title": "Relaxe depois de um dia de praia",

@@ -274,14 +274,44 @@ const faq = home.faq || [];
     </section>
   )}
 
-  <!-- ===== ACOMODAÇÕES (teaser) ===== -->
+  <!-- ===== ACOMODAÇÕES (grid de suítes) ===== -->
   {(suitesTeaser.title || suitesTeaser.text) && (
-    <section class="border-t border-rule">
+    <section id="acomodacoes" class="bg-elev border-t border-rule scroll-mt-24">
       <div class="container-x py-16 md:py-24">
-        {suitesTeaser.eyebrow && <p class="mono uppercase text-ink-faint mb-4">{suitesTeaser.eyebrow}</p>}
-        <h2 class="font-display text-3xl md:text-4xl font-normal tracking-tight text-ink leading-[1.1] max-w-2xl mb-6">{suitesTeaser.title}</h2>
-        {suitesTeaser.text && <div class="text-lg text-ink-muted leading-relaxed max-w-2xl space-y-4 mb-8">{suitesTeaser.text.split('\n\n').map((p: string) => <p>{p}</p>)}</div>}
-        {suitesTeaser.cta && <a href="/suites" class="inline-flex items-center justify-center gap-2.5 min-h-[48px] px-6 rounded-[200px] bg-[#cf3a23] text-bg text-[15px] font-semibold uppercase tracking-wide no-underline hover:brightness-95 transition-[filter]">{suitesTeaser.cta}</a>}
+        <div class="max-w-2xl mb-10 md:mb-14">
+          {suitesTeaser.eyebrow && <p class="mono uppercase text-[#cf3a23] mb-3">{suitesTeaser.eyebrow}</p>}
+          <h2 class="font-display text-3xl md:text-4xl font-normal tracking-tight text-ink leading-[1.1] mb-4">{suitesTeaser.title}</h2>
+          {suitesTeaser.text && <p class="text-lg text-ink-muted leading-relaxed">{suitesTeaser.text}</p>}
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-7">
+          {(suitesTeaser.suites || []).map((s: any) => (
+            <article class="bg-surface rounded-lg overflow-hidden shadow-sm border border-rule/40 flex flex-col">
+              <img src={s.img} alt={s.nome} width="600" height="400" loading="lazy" class="w-full object-cover" style="height:200px" />
+              <div class="p-6 flex flex-col flex-1">
+                <h3 class="font-display text-xl font-semibold text-ink mb-2">{s.nome}</h3>
+                <p class="text-sm text-ink-muted leading-relaxed">{s.desc}</p>
+              </div>
+            </article>
+          ))}
+
+          {suitesTeaser.destaque && (
+            <article class="rounded-lg p-6 md:p-8 flex flex-col" style="background:#2f3d22;">
+              <div class="w-12 h-12 rounded-full flex items-center justify-center mb-5" style="background:rgba(255,255,255,0.08);">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#c9b26a" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 4v16"/><path d="M2 9h18a2 2 0 012 2v9"/><path d="M2 18h20"/><path d="M6 9V6a2 2 0 012-2h8"/></svg>
+              </div>
+              <h3 class="font-display text-xl font-semibold mb-2.5" style="color:#F4EEDD;">{suitesTeaser.destaque.title}</h3>
+              <p class="text-sm leading-relaxed mb-6 flex-1" style="color:#b9bea9;">{suitesTeaser.destaque.text}</p>
+              {suitesTeaser.destaque.cta && <a href="#reservar" class="inline-flex items-center justify-center gap-2.5 min-h-[44px] px-6 rounded-[200px] bg-[#cf3a23] text-white text-sm font-semibold uppercase tracking-wide no-underline hover:brightness-95 transition-[filter] self-start">{suitesTeaser.destaque.cta}</a>}
+            </article>
+          )}
+        </div>
+
+        {suitesTeaser.cta && (
+          <div class="mt-10 md:mt-12">
+            <a href="/suites" class="inline-flex items-center justify-center gap-2.5 min-h-[48px] px-6 rounded-[200px] bg-[#cf3a23] text-bg text-[15px] font-semibold uppercase tracking-wide no-underline hover:brightness-95 transition-[filter]">{suitesTeaser.cta}</a>
+          </div>
+        )}
       </div>
     </section>
   )}
