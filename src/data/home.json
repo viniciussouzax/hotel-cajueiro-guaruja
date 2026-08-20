@@ -91,6 +91,16 @@
       "author": "Amanda F."
     }
   ],
+  "comoChegar": {
+    "eyebrow": "Como chegar",
+    "title": "Fácil acesso, pelos dois lados do porto",
+    "endereco": "Rua Avedis Simonian, 1177 - Guaiuba, Guarujá/SP, CEP 11421-060",
+    "acessos": [
+      { "titulo": "De Santos (Margem Direita)", "texto": "Balsa pela Ponta da Praia (cerca de 7 minutos, 24h) ou pela Rodovia Cônego Domênico Rangoni." },
+      { "titulo": "De São Paulo", "texto": "Pelas rodovias Anchieta ou Imigrantes até a Baixada Santista, seguindo para o Guarujá." },
+      { "titulo": "Vagas para carros", "texto": "Rotativas na propriedade e gratuitas na rua em frente ao hotel." }
+    ]
+  },
   "cta": {
     "title": "Sua próxima estadia no Guarujá começa aqui",
     "subtitle": "Conforto, atendimento impecável e a melhor localização. Reserve pelo nosso site e garanta sempre o melhor preço.",
