@@ -71,14 +71,17 @@ const { transparent = false } = Astro.props;
 
     <div class="flex items-center gap-1">
       {waUrl && (
-        <a
-          href={waUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          class="hidden sm:inline-flex items-center justify-center min-h-[40px] px-5 rounded-[20px] bg-[#cf3a23] text-white text-sm font-semibold uppercase tracking-wide no-underline hover:brightness-95 transition mr-1"
-        >
-          Reservar
-        </a>
+        <div class="hidden sm:flex items-center mr-1">
+          <img src="/images/caju.avif" alt="" aria-hidden="true" width="126" height="104" class="h-9 md:h-[2.85rem] w-auto -mr-3 md:-mr-4 relative z-10 pointer-events-none select-none -scale-x-100 translate-x-2.5 md:translate-x-2" />
+          <a
+            href={waUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center min-h-[38px] pl-7 pr-5 rounded-[20px] bg-[#cf3a23] text-white text-[13px] md:text-sm font-semibold uppercase tracking-wide no-underline hover:brightness-95 transition-[filter] whitespace-nowrap"
+          >
+            Reservar
+          </a>
+        </div>
       )}
       <button id="menu-toggle" class="nav-icon lg:hidden w-10 h-10 flex items-center justify-center rounded transition-colors" aria-label="Menu" aria-expanded="false" aria-controls="mobile-menu">
         <svg id="menu-icon-open" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>

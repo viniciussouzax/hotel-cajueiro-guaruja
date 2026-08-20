@@ -45,11 +45,11 @@ const faq = home.faq || [];
         data-engine={booking.engineUrl}
         data-company={booking.companyId}
         data-newtab={booking.openInNewTab ? '1' : '0'}
-        class="booking-bar bg-surface rounded-lg shadow-2xl p-1.5 flex flex-col gap-1 w-full"
+        class="booking-bar bg-surface rounded-lg shadow-2xl p-1 flex flex-col gap-1 w-full"
       >
        <div class="flex flex-col lg:flex-row lg:items-stretch gap-1 lg:gap-0 w-full">
         <!-- Check-in -->
-        <label for="checkin" class="flex items-center gap-3 flex-1 px-4 py-2 rounded-md hover:bg-elev transition cursor-pointer">
+        <label for="checkin" class="flex items-center gap-2.5 flex-1 px-3.5 py-1.5 rounded-md hover:bg-elev transition cursor-pointer">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-ink-faint shrink-0" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
           <span class="flex flex-col w-full">
             <span class="mono uppercase text-ink-faint text-xs">{booking.labelCheckin}</span>
@@ -58,7 +58,7 @@ const faq = home.faq || [];
         </label>
         <div class="hidden lg:block w-px bg-rule/60 my-2"></div>
         <!-- Check-out -->
-        <label for="checkout" class="flex items-center gap-3 flex-1 px-4 py-2 rounded-md hover:bg-elev transition cursor-pointer">
+        <label for="checkout" class="flex items-center gap-2.5 flex-1 px-3.5 py-1.5 rounded-md hover:bg-elev transition cursor-pointer">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-ink-faint shrink-0" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
           <span class="flex flex-col w-full">
             <span class="mono uppercase text-ink-faint text-xs">{booking.labelCheckout}</span>
@@ -67,7 +67,7 @@ const faq = home.faq || [];
         </label>
         <div class="hidden lg:block w-px bg-rule/60 my-2"></div>
         <!-- Adultos -->
-        <label for="adultos" class="flex items-center gap-3 flex-1 px-4 py-2 rounded-md hover:bg-elev transition cursor-pointer">
+        <label for="adultos" class="flex items-center gap-2.5 flex-1 px-3.5 py-1.5 rounded-md hover:bg-elev transition cursor-pointer">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-ink-faint shrink-0" aria-hidden="true"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
           <span class="flex flex-col w-full">
             <span class="mono uppercase text-ink-faint text-xs">{booking.labelAdultos}</span>
@@ -83,7 +83,7 @@ const faq = home.faq || [];
         </label>
         <div class="hidden lg:block w-px bg-rule/60 my-2"></div>
         <!-- Crianças -->
-        <label for="criancas" class="flex items-center gap-3 flex-1 px-4 py-2 rounded-md hover:bg-elev transition cursor-pointer">
+        <label for="criancas" class="flex items-center gap-2.5 flex-1 px-3.5 py-1.5 rounded-md hover:bg-elev transition cursor-pointer">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-ink-faint shrink-0" aria-hidden="true"><circle cx="12" cy="6" r="3"/><path d="M9 22v-6l-1.5-2A2 2 0 019.4 11h5.2a2 2 0 011.9 3l-1.5 2v6"/></svg>
           <span class="flex flex-col w-full">
             <span class="mono uppercase text-ink-faint text-xs">{booking.labelCriancas}</span>
@@ -96,7 +96,7 @@ const faq = home.faq || [];
           </span>
         </label>
         <!-- Buscar -->
-        <button type="submit" class="flex items-center justify-center gap-2 bg-[#cf3a23] text-bg font-semibold uppercase tracking-wide rounded-[20px] px-8 py-3 lg:my-0 mt-1 hover:brightness-95 transition shrink-0">
+        <button type="submit" class="flex items-center justify-center gap-2 bg-[#cf3a23] text-bg text-sm font-semibold uppercase tracking-wide rounded-[20px] px-6 py-2 lg:my-0 mt-1 hover:brightness-95 transition shrink-0">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
           {booking.cta}
         </button>
@@ -137,6 +137,13 @@ const faq = home.faq || [];
             var minOut = new Date(c); minOut.setDate(c.getDate() + 1);
             co.min = iso(minOut);
             if (new Date(co.value + 'T00:00:00') <= c) co.value = iso(minOut);
+          });
+
+          // Clique em qualquer parte do campo de data abre o calendário nativo.
+          [ci, co].forEach(function (inp) {
+            var lab = inp.closest('label');
+            if (!lab) return;
+            lab.addEventListener('click', function () { try { inp.showPicker(); } catch (e) {} });
           });
 
           // ---- Idade das crianças: renderiza N selects (0–17) conforme a quantidade ----
@@ -370,9 +377,11 @@ const faq = home.faq || [];
 </BaseLayout>
 
 <style>
-  /* Ícone nativo do date picker discreto e alinhado à paleta */
-  .booking-date::-webkit-calendar-picker-indicator { opacity: 0.45; cursor: pointer; }
-  .booking-date::-webkit-calendar-picker-indicator:hover { opacity: 0.85; }
+  /* Esconde o ícone nativo do date picker — usamos só o ícone de calendário à esquerda.
+     O clique na área toda abre o picker (via showPicker no JS).
+     :global pra atravessar o escopo do Astro e atingir o pseudo nativo. */
+  :global(.booking-date::-webkit-calendar-picker-indicator) { display: none; }
+  .booking-date { cursor: pointer; }
   /* Remove a setinha default do select no Safari/Chrome pra ficar mais limpo */
   .booking-bar select { appearance: none; -webkit-appearance: none; }
 </style>
