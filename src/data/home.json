@@ -63,6 +63,27 @@
       "cta": "Reservar agora"
     }
   },
+  "estrutura": {
+    "eyebrow": "Estrutura",
+    "title": "O que o hotel oferece",
+    "text": "Tudo o que você precisa para uma estadia tranquila e confortável, do café da manhã artesanal à recepção 24 horas.",
+    "itens": [
+      { "icon": "coffee", "label": "Café da manhã completo" },
+      { "icon": "dinner", "label": "Jantar (meia ou pensão completa)" },
+      { "icon": "pool", "label": "Piscina" },
+      { "icon": "wifi", "label": "Wi-Fi" },
+      { "icon": "laptop", "label": "Espaço de trabalho exclusivo" },
+      { "icon": "parking", "label": "Vagas rotativas para carros na propriedade" },
+      { "icon": "parking", "label": "Vagas gratuitas na rua em frente ao hotel" },
+      { "icon": "ac", "label": "Ar-condicionado" },
+      { "icon": "fridge", "label": "Frigobar" },
+      { "icon": "bed", "label": "Suítes com ou sem varanda" },
+      { "icon": "closet", "label": "Guarda-roupas" },
+      { "icon": "linen", "label": "Enxoval hoteleiro" },
+      { "icon": "clock", "label": "Recepção 24h" },
+      { "icon": "clean", "label": "Limpeza diária" }
+    ]
+  },
   "piscina": {
     "title": "Relaxe depois de um dia de praia",
     "text": "Nada mais gostoso que relaxar na piscina, com um drink preparado na hora depois de uma praia. Aqui você desfruta de uma infraestrutura com mesas à beira da piscina, para relaxar, ler um livro ou simplesmente desfrutar de um restinho de sol.",
