@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import PostCard from '../../components/ui/PostCard.astro';
+import ReserveCTA from '../../components/ReserveCTA.astro';
 import { getCollection } from 'astro:content';
 import { CATEGORY_ORDER } from '../../lib/categoryColors';
 
@@ -20,22 +21,27 @@ const posts = allPosts.sort((a: any, b: any) => {
 });
 ---
 
-<BaseLayout title="Todos os artigos" description="Arquivo completo">
-  <section class="">
-    <div class="container-x pt-16 md:pt-24 pb-12">
-      <p class="mono uppercase text-ink-faint mb-5">arquivo</p>
-      <h1 class="font-display text-5xl md:text-7xl font-extrabold tracking-tight text-ink leading-[0.95] mb-4">
-        Todos os artigos
+<BaseLayout title="Blog" description="Dicas, praias e novidades do Guarujá pra aproveitar sua estadia no Hotel Cajueiro.">
+  <section>
+    <div class="container-x pt-24 md:pt-32 pb-10 border-b border-rule">
+      <p class="mono uppercase text-[#cf3a23] mb-4">Blog</p>
+      <h1 class="font-display text-4xl md:text-6xl font-normal tracking-tight text-ink leading-[1.05] mb-4 max-w-3xl">
+        Dicas, praias e novidades do Guarujá
       </h1>
-      <p class="mono text-ink-faint">{posts.length} {posts.length === 1 ? 'publicado' : 'publicados'}</p>
+      <p class="text-lg text-ink-muted">{posts.length} {posts.length === 1 ? 'artigo publicado' : 'artigos publicados'}</p>
     </div>
   </section>
 
-  <div class="container-x py-10 md:py-14">
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6">
+  <div class="container-x py-12 md:py-16">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
       {posts.map((post: any, i: number) => (
         <PostCard post={post} index={i} />
       ))}
     </div>
   </div>
+
+  <ReserveCTA
+    title="Gostou do Guarujá? Venha se hospedar no Cajueiro"
+    subtitle="A 100 metros da Praia do Tombo, com piscina, café da manhã artesanal e o melhor preço direto pelo nosso site."
+  />
 </BaseLayout>
