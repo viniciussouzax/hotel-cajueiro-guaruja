@@ -92,7 +92,6 @@ const processedHtml = isHtmlBody && hasShortcodes(rawBody) ? renderShortcodes(ra
   description={data.description || ''}
   image={data.heroImage || data.cover || ''}
   type="article"
-  topBar={true}
 >
   <PostSchemaPlugins
     title={data.title}
@@ -118,16 +117,8 @@ const processedHtml = isHtmlBody && hasShortcodes(rawBody) ? renderShortcodes(ra
       {data.description && (
         <p class="text-xl text-ink-muted leading-relaxed mb-8">{data.description}</p>
       )}
-      <div class="flex items-center gap-3 py-4 border-t border-b border-rule">
-        {currentAuthor.avatar ? (
-          <img src={currentAuthor.avatar} alt={currentAuthor.name} class="w-11 h-11 rounded-full object-cover" />
-        ) : (
-          <div class="w-11 h-11 rounded-full bg-elev flex items-center justify-center font-semibold text-ink-faint">{currentAuthor.name.charAt(0)}</div>
-        )}
-        <div class="text-sm">
-          <div class="font-semibold text-ink leading-tight">{currentAuthor.name}</div>
-          <div class="text-ink-faint">{fmtDate(data.pubDate || data.date)} · {readingMinutes} min de leitura</div>
-        </div>
+      <div class="mono uppercase text-ink-faint text-xs py-4 border-t border-b border-rule">
+        {fmtDate(data.pubDate || data.date)} · {readingMinutes} min de leitura · por {currentAuthor.name}
       </div>
     </div>
 
@@ -266,17 +257,28 @@ const processedHtml = isHtmlBody && hasShortcodes(rawBody) ? renderShortcodes(ra
     subtitle="A 100 metros da Praia do Tombo, com piscina, café da manhã artesanal e o melhor preço direto pelo nosso site."
   />
 
-  <!-- Insere a CTA inline no meio do texto -->
+  <!-- Distribui a CTA inline a cada N <h2> do corpo (fallback: meio dos parágrafos) -->
   <script is:inline>
     (function () {
       var src = document.getElementById('inline-reserve-source');
       if (!src) return;
-      var paras = document.querySelectorAll('.prose-msia > p');
-      if (!paras.length) { if (src.parentNode) src.parentNode.removeChild(src); return; }
-      var idx = Math.floor(paras.length / 2);
-      var target = paras[idx] || paras[paras.length - 1];
-      target.insertAdjacentElement('afterend', src);
-      src.style.display = 'block';
+      var inner = src.firstElementChild;
+      if (!inner) { if (src.parentNode) src.parentNode.removeChild(src); return; }
+      inner.style.display = '';
+      var h2s = document.querySelectorAll('.prose-msia > h2');
+      var EVERY = 2;
+      if (h2s.length >= 2) {
+        for (var i = EVERY; i < h2s.length; i += EVERY) {
+          h2s[i].parentNode.insertBefore(inner.cloneNode(true), h2s[i]);
+        }
+      } else {
+        var paras = document.querySelectorAll('.prose-msia > p');
+        if (paras.length) {
+          var t = paras[Math.floor(paras.length / 2)] || paras[paras.length - 1];
+          t.insertAdjacentElement('afterend', inner.cloneNode(true));
+        }
+      }
+      if (src.parentNode) src.parentNode.removeChild(src);
     })();
   </script>
 

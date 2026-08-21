@@ -45,7 +45,7 @@ const mapEmbed = `https://www.google.com/maps?q=${mapQuery}&z=15&output=embed`;
 const mapHref = `https://www.google.com/maps/search/?api=1&query=${mapQuery}`;
 ---
 
-<BaseLayout title={siteConfig.name} description={siteConfig.description} transparentHeader={true}>
+<BaseLayout title={siteConfig.name} description={siteConfig.description} transparentHeader={true} hideTopBars={true}>
 
   <!-- ===== HERO estilo Trip.com: imagem + headline + barra de busca + banner sobreposto ===== -->
   <section class="relative isolate">

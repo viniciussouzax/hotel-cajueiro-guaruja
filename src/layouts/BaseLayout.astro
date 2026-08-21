@@ -85,7 +85,7 @@ interface Props {
   type?: 'website' | 'article';
   bodyClass?: string;
   transparentHeader?: boolean;
-  topBar?: boolean;
+  hideTopBars?: boolean;
 }
 
 const defaultTitle = siteConfig.seo?.title || siteConfig.name;
@@ -96,7 +96,7 @@ const {
   type = 'website',
   bodyClass = '',
   transparentHeader = false,
-  topBar = false,
+  hideTopBars = false,
 } = Astro.props;
 
 const formattedTitle = title === defaultTitle ? title : `${title} | ${siteConfig.name}`;
@@ -168,11 +168,18 @@ import CustomCodeBodyStart from '../plugins/custom-code/CustomCodeBodyStart.astr
     pular pro conteúdo
   </a>
 
-  {topBar && (
-    <div class="bg-[#cf3a23] text-white text-center text-[13px] py-2 px-4">
-      <span>Reserve sua suíte no Hotel Cajueiro pelo melhor preço.</span>
-      <a href="/" class="font-semibold uppercase tracking-wide ml-2 underline underline-offset-2 hover:opacity-90">Consultar datas →</a>
-    </div>
+  {!hideTopBars && (
+    <>
+      <!-- Aviso escuro (acima da nav) -->
+      <div class="text-center text-[12.5px] py-1.5 px-4 leading-snug" style="background:#26331C; color:#c3c8b6;">
+        A 100 metros da Praia do Tombo · Guarujá · SP
+      </div>
+      <!-- Barra clara de CTA (acima da nav) -->
+      <div class="text-center text-[13px] py-2 px-4 leading-snug" style="background:#DCE4CC; color:#3C5128;">
+        Reserve direto pelo nosso site e garanta o melhor preço.
+        <a href="/" class="font-semibold uppercase tracking-wide ml-2 underline underline-offset-2 hover:opacity-90 whitespace-nowrap">Consultar datas →</a>
+      </div>
+    </>
   )}
   <Header transparent={transparentHeader} />
 
