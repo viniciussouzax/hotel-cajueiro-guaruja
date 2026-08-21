@@ -12,81 +12,127 @@ const whatsapp = contato.whatsapp || c.whatsapp || '';
 const address = contato.endereco || c.address || '';
 const horarios = contato.horarios || {};
 const regiao = contato.regiao || {};
-const form = contato.form || {};
 
 const waDigits = (whatsapp || '').replace(/\D/g, '');
 const waUrl = waDigits ? `https://wa.me/55${waDigits}` : '';
 const phoneHref = phone ? `tel:+55${phone.replace(/\D/g, '')}` : '';
+
+const inputCls = 'w-full rounded-md px-4 py-3 text-ink bg-bg border border-rule outline-none transition-colors focus:border-[#cf3a23] placeholder:text-ink-faint';
 ---
 
 <BaseLayout title={`Contato · ${siteConfig.name}`} description={contato.intro || `Fale com ${siteConfig.name}`}>
   <section>
-    <div class="container-x pt-16 md:pt-20 pb-12">
-      <p class="mono uppercase text-ink-faint mb-5">contato</p>
-      <h1 class="font-display text-3xl md:text-5xl font-normal tracking-tight text-ink leading-[1.05] mb-6 max-w-3xl">
+    <div class="container-x pt-14 md:pt-20 pb-4">
+      <p class="mono uppercase text-[#cf3a23] mb-4">contato</p>
+      <h1 class="font-display text-3xl md:text-5xl font-normal tracking-tight text-ink leading-[1.05] mb-4 max-w-3xl">
         {contato.intro || 'Teremos prazer em tirar todas as suas dúvidas!'}
       </h1>
+      <p class="text-lg text-ink-muted max-w-2xl">Fale com a gente pelo canal que preferir ou mande uma mensagem, a nossa recepção responde rápido.</p>
     </div>
   </section>
 
-  <div class="container-x py-14 md:py-20">
-    <div class="grid grid-cols-1 md:grid-cols-[1fr_2fr] gap-12 md:gap-20">
-      <div class="space-y-8">
+  <div class="container-x pb-20 md:pb-28">
+    <div class="grid grid-cols-1 lg:grid-cols-[1fr_1.35fr] gap-10 lg:gap-16 items-start">
+
+      <!-- ===== Informações de contato ===== -->
+      <div class="space-y-6">
         {phone && (
-          <div>
-            <div class="mono uppercase text-ink-faint mb-2">telefone</div>
-            <a href={phoneHref} class="text-lg font-medium text-ink hover:text-primary transition-colors">{phone}</a>
-          </div>
+          <a href={phoneHref} class="flex items-start gap-4 no-underline group">
+            <span class="shrink-0 w-11 h-11 rounded-full flex items-center justify-center" style="background:rgba(207,58,35,0.10);">
+              <svg class="w-5 h-5 text-[#cf3a23]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            </span>
+            <span>
+              <span class="mono uppercase text-ink-faint text-xs block mb-1">telefone</span>
+              <span class="text-lg font-medium text-ink group-hover:text-primary transition-colors">{phone}</span>
+            </span>
+          </a>
         )}
         {waUrl && (
-          <div>
-            <div class="mono uppercase text-ink-faint mb-2">whatsapp</div>
-            <a href={waUrl} target="_blank" rel="noopener noreferrer" class="text-lg font-medium text-ink hover:text-primary transition-colors">{whatsapp}</a>
-          </div>
+          <a href={waUrl} target="_blank" rel="noopener noreferrer" class="flex items-start gap-4 no-underline group">
+            <span class="shrink-0 w-11 h-11 rounded-full flex items-center justify-center" style="background:rgba(207,58,35,0.10);">
+              <svg class="w-5 h-5 text-[#cf3a23]" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15l-1.3 4.7 4.8-1.3A10 10 0 1 0 12 2Zm5.3 14.1c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .2-3.3-.7-2.8-1.1-4.5-3.9-4.7-4.1-.1-.2-1-1.4-1-2.6s.6-1.8.9-2.1c.2-.2.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 1.9c.1.2.1.4 0 .5l-.4.6c-.1.2-.3.3-.1.6.1.3.7 1.1 1.4 1.7.9.8 1.7 1.1 2 1.2.2.1.4.1.5-.1l.7-.8c.2-.2.3-.2.6-.1l1.8.9c.3.1.5.2.5.3.1.1.1.7-.1 1.3Z"/></svg>
+            </span>
+            <span>
+              <span class="mono uppercase text-ink-faint text-xs block mb-1">whatsapp</span>
+              <span class="text-lg font-medium text-ink group-hover:text-primary transition-colors">{whatsapp}</span>
+            </span>
+          </a>
         )}
         {email && (
-          <div>
-            <div class="mono uppercase text-ink-faint mb-2">email</div>
-            <a href={`mailto:${email}`} class="text-lg font-medium text-ink hover:text-primary transition-colors">{email}</a>
-          </div>
+          <a href={`mailto:${email}`} class="flex items-start gap-4 no-underline group">
+            <span class="shrink-0 w-11 h-11 rounded-full flex items-center justify-center" style="background:rgba(207,58,35,0.10);">
+              <svg class="w-5 h-5 text-[#cf3a23]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/></svg>
+            </span>
+            <span class="min-w-0">
+              <span class="mono uppercase text-ink-faint text-xs block mb-1">email</span>
+              <span class="text-lg font-medium text-ink group-hover:text-primary transition-colors break-words">{email}</span>
+            </span>
+          </a>
         )}
         {address && (
-          <div>
-            <div class="mono uppercase text-ink-faint mb-2">endereço</div>
-            <p class="text-base text-ink leading-relaxed">{address}</p>
+          <div class="flex items-start gap-4">
+            <span class="shrink-0 w-11 h-11 rounded-full flex items-center justify-center" style="background:rgba(207,58,35,0.10);">
+              <svg class="w-5 h-5 text-[#cf3a23]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M21 10c0 6-9 12-9 12s-9-6-9-12a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            </span>
+            <span>
+              <span class="mono uppercase text-ink-faint text-xs block mb-1">endereço</span>
+              <span class="text-base text-ink leading-relaxed">{address}</span>
+            </span>
           </div>
         )}
         {(horarios.atendimentoExterno || horarios.recepcao) && (
-          <div>
-            <div class="mono uppercase text-ink-faint mb-2">horários</div>
-            {horarios.atendimentoExterno && <p class="text-base text-ink leading-relaxed">{horarios.atendimentoExterno}</p>}
-            {horarios.recepcao && <p class="text-base text-ink leading-relaxed">{horarios.recepcao}</p>}
+          <div class="flex items-start gap-4">
+            <span class="shrink-0 w-11 h-11 rounded-full flex items-center justify-center" style="background:rgba(207,58,35,0.10);">
+              <svg class="w-5 h-5 text-[#cf3a23]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15.5 14"/></svg>
+            </span>
+            <span>
+              <span class="mono uppercase text-ink-faint text-xs block mb-1">horários</span>
+              {horarios.atendimentoExterno && <span class="block text-base text-ink leading-relaxed">{horarios.atendimentoExterno}</span>}
+              {horarios.recepcao && <span class="block text-base text-ink leading-relaxed">{horarios.recepcao}</span>}
+            </span>
           </div>
+        )}
+
+        {waUrl && (
+          <a href={waUrl} target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center gap-2 min-h-[48px] px-6 rounded-[200px] bg-[#cf3a23] text-bg text-sm font-semibold uppercase tracking-wide no-underline hover:brightness-95 transition-[filter] mt-2">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15l-1.3 4.7 4.8-1.3A10 10 0 1 0 12 2Zm5.3 14.1c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .2-3.3-.7-2.8-1.1-4.5-3.9-4.7-4.1-.1-.2-1-1.4-1-2.6s.6-1.8.9-2.1c.2-.2.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 1.9c.1.2.1.4 0 .5l-.4.6c-.1.2-.3.3-.1.6.1.3.7 1.1 1.4 1.7.9.8 1.7 1.1 2 1.2.2.1.4.1.5-.1l.7-.8c.2-.2.3-.2.6-.1l1.8.9c.3.1.5.2.5.3.1.1.1.7-.1 1.3Z"/></svg>
+            Falar no WhatsApp
+          </a>
         )}
       </div>
 
-      <form class="space-y-6" action="/api/subscribe" method="POST">
-        <div>
-          <label class="mono uppercase text-ink-faint block mb-2" for="name">nome</label>
-          <input type="text" id="name" name="name" required class="w-full bg-transparent  focus:border-ink py-2 text-ink outline-none transition-colors" />
-        </div>
-        <div>
-          <label class="mono uppercase text-ink-faint block mb-2" for="email">email</label>
-          <input type="email" id="email" name="email" required class="w-full bg-transparent  focus:border-ink py-2 text-ink outline-none transition-colors" />
-        </div>
-        <div>
-          <label class="mono uppercase text-ink-faint block mb-2" for="message">mensagem</label>
-          <textarea id="message" name="message" rows="5" required class="w-full bg-transparent  focus:border-ink py-2 text-ink outline-none transition-colors resize-y"></textarea>
-        </div>
-        <button type="submit" class="btn btn-primary">
-          enviar
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-        </button>
-      </form>
+      <!-- ===== Formulário ===== -->
+      <div class="bg-surface rounded-lg p-6 md:p-8 shadow-[0_10px_40px_-24px_rgba(60,45,25,0.4)] border border-rule/50">
+        <h2 class="font-display text-2xl font-semibold text-ink mb-1">Envie uma mensagem</h2>
+        <p class="text-ink-muted mb-6">Preencha os campos e retornamos o contato.</p>
+        <form class="space-y-5" action="/api/subscribe" method="POST">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+            <div>
+              <label class="block text-sm font-medium text-ink mb-1.5" for="name">Nome</label>
+              <input type="text" id="name" name="name" required placeholder="Seu nome" class={inputCls} />
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-ink mb-1.5" for="whatsapp">WhatsApp</label>
+              <input type="tel" id="whatsapp" name="whatsapp" placeholder="(13) 90000-0000" class={inputCls} />
+            </div>
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-ink mb-1.5" for="email">E-mail</label>
+            <input type="email" id="email" name="email" required placeholder="voce@email.com" class={inputCls} />
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-ink mb-1.5" for="message">Mensagem</label>
+            <textarea id="message" name="message" rows="5" required placeholder="Como podemos ajudar?" class={`${inputCls} resize-y`}></textarea>
+          </div>
+          <button type="submit" class="w-full sm:w-auto inline-flex items-center justify-center min-h-[50px] px-8 rounded-[200px] bg-[#cf3a23] text-bg text-sm font-semibold uppercase tracking-wide no-underline hover:brightness-95 transition-[filter]">
+            Enviar mensagem
+          </button>
+        </form>
+      </div>
     </div>
 
     {(regiao.titulo || regiao.texto) && (
-      <div class="mt-16 md:mt-24  pt-12 max-w-2xl">
+      <div class="mt-16 md:mt-24 max-w-2xl">
         <h2 class="font-display text-2xl md:text-3xl font-normal tracking-tight text-ink leading-[1.1] mb-4">{regiao.titulo}</h2>
         {regiao.texto && <p class="text-lg text-ink-muted leading-relaxed">{regiao.texto}</p>}
       </div>
