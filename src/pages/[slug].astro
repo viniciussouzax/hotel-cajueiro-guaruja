@@ -141,19 +141,29 @@ const processedHtml = isHtmlBody && hasShortcodes(rawBody) ? renderShortcodes(ra
 
       <!-- ===== Artigo (cabeçalho + imagem + conteúdo): coluna 1, 8/12 ===== -->
       <div class="lg:col-span-8 lg:col-start-1 lg:row-start-1 min-w-0">
-        <!-- Cabeçalho -->
-        <div class="flex items-center gap-4 mono uppercase text-ink-faint mb-6">
-          <a href="/blog" class="hover:text-ink transition-colors">← Blog</a>
+        <!-- Breadcrumb: início / categoria / leitura atual -->
+        <nav class="mono uppercase text-ink-faint text-xs mb-8 flex items-center gap-2.5 flex-wrap" aria-label="Breadcrumb">
+          <a href="/" class="hover:text-ink transition-colors">início</a>
+          <span class="opacity-40">/</span>
           {data.category && (
-            <a href={`/categoria/${getCategorySlug(data.category, allCategories)}`} class="text-[#cf3a23] hover:brightness-90 transition">{data.category}</a>
+            <>
+              <a href={`/categoria/${getCategorySlug(data.category, allCategories)}`} class="hover:text-ink transition-colors">{data.category}</a>
+              <span class="opacity-40">/</span>
+            </>
           )}
-        </div>
-        <h1 class="font-display text-3xl md:text-4xl lg:text-5xl font-normal tracking-tight text-ink leading-[1.08] mb-5">{data.title}</h1>
+          <span class="text-ink">leitura atual</span>
+        </nav>
+        <h1 class="font-display text-3xl md:text-4xl lg:text-5xl font-normal tracking-tight text-ink leading-[1.1] mb-4">{data.title}</h1>
         {data.description && (
           <p class="text-lg md:text-xl text-ink-muted leading-relaxed mb-8">{data.description}</p>
         )}
-        <div class="mono uppercase text-ink-faint text-xs py-4 border-t border-b border-rule">
-          {fmtDate(data.pubDate || data.date)} · {readingMinutes} min de leitura · por {currentAuthor.name}
+        <div class="mono uppercase text-ink-faint text-xs flex items-center gap-2.5 flex-wrap">
+          {data.category && (<><span>{data.category}</span><span class="opacity-40">·</span></>)}
+          <span>{fmtDate(data.pubDate || data.date)}</span>
+          <span class="opacity-40">·</span>
+          <span>{readingMinutes} min de leitura</span>
+          <span class="opacity-40">·</span>
+          <span>por {currentAuthor.name}</span>
         </div>
 
         <!-- Imagem/vídeo de destaque -->
@@ -176,14 +186,14 @@ const processedHtml = isHtmlBody && hasShortcodes(rawBody) ? renderShortcodes(ra
           {processedHtml ? (<Fragment set:html={processedHtml} />) : (<Content />)}
         </div>
 
-        <!-- CTA inline: caixa clara distribuída no corpo (via JS) -->
+        <!-- CTA inline: caixa clara compacta distribuída no corpo (via JS) -->
         <div id="inline-reserve-source" style="display:none">
           <div class="my-6 rounded-lg px-5 py-4 flex flex-col md:flex-row md:items-center md:justify-between gap-3 md:gap-5" style="background:#DCE4CC;">
-            <div>
-              <p class="font-semibold text-ink leading-tight">Reserve sua suíte no Hotel Cajueiro</p>
-              <p class="text-sm text-ink-muted">A 100m da Praia do Tombo, com o melhor preço direto pelo site.</p>
-            </div>
-            <a href="/" class="shrink-0 inline-flex items-center justify-center gap-2 min-h-[44px] px-6 rounded-[200px] bg-[#cf3a23] text-bg text-sm font-semibold uppercase tracking-wide no-underline hover:brightness-95 transition-[filter]">Consultar datas</a>
+            <p class="text-ink flex items-start gap-2.5 leading-snug">
+              <span class="mt-1.5 w-2 h-2 rounded-full shrink-0" style="background:#cf3a23;"></span>
+              <span><strong class="font-semibold">Reserve sua suíte no Hotel Cajueiro</strong> a 100m da Praia do Tombo, com o melhor preço direto pelo site.</span>
+            </p>
+            <a href="/" class="shrink-0 inline-flex items-center justify-center gap-2 min-h-[44px] px-6 rounded-[200px] bg-[#cf3a23] text-bg text-sm font-semibold uppercase tracking-wide no-underline hover:brightness-95 transition-[filter]">Consultar datas →</a>
           </div>
         </div>
 
@@ -213,6 +223,20 @@ const processedHtml = isHtmlBody && hasShortcodes(rawBody) ? renderShortcodes(ra
             </div>
           </div>
         )}
+
+        <!-- CTA grande de reserva (posição pós-FAQ) -->
+        <section class="mt-12 rounded-xl p-8 md:p-10 text-center" style="background:#DCE4CC;">
+          <p class="inline-flex items-center gap-2 mono uppercase text-[#cf3a23] mb-4">
+            <span class="w-2 h-2 rounded-full" style="background:#cf3a23;"></span>
+            Reserva online
+          </p>
+          <h2 class="font-display text-2xl md:text-3xl font-semibold text-ink leading-[1.15] mb-4">Reserve sua suíte no Hotel Cajueiro</h2>
+          <p class="text-ink-muted leading-relaxed max-w-xl mx-auto mb-7">A 100 metros da Praia do Tombo, com piscina, café da manhã artesanal e o melhor preço direto pelo nosso site. Escolha as datas e veja a disponibilidade na hora.</p>
+          <a href="/" class="inline-flex items-center justify-center gap-2 min-h-[52px] px-8 rounded-[200px] bg-[#cf3a23] text-bg text-[15px] font-semibold uppercase tracking-wide no-underline hover:brightness-95 transition-[filter]">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            Consultar datas →
+          </a>
+        </section>
       </div>
 
     </div>
