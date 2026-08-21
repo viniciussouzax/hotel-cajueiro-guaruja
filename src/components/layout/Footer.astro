@@ -11,7 +11,7 @@ const categoriesData = readData('categories.json', []);
 const registered = normalizeCategories(categoriesData);
 const postCats = [...new Set(posts.map(p => p.data.category).filter(Boolean))];
 const orphans = collectOrphanCategories(postCats, registered);
-const allCategories = (registered.length > 0 ? [...registered, ...orphans] : orphans).slice(0, 6);
+const allCategories = registered.length > 0 ? registered : orphans;
 
 const year = new Date().getFullYear();
 

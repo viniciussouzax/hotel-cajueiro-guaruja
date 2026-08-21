@@ -1,22 +1,38 @@
 [
   {
-    "name": "Comece aqui",
-    "slug": "comece-aqui"
+    "name": "Hospedagem",
+    "slug": "hospedagem"
   },
   {
-    "name": "Configuração",
-    "slug": "configuracao"
+    "name": "Turismo e Destino",
+    "slug": "turismo-e-destino"
   },
   {
-    "name": "Conteúdo",
-    "slug": "conteudo"
+    "name": "Guia Local",
+    "slug": "guia-local"
   },
   {
-    "name": "Plugins",
-    "slug": "plugins"
+    "name": "Dicas de Viagem",
+    "slug": "dicas-de-viagem"
   },
   {
-    "name": "Inspiração",
-    "slug": "inspiracao"
+    "name": "Gastronomia",
+    "slug": "gastronomia"
+  },
+  {
+    "name": "Hospedagem Corporativa",
+    "slug": "hospedagem-corporativa"
+  },
+  {
+    "name": "Eventos e Negócios",
+    "slug": "eventos-e-negocios"
+  },
+  {
+    "name": "Experiências",
+    "slug": "experiencias"
+  },
+  {
+    "name": "Notícias e Novidades",
+    "slug": "noticias-e-novidades"
   }
 ]
