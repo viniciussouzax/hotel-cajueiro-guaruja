@@ -74,7 +74,7 @@ const mapHref = `https://www.google.com/maps/search/?api=1&query=${mapQuery}`;
       >
        <div class="flex flex-col lg:flex-row lg:items-stretch gap-1 lg:gap-0 w-full">
         <!-- Datas (check-in → check-out) — abre calendário de 2 meses -->
-        <div class="relative flex-[1.4]" id="dates-field">
+        <div class="relative flex-1 min-w-0" id="dates-field">
           <button type="button" id="dates-trigger" class="flex items-center gap-3 w-full px-4 py-2 rounded-md hover:bg-elev transition cursor-pointer text-left">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-ink-faint shrink-0" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
             <span class="flex flex-col w-full min-w-0 leading-none">
@@ -88,7 +88,7 @@ const mapHref = `https://www.google.com/maps/search/?api=1&query=${mapQuery}`;
         </div>
         <div class="hidden lg:block w-px bg-rule/60 my-2"></div>
         <!-- Hóspedes — abre seletor de quartos/adultos/crianças -->
-        <div class="relative flex-[1.1]" id="guests-field">
+        <div class="relative flex-1 min-w-0" id="guests-field">
           <button type="button" id="guests-trigger" class="flex items-center gap-3 w-full px-4 py-2 rounded-md hover:bg-elev transition cursor-pointer text-left">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-ink-faint shrink-0" aria-hidden="true"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
             <span class="flex flex-col w-full min-w-0 leading-none">
@@ -117,7 +117,7 @@ const mapHref = `https://www.google.com/maps/search/?api=1&query=${mapQuery}`;
               </div>
             </div>
             <div class="gp-row">
-              <div><div class="gp-t">Crianças</div><div class="gp-s">0–17 anos</div></div>
+              <div><div class="gp-t">Crianças</div><div class="gp-s">0–12 anos</div></div>
               <div class="gp-ctrl">
                 <button type="button" class="gp-btn" data-act="dec" data-t="children" aria-label="Menos crianças">&#8722;</button>
                 <span class="gp-n" id="gp-children">0</span>
@@ -125,18 +125,19 @@ const mapHref = `https://www.google.com/maps/search/?api=1&query=${mapQuery}`;
               </div>
             </div>
             <div id="gp-ages" class="gp-ages hidden"></div>
-            <div class="gp-foot"><button type="button" id="gp-done" class="gp-done">Concluir</button></div>
           </div>
         </div>
         <div class="hidden lg:block w-px bg-rule/60 my-2"></div>
         <!-- Código promocional -->
-        <label for="cupom" class="flex items-center gap-3 flex-1 px-4 py-2 rounded-md hover:bg-elev transition cursor-text">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-ink-faint shrink-0" aria-hidden="true"><path d="M20.59 13.41 13.42 20.58a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82Z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
-          <span class="flex flex-col w-full min-w-0 leading-none">
-            <span class="mono uppercase text-ink-faint text-[11px] tracking-wider mb-1">{booking.labelCupom || 'Cupom'}</span>
-            <input id="cupom" type="text" class="bg-transparent outline-none text-ink font-semibold text-[15px] leading-none w-full placeholder:text-ink-faint/70 placeholder:font-normal" placeholder={booking.placeholderCupom || 'Código promocional'} aria-label={booking.labelCupom || 'Código promocional'} />
-          </span>
-        </label>
+        <div class="relative flex-1 min-w-0">
+          <label for="cupom" class="flex items-center gap-3 w-full px-4 py-2 rounded-md hover:bg-elev transition cursor-text">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-ink-faint shrink-0" aria-hidden="true"><path d="M20.59 13.41 13.42 20.58a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82Z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
+            <span class="flex flex-col w-full min-w-0 leading-none">
+              <span class="mono uppercase text-ink-faint text-[11px] tracking-wider mb-1">{booking.labelCupom || 'Cupom'}</span>
+              <input id="cupom" type="text" class="bg-transparent outline-none text-ink font-semibold text-[15px] leading-none w-full min-w-0 placeholder:text-ink-faint/70 placeholder:font-normal" placeholder={booking.placeholderCupom || 'Código promocional'} aria-label={booking.labelCupom || 'Código promocional'} />
+            </span>
+          </label>
+        </div>
         <!-- Buscar -->
         <button type="submit" class="flex items-center justify-center gap-2 bg-[#55703A] text-bg text-sm font-semibold uppercase tracking-wide rounded-[200px] px-6 py-2 lg:my-0 mt-1 hover:brightness-95 transition shrink-0">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
@@ -268,12 +269,12 @@ const mapHref = `https://www.google.com/maps/search/?api=1&query=${mapQuery}`;
               wrap.className = 'gp-age';
               var lb = document.createElement('span'); lb.textContent = 'Criança ' + (i + 1);
               var sel = document.createElement('select'); sel.className = 'child-age'; sel.setAttribute('aria-label', 'Idade da criança ' + (i + 1));
-              for (var age = 0; age <= 17; age++) {
+              for (var age = 0; age <= 12; age++) {
                 var opt = document.createElement('option'); opt.value = String(age);
                 opt.textContent = age === 0 ? '< 1 ano' : age + (age === 1 ? ' ano' : ' anos');
                 sel.appendChild(opt);
               }
-              sel.value = String(childAges[i] != null ? childAges[i] : 8);
+              sel.value = String(childAges[i] != null ? childAges[i] : 6);
               (function (idx, s) { s.addEventListener('change', function () { childAges[idx] = parseInt(s.value, 10); }); })(i, sel);
               wrap.appendChild(lb); wrap.appendChild(sel); agesBox.appendChild(wrap);
             }
@@ -304,9 +305,7 @@ const mapHref = `https://www.google.com/maps/search/?api=1&query=${mapQuery}`;
               counts[t] = Math.max(mins[t], Math.min(maxs[t], counts[t] + (act === 'inc' ? 1 : -1)));
               if (t === 'children') { childAges = childAges.slice(0, counts.children); renderAges(); }
               syncGuests();
-              return;
             }
-            if (e.target.closest('#gp-done')) closeGuests();
           });
 
           // Fecha popovers ao clicar fora.
@@ -362,7 +361,7 @@ const mapHref = `https://www.google.com/maps/search/?api=1&query=${mapQuery}`;
           border-radius: 1.1rem; box-shadow: 0 24px 60px -15px rgba(0,0,0,.4);
         }
         .cal-pop { left: 0; padding: 2.6rem 1.25rem 1rem; width: min(640px, 94vw); }
-        .guests-pop { right: 0; padding: .35rem .25rem; width: min(340px, 92vw); }
+        .guests-pop { right: 0; padding: .35rem .25rem .7rem; width: min(340px, 92vw); }
         @media (max-width: 1023px) { .cal-pop { left: 0; } }
 
         .cal-months { display: grid; grid-template-columns: 1fr; gap: 1.75rem; }
@@ -404,7 +403,7 @@ const mapHref = `https://www.google.com/maps/search/?api=1&query=${mapQuery}`;
 
   <!-- ===== BANNER (abaixo da hero) — painel arredondado que sobe sobre a imagem ===== -->
   {(banner.title || banner.text) && (
-    <section class="relative z-10 bg-bg rounded-t-[50px] -mt-6 md:-mt-10">
+    <section class="relative z-10 bg-bg md:rounded-t-[50px] md:-mt-10">
       <div class="container-x py-12 md:py-16">
         <div class="bg-elev rounded-lg border border-rule/60 overflow-hidden flex flex-col md:flex-row">
           <!-- Texto (70%) -->
