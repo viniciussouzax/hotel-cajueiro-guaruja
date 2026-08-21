@@ -40,14 +40,14 @@ function fmtDate(d: any): string {
 
   <!-- Lista de artigos: título grande + meta embaixo (thumb só se houver capa), estilo lifewave -->
   <div class="container-x pb-16 md:pb-20">
-    <div class="max-w-3xl flex flex-col gap-8 md:gap-10">
+    <div class="max-w-3xl flex flex-col gap-2">
       {posts.map((post: any) => {
         const slug = post.slug ?? post.id;
         const img = post.data.heroImage || post.data.cover || post.data.coverImage || '';
         return (
-          <a href={`/${slug}`} class="group flex items-start gap-5 md:gap-7 no-underline">
+          <a href={`/${slug}`} class="group flex items-start gap-4 sm:gap-6 py-3 no-underline -mx-3 px-3 rounded-md hover:bg-elev/60 transition-colors">
             {img && (
-              <img src={img} alt={post.data.title} loading="lazy" class="w-28 h-20 md:w-40 md:h-24 object-cover rounded-md shrink-0 hidden sm:block" />
+              <img src={img} alt={post.data.title} loading="lazy" class="w-24 h-20 md:w-36 md:h-24 object-cover rounded-md shrink-0 hidden sm:block" />
             )}
             <div class="flex-1 min-w-0">
               <h2 class="font-display text-xl md:text-2xl font-normal text-ink leading-tight group-hover:text-primary transition-colors">
