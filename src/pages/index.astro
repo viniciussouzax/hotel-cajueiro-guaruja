@@ -73,6 +73,16 @@ const mapHref = `https://www.google.com/maps/search/?api=1&query=${mapQuery}`;
         class="booking-bar relative z-20 bg-surface rounded-[20px] lg:rounded-[200px] shadow-2xl p-1 lg:pl-3 flex flex-col gap-1 w-full"
       >
        <div class="flex flex-col lg:flex-row lg:items-stretch gap-1 lg:gap-0 w-full">
+        <!-- Destino (fixo: hotel único no Guarujá) -->
+        <div class="flex items-center gap-2.5 flex-[1.3] px-3.5 py-1.5 rounded-md">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-ink-faint shrink-0" aria-hidden="true"><path d="M21 10c0 6-9 12-9 12s-9-6-9-12a9 9 0 0 1 18 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+          <span class="flex flex-col w-full min-w-0">
+            <span class="mono uppercase text-ink-faint text-xs">{booking.labelDestino}</span>
+            <span class="text-ink font-medium truncate leading-tight">{booking.destino}</span>
+            {booking.destinoSub && <span class="text-ink-faint text-xs truncate leading-tight">{booking.destinoSub}</span>}
+          </span>
+        </div>
+        <div class="hidden lg:block w-px bg-rule/60 my-2"></div>
         <!-- Datas (check-in → check-out) — abre calendário de 2 meses -->
         <div class="relative flex-[1.6]" id="dates-field">
           <button type="button" id="dates-trigger" class="flex items-center gap-2.5 w-full px-3.5 py-1.5 rounded-md hover:bg-elev transition cursor-pointer text-left">

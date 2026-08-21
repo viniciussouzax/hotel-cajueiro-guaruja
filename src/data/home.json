@@ -5,6 +5,9 @@
     "title": "Hospedagem no Guarujá",
     "lead": "A 100 metros da Praia do Tombo",
     "booking": {
+      "labelDestino": "Destino",
+      "destino": "Guarujá",
+      "destinoSub": "Praia do Tombo, SP",
       "labelCheckin": "Check-in",
       "labelCheckout": "Check-out",
       "labelAdultos": "Adultos",
