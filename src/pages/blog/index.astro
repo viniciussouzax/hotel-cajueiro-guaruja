@@ -18,42 +18,52 @@ const posts = allPosts.sort((a: any, b: any) => {
   return new Date(b.data.pubDate).getTime() - new Date(a.data.pubDate).getTime();
 });
 
+const MONTHS_PT = ['jan', 'fev', 'mar', 'abr', 'mai', 'jun', 'jul', 'ago', 'set', 'out', 'nov', 'dez'];
 function fmtDate(d: any): string {
-  if (!d) return '';
   const dt = new Date(d);
   if (isNaN(dt.getTime())) return '';
-  return dt.toLocaleDateString('pt-BR', { day: '2-digit', month: 'short', year: 'numeric' });
+  const day = String(dt.getUTCDate()).padStart(2, '0');
+  const mon = MONTHS_PT[dt.getUTCMonth()];
+  const year = String(dt.getUTCFullYear()).slice(-2);
+  return `${day} ${mon} ${year}`;
+}
+function isoDate(d: any): string | undefined {
+  const dt = new Date(d);
+  return isNaN(dt.getTime()) ? undefined : dt.toISOString().slice(0, 10);
 }
 ---
 
 <BaseLayout title="Blog" description="Dicas, praias e novidades do Guarujá pra aproveitar sua estadia no Hotel Cajueiro.">
   <section>
-    <div class="container-x pt-24 md:pt-32 pb-8">
-      <p class="mono uppercase text-[#cf3a23] mb-4">Blog</p>
-      <h1 class="font-display text-4xl md:text-6xl font-normal tracking-tight text-ink leading-[1.05] mb-4 max-w-3xl">
+    <div class="container-x pt-12 md:pt-16 pb-6">
+      <h1 class="font-display text-3xl md:text-4xl font-normal tracking-tight text-ink leading-[1.1] mb-3">
         Dicas, praias e novidades do Guarujá
       </h1>
-      <p class="text-lg text-ink-muted">{posts.length} {posts.length === 1 ? 'artigo publicado' : 'artigos publicados'}</p>
+      <p class="mono text-ink-faint">{posts.length} {posts.length === 1 ? 'publicado' : 'publicados'}</p>
     </div>
   </section>
 
-  <!-- Lista de artigos: título grande + meta embaixo (thumb só se houver capa), estilo lifewave -->
-  <div class="container-x pb-16 md:pb-20">
-    <div class="max-w-3xl flex flex-col gap-2">
+  <div class="container-x pb-20">
+    <div class="max-w-3xl flex flex-col">
       {posts.map((post: any) => {
+        const data = post.data;
         const slug = post.slug ?? post.id;
-        const img = post.data.heroImage || post.data.cover || post.data.coverImage || '';
+        const img = data.heroImage || data.cover || data.coverImage || '';
         return (
           <a href={`/${slug}`} class="group flex items-start gap-4 sm:gap-6 py-3 no-underline -mx-3 px-3 rounded-md hover:bg-elev/60 transition-colors">
             {img && (
-              <img src={img} alt={post.data.title} loading="lazy" class="w-24 h-20 md:w-36 md:h-24 object-cover rounded-md shrink-0 hidden sm:block" />
+              <div class="shrink-0 w-24 h-16 sm:w-28 sm:h-[4.5rem] rounded overflow-hidden">
+                <img src={img} alt="" loading="lazy" class="w-full h-full object-cover transition-opacity group-hover:opacity-85" />
+              </div>
             )}
             <div class="flex-1 min-w-0">
-              <h2 class="font-display text-xl md:text-2xl font-normal text-ink leading-tight group-hover:text-primary transition-colors">
-                {post.data.title}
+              <h2 class="font-display text-lg md:text-xl text-ink leading-snug group-hover:text-primary transition-colors">
+                {data.title}
               </h2>
-              <div class="mono uppercase text-ink-faint text-xs mt-2">
-                {post.data.category && <span>{post.data.category} · </span>}{fmtDate(post.data.pubDate || post.data.date)}
+              <div class="mono uppercase text-xs mt-2 flex items-center gap-2 flex-wrap">
+                {data.category && <span class="text-ink-muted">{data.category}</span>}
+                {data.category && <span class="text-ink-faint opacity-50" aria-hidden="true">·</span>}
+                <time datetime={isoDate(data.pubDate)} class="text-ink-faint tabular-nums">{fmtDate(data.pubDate)}</time>
               </div>
             </div>
           </a>
