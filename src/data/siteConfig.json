@@ -27,6 +27,8 @@
     "name": "Hotel Cajueiro Guarujá"
   },
   "legal": {
+    "razaoSocial": "Hotel do Cajueiro LTDA",
+    "cnpj": "33.650.652/0001-20",
     "terms_last_updated": "",
     "privacy_last_updated": ""
   },
