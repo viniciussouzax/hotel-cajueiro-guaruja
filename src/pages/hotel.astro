@@ -24,7 +24,7 @@ const promocoes = hotel.promocoes || {};
 
   <!-- ===== INTRO ===== -->
   {(intro.title || intro.text) && (
-    <section class="border-t border-rule">
+    <section class="">
       <div class="container-x py-14 md:py-20">
         <div class="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-12">
           <div class="md:col-span-5">
@@ -40,12 +40,12 @@ const promocoes = hotel.promocoes || {};
 
   <!-- ===== ESTRUTURA ===== -->
   {estrutura.length > 0 && (
-    <section class="border-t border-rule">
+    <section class="">
       <div class="container-x py-14 md:py-20">
         <p class="mono uppercase text-ink-faint mb-10">estrutura</p>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-12">
           {estrutura.map((e: any) => (
-            <div class="border-t border-rule pt-5">
+            <div class=" pt-5">
               <h3 class="font-sans font-semibold text-lg text-ink mb-1">{e.titulo}</h3>
               {e.subtitulo && <p class="mono uppercase text-ink-faint mb-3">{e.subtitulo}</p>}
               <p class="text-base text-ink-muted leading-relaxed">{e.texto}</p>
@@ -58,7 +58,7 @@ const promocoes = hotel.promocoes || {};
 
   <!-- ===== PROMOÇÕES ===== -->
   {(promocoes.titulo || promocoes.texto) && (
-    <section class="border-t border-rule">
+    <section class="">
       <div class="container-x py-16 md:py-24 text-center">
         <h2 class="font-display text-3xl md:text-4xl font-normal tracking-tight text-ink leading-[1.1] mb-4">{promocoes.titulo}</h2>
         {promocoes.texto && <p class="text-lg text-ink-muted leading-relaxed max-w-2xl mx-auto mb-8">{promocoes.texto}</p>}

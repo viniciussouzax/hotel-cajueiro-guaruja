@@ -128,7 +128,7 @@ const mapHref = `https://www.google.com/maps/search/?api=1&query=${mapQuery}`;
        </div>
 
         <!-- Idades das crianças (aparecem conforme a quantidade selecionada) -->
-        <div id="children-ages" class="hidden flex-wrap items-center gap-3 px-4 pt-2 pb-1 border-t border-rule/50">
+        <div id="children-ages" class="hidden flex-wrap items-center gap-3 px-4 pt-2 pb-1 /50">
           <span class="mono uppercase text-ink-faint text-xs">Idade das crianças</span>
         </div>
       </form>
@@ -244,7 +244,7 @@ const mapHref = `https://www.google.com/maps/search/?api=1&query=${mapQuery}`;
 
   <!-- ===== BANNER (abaixo da hero) ===== -->
   {(banner.title || banner.text) && (
-    <section class="border-t border-rule">
+    <section class="">
       <div class="container-x py-12 md:py-16">
         <div class="bg-elev rounded-lg border border-rule/60 overflow-hidden flex flex-col md:flex-row">
           <!-- Texto (70%) -->
@@ -266,7 +266,7 @@ const mapHref = `https://www.google.com/maps/search/?api=1&query=${mapQuery}`;
 
   <!-- ===== 3 FEATURES (icone + texto) ===== -->
   {features.length > 0 && (
-    <section class="border-t border-rule">
+    <section class="">
       <div class="container-x py-14 md:py-20">
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-10">
           {features.map((f: any) => (
@@ -285,7 +285,7 @@ const mapHref = `https://www.google.com/maps/search/?api=1&query=${mapQuery}`;
 
   <!-- ===== INTRO ===== -->
   {(intro.title || intro.text) && (
-    <section class="border-t border-rule">
+    <section class="">
       <div class="container-x py-16 md:py-24">
         <div class="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-12">
           <div class="md:col-span-5">
@@ -301,7 +301,7 @@ const mapHref = `https://www.google.com/maps/search/?api=1&query=${mapQuery}`;
 
   <!-- ===== ACOMODAÇÕES (grid de suítes) ===== -->
   {(suitesTeaser.title || suitesTeaser.text) && (
-    <section id="acomodacoes" class="bg-elev border-t border-rule scroll-mt-24">
+    <section id="acomodacoes" class="bg-elev  scroll-mt-24">
       <div class="container-x py-16 md:py-24">
         <div class="max-w-2xl mb-10 md:mb-14">
           {suitesTeaser.eyebrow && <p class="mono uppercase text-[#cf3a23] mb-3">{suitesTeaser.eyebrow}</p>}
@@ -343,7 +343,7 @@ const mapHref = `https://www.google.com/maps/search/?api=1&query=${mapQuery}`;
 
   <!-- ===== ESTRUTURA (o que o hotel oferece) ===== -->
   {estrutura.itens && estrutura.itens.length > 0 && (
-    <section id="estrutura" class="border-t border-rule scroll-mt-24">
+    <section id="estrutura" class=" scroll-mt-24">
       <div class="container-x py-16 md:py-24">
         <div class="max-w-2xl mb-10 md:mb-12">
           {estrutura.eyebrow && <p class="mono uppercase text-[#cf3a23] mb-3">{estrutura.eyebrow}</p>}
@@ -363,13 +363,13 @@ const mapHref = `https://www.google.com/maps/search/?api=1&query=${mapQuery}`;
   )}
 
   <!-- ===== PISCINA + LOCALIZAÇÃO ===== -->
-  <section class="border-t border-rule">
+  <section class="">
     <div class="container-x py-16 md:py-24 grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16">
       {(piscina.title || piscina.text) && (
         <div>
           <h2 class="font-display text-2xl md:text-3xl font-normal tracking-tight text-ink leading-[1.1] mb-4">{piscina.title}</h2>
           {piscina.text && <p class="text-lg text-ink-muted leading-relaxed mb-6">{piscina.text}</p>}
-          {piscina.cta && <a href="/hotel" class="mono uppercase text-ink-faint hover:text-ink transition">{piscina.cta} →</a>}
+          {piscina.cta && <a href="/hotel" class="mono uppercase text-ink-faint hover:text-ink transition">{piscina.cta}</a>}
         </div>
       )}
       {(localizacao.title || localizacao.text) && (
@@ -383,7 +383,7 @@ const mapHref = `https://www.google.com/maps/search/?api=1&query=${mapQuery}`;
 
   <!-- ===== DIFERENCIAIS ===== -->
   {diferenciais.items && diferenciais.items.length > 0 && (
-    <section class="border-t border-rule">
+    <section class="">
       <div class="container-x py-16 md:py-24">
         <div class="max-w-2xl mb-12">
           <h2 class="font-display text-3xl md:text-4xl font-normal tracking-tight text-ink leading-[1.1] mb-4">{diferenciais.title}</h2>
@@ -392,7 +392,7 @@ const mapHref = `https://www.google.com/maps/search/?api=1&query=${mapQuery}`;
         </div>
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {diferenciais.items.map((it: any) => (
-            <div class="border-t border-rule pt-5">
+            <div class=" pt-5">
               <h3 class="font-sans font-semibold text-lg text-ink mb-2">{it.title}</h3>
               <p class="text-base text-ink-muted leading-relaxed">{it.text}</p>
             </div>
@@ -404,7 +404,7 @@ const mapHref = `https://www.google.com/maps/search/?api=1&query=${mapQuery}`;
 
   <!-- ===== DEPOIMENTOS ===== -->
   {depoimentos.length > 0 && (
-    <section class="border-t border-rule">
+    <section class="">
       <div class="container-x py-16 md:py-24">
         {depoimentos.map((d: any) => (
           <figure class="max-w-3xl">
@@ -418,10 +418,10 @@ const mapHref = `https://www.google.com/maps/search/?api=1&query=${mapQuery}`;
 
   <!-- ===== FAQ ===== -->
   {faq.length > 0 && (
-    <section class="border-t border-rule">
+    <section class="">
       <div class="container-x py-16 md:py-24">
         <h2 class="font-display text-3xl md:text-4xl font-normal tracking-tight text-ink leading-[1.1] mb-10">Perguntas frequentes</h2>
-        <div class="max-w-3xl divide-y divide-rule border-t border-rule">
+        <div class="max-w-3xl divide-y divide-rule ">
           {faq.map((item: any) => (
             <details class="group py-5">
               <summary class="cursor-pointer font-sans font-semibold text-lg text-ink list-none flex justify-between items-center">
@@ -438,7 +438,7 @@ const mapHref = `https://www.google.com/maps/search/?api=1&query=${mapQuery}`;
 
   <!-- ===== COMO CHEGAR ===== -->
   {(comoChegar.title || endereco) && (
-    <section id="como-chegar" class="border-t border-rule scroll-mt-24">
+    <section id="como-chegar" class=" scroll-mt-24">
       <div class="container-x py-16 md:py-24">
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-14 items-center">
           <div>
@@ -478,7 +478,7 @@ const mapHref = `https://www.google.com/maps/search/?api=1&query=${mapQuery}`;
 
   <!-- ===== CTA FINAL ===== -->
   {(cta.title || cta.button) && (
-    <section id="reservar" class="bg-elev border-t border-rule">
+    <section id="reservar" class="bg-elev ">
       <div class="container-x py-20 md:py-28 text-center">
         <h2 class="font-display text-3xl md:text-5xl font-normal tracking-tight text-ink leading-[1.05] max-w-3xl mx-auto mb-5">{cta.title}</h2>
         {cta.subtitle && <p class="text-lg text-ink-muted leading-relaxed max-w-2xl mx-auto mb-8">{cta.subtitle}</p>}

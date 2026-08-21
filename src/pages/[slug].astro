@@ -243,23 +243,21 @@ const processedHtml = isHtmlBody && hasShortcodes(rawBody) ? renderShortcodes(ra
       <section class="">
         <div class="container-x py-14 md:py-20">
           <p class="mono uppercase text-ink-faint mb-8">continuar lendo</p>
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-4">
-            {related.map((p: any, i: number) => {
-              const c = colorForCategory(p.data.category, i);
+          <div class="max-w-3xl flex flex-col gap-2">
+            {related.map((p: any) => {
               const s = p.slug ?? p.id;
+              const rimg = p.data.heroImage || p.data.cover || p.data.coverImage || '';
               return (
-                <a href={`/${s}`} class={`color-block color-block-md bg-cat-${c} group`}>
-                  <span class="color-block-num">{String(i + 1).padStart(2, '0')}</span>
-                  <div>
-                    <p class="mono uppercase opacity-80 mb-3">{p.data.category}</p>
-                    <h3 class="font-display text-xl md:text-2xl font-bold leading-[1.1] tracking-tight">
-                      {p.data.title}
-                    </h3>
+                <a href={`/${s}`} class="group flex items-start gap-4 sm:gap-6 py-3 no-underline -mx-3 px-3 rounded-md hover:bg-elev/60 transition-colors">
+                  {rimg && (
+                    <img src={rimg} alt={p.data.title} loading="lazy" class="w-24 h-20 md:w-36 md:h-24 object-cover rounded-md shrink-0 hidden sm:block" />
+                  )}
+                  <div class="flex-1 min-w-0">
+                    <h3 class="font-display text-lg md:text-xl font-normal text-ink leading-tight group-hover:text-primary transition-colors">{p.data.title}</h3>
+                    <div class="mono uppercase text-ink-faint text-xs mt-2">
+                      {p.data.category && <span>{p.data.category} · </span>}{fmtDate(p.data.pubDate || p.data.date)}
+                    </div>
                   </div>
-                  <span class="mono uppercase mt-4 inline-flex items-center gap-2 self-start border-b border-current pb-1 group-hover:gap-3 transition-all">
-                    abrir
-                    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-                  </span>
                 </a>
               );
             })}
