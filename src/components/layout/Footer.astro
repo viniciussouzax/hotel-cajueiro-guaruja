@@ -2,6 +2,7 @@
 import { readData } from '../../lib/readData';
 import { normalizeCategories, collectOrphanCategories } from '../../lib/categorySlug';
 import { getCollection } from 'astro:content';
+import { BRAND_ICONS } from '../../lib/brandIcons';
 
 const siteConfig = readData('siteConfig.json');
 const menuItems: any[] = readData('menu.json', { items: [] }).items || [];
@@ -92,17 +93,14 @@ const igProfile = siteConfig.social?.instagram || '';
 
         {socials.length > 0 && (
           <div class="md:col-span-2">
-            <div class="mono uppercase mb-4 pb-3" style="color:rgba(255,255,255,0.6);">social</div>
-            <ul class="space-y-2.5 text-sm">
-              {socials.map(([_, label, href]: any) => (
-                <li>
-                  <a href={href} target="_blank" rel="noopener" class="transition-colors hover:!text-[#FFEAB0] inline-flex items-center gap-1.5" style="color:rgba(255,255,255,0.9);">
-                    {label}
-                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
-                  </a>
-                </li>
+            <div class="mono uppercase mb-4" style="color:rgba(255,255,255,0.6);">participe da conversa</div>
+            <div class="flex flex-wrap gap-2.5">
+              {socials.map(([key, label, href]: any) => (
+                <a href={href} target="_blank" rel="noopener" aria-label={label} class="w-10 h-10 rounded-full flex items-center justify-center transition-[filter] hover:brightness-125" style="background:#26331C; color:#e8ead9;">
+                  <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" set:html={`<path d="${BRAND_ICONS[key] || ''}"/>`}></svg>
+                </a>
               ))}
-            </ul>
+            </div>
           </div>
         )}
       </div>
