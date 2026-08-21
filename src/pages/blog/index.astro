@@ -38,27 +38,24 @@ function fmtDate(d: any): string {
     </div>
   </section>
 
-  <!-- Lista de artigos: data + título (imagem só se houver capa, sem cor de categoria) -->
+  <!-- Lista de artigos: título grande + meta embaixo (thumb só se houver capa), estilo lifewave -->
   <div class="container-x pb-16 md:pb-20">
-    <div class="max-w-3xl divide-y divide-rule border-t border-rule">
+    <div class="max-w-3xl flex flex-col gap-8 md:gap-10">
       {posts.map((post: any) => {
         const slug = post.slug ?? post.id;
         const img = post.data.heroImage || post.data.cover || post.data.coverImage || '';
         return (
-          <a href={`/${slug}`} class="group flex items-start gap-5 md:gap-6 py-6 no-underline">
+          <a href={`/${slug}`} class="group flex items-start gap-5 md:gap-7 no-underline">
             {img && (
-              <img src={img} alt={post.data.title} loading="lazy" class="w-28 h-20 md:w-36 md:h-24 object-cover rounded-md shrink-0 hidden sm:block" />
+              <img src={img} alt={post.data.title} loading="lazy" class="w-28 h-20 md:w-40 md:h-24 object-cover rounded-md shrink-0 hidden sm:block" />
             )}
             <div class="flex-1 min-w-0">
-              <div class="mono uppercase text-ink-faint text-xs mb-2">
-                {post.data.category && <span>{post.data.category} · </span>}{fmtDate(post.data.pubDate || post.data.date)}
-              </div>
               <h2 class="font-display text-xl md:text-2xl font-normal text-ink leading-tight group-hover:text-primary transition-colors">
                 {post.data.title}
               </h2>
-              {post.data.description && (
-                <p class="text-ink-muted leading-relaxed mt-2 line-clamp-2 hidden sm:block">{post.data.description}</p>
-              )}
+              <div class="mono uppercase text-ink-faint text-xs mt-2">
+                {post.data.category && <span>{post.data.category} · </span>}{fmtDate(post.data.pubDate || post.data.date)}
+              </div>
             </div>
           </a>
         );
