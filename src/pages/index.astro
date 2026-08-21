@@ -236,6 +236,7 @@ const mapHref = `https://www.google.com/maps/search/?api=1&query=${mapQuery}`;
 
           dTrigger.addEventListener('click', function (e) { e.stopPropagation(); if (dPop.classList.contains('hidden')) { closeGuests(); openDates(); } else closeDates(); });
           dPop.addEventListener('click', function (e) {
+            e.stopPropagation();
             var prev = e.target.closest('.cal-prev'), next = e.target.closest('.cal-next'), day = e.target.closest('.cal-day');
             if (prev) { if (!prev.classList.contains('is-off')) { view = new Date(view.getFullYear(), view.getMonth() - 1, 1); renderCal(); } return; }
             if (next) { view = new Date(view.getFullYear(), view.getMonth() + 1, 1); renderCal(); return; }
@@ -245,7 +246,6 @@ const mapHref = `https://www.google.com/maps/search/?api=1&query=${mapQuery}`;
               else if (dt > checkin) { checkout = dt; }
               else { checkin = dt; checkout = null; }
               syncDates(); renderCal();
-              if (checkin && checkout) setTimeout(closeDates, 180);
             }
           });
 
