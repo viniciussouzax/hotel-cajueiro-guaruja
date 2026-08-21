@@ -38,34 +38,37 @@ function fmtDate(d: any): string {
     </div>
   </section>
 
-  <!-- Lista de artigos (linhas, estilo lifewave) -->
-  <div class="container-x pb-16 md:pb-20">
-    <div class="max-w-4xl border-t border-rule">
+  <!-- Lista de artigos: tiles elevados empilhados (estilo intent-card do lifewave) -->
+  <div class="container-x pb-16 md:pb-20 pt-8">
+    <div class="max-w-4xl flex flex-col gap-4">
       {posts.map((post: any) => {
         const slug = post.slug ?? post.id;
         const img = post.data.heroImage || post.data.cover || post.data.coverImage || '';
         return (
-          <a href={`/${slug}`} class="group flex items-center gap-5 md:gap-8 py-6 border-b border-rule no-underline">
+          <a
+            href={`/${slug}`}
+            class="group flex items-center gap-4 md:gap-5 bg-surface rounded-lg p-3 md:p-4 no-underline shadow-[0_6px_20px_rgba(60,45,25,0.10)] hover:shadow-[0_14px_32px_rgba(60,45,25,0.18)] hover:-translate-y-0.5 transition-all duration-150"
+          >
             {img ? (
-              <img src={img} alt={post.data.title} loading="lazy" class="w-24 h-20 md:w-40 md:h-28 object-cover rounded-md shrink-0" />
+              <img src={img} alt={post.data.title} loading="lazy" class="w-24 h-24 md:w-32 md:h-28 object-cover rounded-md shrink-0" />
             ) : (
-              <div class="w-24 h-20 md:w-40 md:h-28 rounded-md bg-elev shrink-0 hidden sm:flex items-center justify-center">
-                <span class="mono uppercase text-ink-faint text-xs">Cajueiro</span>
+              <div class="w-24 h-24 md:w-32 md:h-28 rounded-md shrink-0 flex items-center justify-center" style="background:rgba(207,58,35,0.08);">
+                <svg class="w-8 h-8 text-[#cf3a23]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
               </div>
             )}
             <div class="flex-1 min-w-0">
-              <div class="flex items-center gap-3 mono uppercase text-ink-faint mb-2">
+              <div class="flex items-center gap-3 mono uppercase text-ink-faint mb-1.5 text-xs">
                 {post.data.category && <span class="text-[#cf3a23]">{post.data.category}</span>}
                 <span>{fmtDate(post.data.pubDate || post.data.date)}</span>
               </div>
-              <h2 class="font-display text-xl md:text-2xl font-normal text-ink leading-tight mb-1.5 group-hover:text-primary transition-colors">
+              <h2 class="font-display text-lg md:text-xl font-semibold text-ink leading-tight mb-1 group-hover:text-primary transition-colors line-clamp-2">
                 {post.data.title}
               </h2>
               {post.data.description && (
-                <p class="text-ink-muted leading-relaxed line-clamp-2 hidden sm:block">{post.data.description}</p>
+                <p class="text-sm text-ink-muted leading-relaxed line-clamp-2 hidden sm:block">{post.data.description}</p>
               )}
             </div>
-            <svg class="w-5 h-5 shrink-0 text-ink-faint group-hover:text-ink group-hover:translate-x-1 transition-all" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
+            <svg class="w-5 h-5 shrink-0 text-ink-faint group-hover:text-[#cf3a23] group-hover:translate-x-1 transition-all" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
           </a>
         );
       })}
