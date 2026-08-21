@@ -6,6 +6,16 @@ import { getCollection } from 'astro:content';
 const siteConfig = readData('siteConfig.json');
 const menuItems: any[] = readData('menu.json', { items: [] }).items || [];
 
+// Contato (mostrado no rodapé para não precisar repetir na página de contato).
+const contato = readData('contato.json', {}) as any;
+const contact = siteConfig.contact || {};
+const cEmail = contact.email || '';
+const cPhone = contato.telefone || contact.phone || '';
+const cWhats = contato.whatsapp || contact.whatsapp || '';
+const cAddress = contato.endereco || contact.address || '';
+const cWaUrl = cWhats ? `https://wa.me/55${cWhats.replace(/\D/g, '')}` : '';
+const cPhoneHref = cPhone ? `tel:+55${cPhone.replace(/\D/g, '')}` : '';
+
 const posts = await getCollection('blog');
 const categoriesData = readData('categories.json', []);
 const registered = normalizeCategories(categoriesData);
@@ -46,6 +56,18 @@ const igProfile = siteConfig.social?.instagram || '';
           <p class="text-sm leading-relaxed max-w-sm" style="color:rgba(255,255,255,0.8);">
             {siteConfig.footer?.description || siteConfig.description}
           </p>
+
+          <div class="mt-6 space-y-2 text-sm" style="color:rgba(255,255,255,0.85);">
+            {cAddress && <p class="max-w-xs">{cAddress}</p>}
+            {cPhone && <p><a href={cPhoneHref} class="transition-colors hover:!text-[#FFEAB0]" style="color:inherit;">{cPhone}</a></p>}
+            {cWhats && <p><a href={cWaUrl} target="_blank" rel="noopener" class="transition-colors hover:!text-[#FFEAB0]" style="color:inherit;">WhatsApp {cWhats}</a></p>}
+            {cEmail && <p><a href={`mailto:${cEmail}`} class="transition-colors hover:!text-[#FFEAB0]" style="color:inherit;">{cEmail}</a></p>}
+            {(contato.horarios?.atendimentoExterno || contato.horarios?.recepcao) && (
+              <p class="pt-1" style="color:rgba(255,255,255,0.65);">
+                {contato.horarios?.atendimentoExterno}{contato.horarios?.atendimentoExterno && contato.horarios?.recepcao ? ' · ' : ''}{contato.horarios?.recepcao}
+              </p>
+            )}
+          </div>
         </div>
 
         <div class="md:col-span-3">
