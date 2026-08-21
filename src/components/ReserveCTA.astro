@@ -9,7 +9,11 @@ const whatsapp = c.whatsapp || '';
 const waDigits = (whatsapp || '').replace(/\D/g, '');
 const waUrl = waDigits ? `https://wa.me/55${waDigits}` : '';
 
-const { title, subtitle, beneficios } = Astro.props;
+const { title, subtitle, beneficios, image } = Astro.props;
+// Fundo: imagem com overlay verde-oliva (para o texto/card ficarem legíveis) ou oliva sólido.
+const bg = image
+  ? `background-image: linear-gradient(rgba(60,77,40,0.86), rgba(60,77,40,0.93)), url('${image}'); background-size: cover; background-position: center;`
+  : 'background:#55703A;';
 const heading = title || 'Consulte datas e garanta o melhor preço';
 const lead = subtitle || 'Veja a disponibilidade em tempo real e reserve direto pelo nosso site, sempre com a melhor tarifa.';
 const items = (beneficios && beneficios.length ? beneficios : [
@@ -20,7 +24,7 @@ const items = (beneficios && beneficios.length ? beneficios : [
 ]);
 ---
 
-<section class="relative overflow-hidden" style="background:#55703A;">
+<section class="relative overflow-hidden" style={bg}>
   <div aria-hidden="true" class="absolute -top-28 -left-24 w-[26rem] h-[26rem] rounded-full" style="background:rgba(255,255,255,0.06);"></div>
   <div aria-hidden="true" class="absolute -bottom-32 -right-20 w-[24rem] h-[24rem] rounded-full" style="background:rgba(0,0,0,0.10);"></div>
 
