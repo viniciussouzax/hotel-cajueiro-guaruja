@@ -10,7 +10,6 @@ import { renderShortcodes, hasShortcodes } from '../lib/shortcodes';
 import EmailInlineBanner from '../plugins/email-list/EmailInlineBanner.astro';
 import AffiliateProducts from '../plugins/affiliates/AffiliateProducts.astro';
 import PostSchemaPlugins from '../plugins/_slots/PostSchemaPlugins.astro';
-import PostBottomPlugins from '../plugins/_slots/PostBottomPlugins.astro';
 
 const allCategories = normalizeCategories(readData('categories.json', []));
 
@@ -183,6 +182,12 @@ const processedHtml = isHtmlBody && hasShortcodes(rawBody) ? renderShortcodes(ra
         <!-- Corpo -->
         <div class="prose-msia max-w-none mt-8 md:mt-10">
           {processedHtml ? (<Fragment set:html={processedHtml} />) : (<Content />)}
+
+          <!-- FAQ fixa do hotel — sempre no fim de toda matéria (o script converte em accordion) -->
+          <p><strong>Qual o horário de check-in e check-out?</strong><br />O check-in é a partir das 14h e o check-out até as 12h. Se precisar de outro horário, fale com a recepção (24h) que tentamos ajustar conforme a disponibilidade.</p>
+          <p><strong>O café da manhã está incluso?</strong><br />Sim. Todas as diárias incluem o nosso café da manhã, preparado artesanalmente todos os dias.</p>
+          <p><strong>O hotel tem estacionamento?</strong><br />Oferecemos 15 vagas rotativas aos hóspedes. Há também estacionamento em frente com desconto exclusivo, ou você pode parar na calçada do hotel.</p>
+          <p><strong>Quão perto o hotel fica da praia?</strong><br />Ficamos a apenas 100 metros (cerca de 1 quadra) da Praia do Tombo, uma das praias mais tranquilas do Guarujá.</p>
         </div>
 
         <!-- CTA inline: caixa clara compacta distribuída no corpo (via JS) -->
@@ -191,7 +196,7 @@ const processedHtml = isHtmlBody && hasShortcodes(rawBody) ? renderShortcodes(ra
             <p class="text-base text-ink-muted leading-snug md:flex-1 min-w-0" style="margin:0">
               <span class="inline-block w-2 h-2 rounded-full align-middle mr-2" style="background:#cf3a23;"></span><strong class="font-semibold text-ink">Reserve sua suíte no Hotel Cajueiro</strong> pelo melhor preço, direto pelo nosso site.
             </p>
-            <a href="/" class="shrink-0 self-start md:self-auto inline-flex items-center bg-[#cf3a23] text-sm font-semibold px-5 py-2.5 rounded-full hover:brightness-95 transition-[filter]" style="color:#fff; text-decoration:none">Consultar datas</a>
+            <a href="/" class="shrink-0 self-start md:self-auto inline-flex items-center bg-[#cf3a23] text-sm font-semibold uppercase tracking-wide px-5 py-2.5 rounded-[200px] hover:brightness-95 transition-[filter]" style="color:#fff; text-decoration:none">Consultar datas</a>
           </div>
         </div>
 
@@ -201,39 +206,32 @@ const processedHtml = isHtmlBody && hasShortcodes(rawBody) ? renderShortcodes(ra
           </div>
         )}
         <AffiliateProducts />
-        <div class="flex items-center justify-between gap-4 flex-wrap py-6 mt-8 border-t border-rule">
-          {data.category && (
-            <a href={`/categoria/${getCategorySlug(data.category, allCategories)}`} class="mono uppercase text-ink-faint hover:text-ink transition-colors">#{data.category}</a>
-          )}
-          <PostBottomPlugins title={data.title} />
-        </div>
-        {(currentAuthor.bio || currentAuthor.role) && (
-          <div class="flex gap-5 items-start py-8 border-t border-rule">
-            {currentAuthor.avatar ? (
-              <img src={currentAuthor.avatar} alt={currentAuthor.name} class="w-16 h-16 rounded-full object-cover shrink-0" />
-            ) : (
-              <div class="w-16 h-16 rounded-full bg-elev flex items-center justify-center text-2xl font-semibold text-ink-faint shrink-0">{currentAuthor.name.charAt(0)}</div>
-            )}
-            <div>
-              <h4 class="font-semibold text-ink">{currentAuthor.name}</h4>
-              {currentAuthor.role && <p class="mono uppercase text-ink-faint mt-0.5">{currentAuthor.role}</p>}
-              {currentAuthor.bio && <p class="text-ink-muted leading-relaxed mt-2">{currentAuthor.bio}</p>}
-            </div>
-          </div>
-        )}
 
-        <!-- CTA grande de reserva (posição pós-FAQ) -->
-        <section class="mt-12 rounded-xl p-8 md:p-10 text-center" style="background:#DCE4CC;">
-          <p class="inline-flex items-center gap-2 mono uppercase text-[#cf3a23] mb-4">
-            <span class="w-2 h-2 rounded-full" style="background:#cf3a23;"></span>
-            Reserva online
-          </p>
-          <h2 class="font-display text-2xl md:text-3xl font-semibold text-ink leading-[1.15] mb-4">Reserve sua suíte no Hotel Cajueiro</h2>
-          <p class="text-ink-muted leading-relaxed max-w-xl mx-auto mb-7">A 100 metros da Praia do Tombo, com piscina, café da manhã artesanal e o melhor preço direto pelo nosso site. Escolha as datas e veja a disponibilidade na hora.</p>
-          <a href="/" class="inline-flex items-center justify-center gap-2 min-h-[52px] px-8 rounded-[200px] bg-[#cf3a23] text-bg text-[15px] font-semibold uppercase tracking-wide no-underline hover:brightness-95 transition-[filter]">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-            Consultar datas →
-          </a>
+        <!-- CTA grande de reserva (pós-FAQ) — mesma cor/estilo do card lateral, com a imagem da suíte -->
+        <section class="mt-12 rounded-xl overflow-hidden" style="background:#55703A;">
+          <img src="/images/suite-2.jpg" alt="Suíte do Hotel Cajueiro" loading="lazy" class="w-full h-52 md:h-64 object-cover" />
+          <div class="p-8 md:p-10">
+            <h2 class="font-display text-2xl md:text-3xl font-semibold text-white leading-[1.15] mb-4">Reserve sua suíte no Hotel Cajueiro</h2>
+            <ul class="flex flex-col gap-2.5 mb-6">
+              {['A 100m da Praia do Tombo', 'Café da manhã artesanal', 'Melhor preço pelo site'].map((f) => (
+                <li class="flex items-center gap-2.5 text-white/90">
+                  <span class="shrink-0 w-5 h-5 rounded-full flex items-center justify-center" style="background:rgba(255,255,255,0.15);">
+                    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+                  </span>
+                  {f}
+                </li>
+              ))}
+            </ul>
+            <a href="/" class="inline-flex items-center justify-center gap-2 min-h-[52px] px-8 rounded-[200px] bg-[#cf3a23] text-bg text-[15px] font-semibold uppercase tracking-wide no-underline hover:brightness-95 transition-[filter]">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+              Consultar datas
+            </a>
+            {waUrl && (
+              <p class="text-xs mt-4" style="color:rgba(255,255,255,0.75);">
+                Prefere falar? <a href={waUrl} target="_blank" rel="noopener" class="font-semibold text-white underline underline-offset-2">WhatsApp</a>
+              </p>
+            )}
+          </div>
         </section>
       </div>
 
@@ -294,6 +292,92 @@ const processedHtml = isHtmlBody && hasShortcodes(rawBody) ? renderShortcodes(ra
       if (src.parentNode) src.parentNode.removeChild(src);
     })();
   </script>
+
+  <!-- Converte a FAQ (título "Perguntas frequentes" ou <p><strong>Pergunta</strong> resposta</p>) em accordion <details> -->
+  <script is:inline>
+    (function () {
+      var prose = document.querySelector('.prose-msia');
+      if (!prose) return;
+      var FAQ_RE = /perguntas frequentes|d[uú]vidas frequentes|d[uú]vidas comuns|perguntas comuns|\bfaq\b/i;
+      function isHeading(el){ return !!el && /^H[1-6]$/.test(el.tagName); }
+      function levelOf(el){ return parseInt(el.tagName.charAt(1), 10); }
+      function isStrongP(el){ return !!el && el.tagName === 'P' && el.firstElementChild && el.firstElementChild.tagName === 'STRONG'; }
+      function fromStrongP(p){
+        var strong = p.querySelector('strong');
+        var div = document.createElement('div');
+        var node = strong.nextSibling;
+        while(node){
+          if(node.nodeType === 1 && node.tagName === 'BR' && !div.hasChildNodes()){ node = node.nextSibling; continue; }
+          div.appendChild(node.cloneNode(true));
+          node = node.nextSibling;
+        }
+        return { q: strong.textContent.trim(), ans: div };
+      }
+      function buildItems(nodes){
+        var items = [];
+        for(var i = 0; i < nodes.length; i++){
+          var n = nodes[i];
+          if(isStrongP(n)){
+            var r = fromStrongP(n);
+            items.push({ q: r.q, ans: r.ans, src: [n] });
+          } else if(isHeading(n)){
+            var div = document.createElement('div'); var src = [n]; var j = i + 1;
+            while(j < nodes.length && !isHeading(nodes[j]) && !isStrongP(nodes[j])){ div.appendChild(nodes[j].cloneNode(true)); src.push(nodes[j]); j++; }
+            items.push({ q: n.textContent.trim(), ans: div, src: src }); i = j - 1;
+          }
+        }
+        return items;
+      }
+      function render(items){
+        if(!items.length) return;
+        var wrap = document.createElement('div'); wrap.className = 'faq-accordion';
+        items.forEach(function(it){
+          var det = document.createElement('details'); det.className = 'faq-item';
+          var sum = document.createElement('summary'); sum.textContent = it.q; det.appendChild(sum);
+          it.ans.className = 'faq-answer'; det.appendChild(it.ans);
+          wrap.appendChild(det);
+        });
+        var anchor = items[0].src[0];
+        anchor.parentNode.insertBefore(wrap, anchor);
+        items.forEach(function(it){ it.src.forEach(function(s){ s.remove(); }); });
+      }
+      var head = null;
+      prose.querySelectorAll('h1,h2,h3,h4').forEach(function(h){ if(!head && FAQ_RE.test(h.textContent)) head = h; });
+      if(head){
+        var hl = levelOf(head); var nodes = []; var el = head.nextElementSibling;
+        while(el){ if(isHeading(el) && levelOf(el) <= hl) break; nodes.push(el); el = el.nextElementSibling; }
+        render(buildItems(nodes)); return;
+      }
+      var children = Array.prototype.slice.call(prose.children);
+      var trailing = [];
+      for(var k = children.length - 1; k >= 0; k--){ if(isStrongP(children[k])) trailing.unshift(children[k]); else break; }
+      if(trailing.length){
+        var h2 = document.createElement('h2'); h2.textContent = 'Perguntas frequentes';
+        trailing[0].parentNode.insertBefore(h2, trailing[0]);
+        render(buildItems(trailing));
+      }
+    })();
+  </script>
+
+  <style is:global>
+    /* Accordion da FAQ (elementos criados em runtime → estilo global). */
+    .prose-msia .faq-accordion { display: flex; flex-direction: column; gap: .6rem; margin: 1.5rem 0; }
+    .prose-msia .faq-item { border: 1px solid rgb(var(--c-rule)); border-radius: .7rem; background: rgb(var(--c-surface)); overflow: hidden; }
+    .prose-msia .faq-item > summary {
+      list-style: none; cursor: pointer; display: flex; align-items: center; justify-content: space-between;
+      gap: 1rem; padding: .95rem 1.15rem; margin: 0; font-weight: 600; color: rgb(var(--c-ink)); line-height: 1.35;
+    }
+    .prose-msia .faq-item > summary::-webkit-details-marker { display: none; }
+    .prose-msia .faq-item > summary::after {
+      content: ""; flex-shrink: 0; width: .6rem; height: .6rem;
+      border-right: 2px solid #cf3a23; border-bottom: 2px solid #cf3a23;
+      transform: rotate(45deg); transition: transform .2s ease;
+    }
+    .prose-msia .faq-item[open] > summary::after { transform: rotate(-135deg); }
+    .prose-msia .faq-answer { padding: 0 1.15rem 1.05rem; color: rgb(var(--c-ink-muted)); line-height: 1.6; }
+    .prose-msia .faq-answer > :first-child { margin-top: 0; }
+    .prose-msia .faq-answer > :last-child { margin-bottom: 0; }
+  </style>
 
   {inlineEnabled && (
     <script>
