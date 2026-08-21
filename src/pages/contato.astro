@@ -17,125 +17,125 @@ const waDigits = (whatsapp || '').replace(/\D/g, '');
 const waUrl = waDigits ? `https://wa.me/55${waDigits}` : '';
 const phoneHref = phone ? `tel:+55${phone.replace(/\D/g, '')}` : '';
 
-const inputCls = 'w-full rounded-md px-4 py-3 text-ink bg-bg border border-rule outline-none transition-colors focus:border-[#cf3a23] placeholder:text-ink-faint';
+const heroImage = '/images/hero-tombo.jpg';
+const inputCls = 'w-full rounded-lg px-4 py-3 text-ink bg-bg border border-rule outline-none transition-colors focus:border-[#cf3a23] placeholder:text-ink-faint';
 ---
 
-<BaseLayout title={`Contato · ${siteConfig.name}`} description={contato.intro || `Fale com ${siteConfig.name}`}>
-  <section>
-    <div class="container-x pt-14 md:pt-20 pb-4">
-      <p class="mono uppercase text-[#cf3a23] mb-4">contato</p>
-      <h1 class="font-display text-3xl md:text-5xl font-normal tracking-tight text-ink leading-[1.05] mb-4 max-w-3xl">
-        {contato.intro || 'Teremos prazer em tirar todas as suas dúvidas!'}
-      </h1>
-      <p class="text-lg text-ink-muted max-w-2xl">Fale com a gente pelo canal que preferir ou mande uma mensagem, a nossa recepção responde rápido.</p>
+<BaseLayout title={`Contato · ${siteConfig.name}`} description={contato.intro || `Fale com ${siteConfig.name}`} transparentHeader={true}>
+
+  <!-- ===== HERO + formulário ===== -->
+  <section class="relative isolate">
+    <div
+      class="absolute inset-0 -z-10 bg-cover bg-center"
+      style={`background-image: linear-gradient(180deg, rgba(38,51,28,.45), rgba(38,51,28,.7)), url('${heroImage}')`}
+    ></div>
+
+    <div class="container-x pt-28 md:pt-36 pb-16 md:pb-24">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-start">
+
+        <!-- Texto -->
+        <div class="lg:pt-6">
+          <p class="mono uppercase text-white/80 mb-5">( contato )</p>
+          <h1 class="font-display text-4xl md:text-6xl font-semibold tracking-tight text-white leading-[1.03] mb-6">
+            {contato.intro || 'Fale com a gente'}
+          </h1>
+          <p class="text-lg md:text-xl leading-relaxed max-w-lg" style="color:rgba(255,255,255,0.88);">
+            Tem uma dúvida sobre sua reserva, o hotel ou o Guarujá? Escreve pra gente que a recepção responde rápido, todos os dias.
+          </p>
+        </div>
+
+        <!-- Card do formulário -->
+        <div class="bg-surface rounded-2xl p-6 md:p-8 shadow-2xl">
+          <form class="space-y-5" action="/api/subscribe" method="POST">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+              <div>
+                <label class="block text-sm font-medium text-ink mb-1.5" for="name">Nome</label>
+                <input type="text" id="name" name="name" required placeholder="Seu nome" class={inputCls} />
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-ink mb-1.5" for="whatsapp">WhatsApp</label>
+                <input type="tel" id="whatsapp" name="whatsapp" placeholder="(13) 90000-0000" class={inputCls} />
+              </div>
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-ink mb-1.5" for="email">E-mail</label>
+              <input type="email" id="email" name="email" required placeholder="voce@email.com" class={inputCls} />
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-ink mb-1.5" for="message">Mensagem</label>
+              <textarea id="message" name="message" rows="5" required placeholder="Como podemos ajudar?" class={`${inputCls} resize-y`}></textarea>
+            </div>
+            <button type="submit" class="w-full inline-flex items-center justify-center min-h-[52px] px-8 rounded-[200px] bg-[#cf3a23] text-bg text-[15px] font-semibold uppercase tracking-wide no-underline hover:brightness-95 transition-[filter]">
+              Enviar mensagem
+            </button>
+          </form>
+        </div>
+      </div>
     </div>
   </section>
 
-  <div class="container-x pb-20 md:pb-28">
-    <div class="grid grid-cols-1 lg:grid-cols-[1fr_1.35fr] gap-10 lg:gap-16 items-start">
+  <!-- ===== Onde estamos / contatos ===== -->
+  <section>
+    <div class="container-x py-16 md:py-24">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-start">
+        <div>
+          <h2 class="font-display text-3xl md:text-5xl font-normal tracking-tight text-ink leading-[1.05] mb-4">Onde estamos</h2>
+          <p class="text-lg text-ink-muted max-w-md">Se você estiver por perto, será muito bem recebido. Estamos a poucos passos da Praia do Tombo.</p>
 
-      <!-- ===== Informações de contato ===== -->
-      <div class="space-y-6">
-        {phone && (
-          <a href={phoneHref} class="flex items-start gap-4 no-underline group">
-            <span class="shrink-0 w-11 h-11 rounded-full flex items-center justify-center" style="background:rgba(207,58,35,0.10);">
-              <svg class="w-5 h-5 text-[#cf3a23]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-            </span>
-            <span>
-              <span class="mono uppercase text-ink-faint text-xs block mb-1">telefone</span>
-              <span class="text-lg font-medium text-ink group-hover:text-primary transition-colors">{phone}</span>
-            </span>
-          </a>
-        )}
-        {waUrl && (
-          <a href={waUrl} target="_blank" rel="noopener noreferrer" class="flex items-start gap-4 no-underline group">
-            <span class="shrink-0 w-11 h-11 rounded-full flex items-center justify-center" style="background:rgba(207,58,35,0.10);">
-              <svg class="w-5 h-5 text-[#cf3a23]" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15l-1.3 4.7 4.8-1.3A10 10 0 1 0 12 2Zm5.3 14.1c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .2-3.3-.7-2.8-1.1-4.5-3.9-4.7-4.1-.1-.2-1-1.4-1-2.6s.6-1.8.9-2.1c.2-.2.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 1.9c.1.2.1.4 0 .5l-.4.6c-.1.2-.3.3-.1.6.1.3.7 1.1 1.4 1.7.9.8 1.7 1.1 2 1.2.2.1.4.1.5-.1l.7-.8c.2-.2.3-.2.6-.1l1.8.9c.3.1.5.2.5.3.1.1.1.7-.1 1.3Z"/></svg>
-            </span>
-            <span>
-              <span class="mono uppercase text-ink-faint text-xs block mb-1">whatsapp</span>
-              <span class="text-lg font-medium text-ink group-hover:text-primary transition-colors">{whatsapp}</span>
-            </span>
-          </a>
-        )}
-        {email && (
-          <a href={`mailto:${email}`} class="flex items-start gap-4 no-underline group">
-            <span class="shrink-0 w-11 h-11 rounded-full flex items-center justify-center" style="background:rgba(207,58,35,0.10);">
-              <svg class="w-5 h-5 text-[#cf3a23]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/></svg>
-            </span>
-            <span class="min-w-0">
-              <span class="mono uppercase text-ink-faint text-xs block mb-1">email</span>
-              <span class="text-lg font-medium text-ink group-hover:text-primary transition-colors break-words">{email}</span>
-            </span>
-          </a>
-        )}
-        {address && (
-          <div class="flex items-start gap-4">
-            <span class="shrink-0 w-11 h-11 rounded-full flex items-center justify-center" style="background:rgba(207,58,35,0.10);">
-              <svg class="w-5 h-5 text-[#cf3a23]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M21 10c0 6-9 12-9 12s-9-6-9-12a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-            </span>
-            <span>
-              <span class="mono uppercase text-ink-faint text-xs block mb-1">endereço</span>
-              <span class="text-base text-ink leading-relaxed">{address}</span>
-            </span>
+          <div class="flex flex-wrap gap-3 mt-8">
+            {waUrl && (
+              <a href={waUrl} target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center gap-2 min-h-[48px] px-6 rounded-[200px] bg-[#cf3a23] text-bg text-sm font-semibold uppercase tracking-wide no-underline hover:brightness-95 transition-[filter]">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15l-1.3 4.7 4.8-1.3A10 10 0 1 0 12 2Zm5.3 14.1c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .2-3.3-.7-2.8-1.1-4.5-3.9-4.7-4.1-.1-.2-1-1.4-1-2.6s.6-1.8.9-2.1c.2-.2.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 1.9c.1.2.1.4 0 .5l-.4.6c-.1.2-.3.3-.1.6.1.3.7 1.1 1.4 1.7.9.8 1.7 1.1 2 1.2.2.1.4.1.5-.1l.7-.8c.2-.2.3-.2.6-.1l1.8.9c.3.1.5.2.5.3.1.1.1.7-.1 1.3Z"/></svg>
+                Falar no WhatsApp
+              </a>
+            )}
           </div>
-        )}
-        {(horarios.atendimentoExterno || horarios.recepcao) && (
-          <div class="flex items-start gap-4">
-            <span class="shrink-0 w-11 h-11 rounded-full flex items-center justify-center" style="background:rgba(207,58,35,0.10);">
-              <svg class="w-5 h-5 text-[#cf3a23]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15.5 14"/></svg>
-            </span>
-            <span>
-              <span class="mono uppercase text-ink-faint text-xs block mb-1">horários</span>
-              {horarios.atendimentoExterno && <span class="block text-base text-ink leading-relaxed">{horarios.atendimentoExterno}</span>}
-              {horarios.recepcao && <span class="block text-base text-ink leading-relaxed">{horarios.recepcao}</span>}
-            </span>
-          </div>
-        )}
+        </div>
 
-        {waUrl && (
-          <a href={waUrl} target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center gap-2 min-h-[48px] px-6 rounded-[200px] bg-[#cf3a23] text-bg text-sm font-semibold uppercase tracking-wide no-underline hover:brightness-95 transition-[filter] mt-2">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15l-1.3 4.7 4.8-1.3A10 10 0 1 0 12 2Zm5.3 14.1c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .2-3.3-.7-2.8-1.1-4.5-3.9-4.7-4.1-.1-.2-1-1.4-1-2.6s.6-1.8.9-2.1c.2-.2.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 1.9c.1.2.1.4 0 .5l-.4.6c-.1.2-.3.3-.1.6.1.3.7 1.1 1.4 1.7.9.8 1.7 1.1 2 1.2.2.1.4.1.5-.1l.7-.8c.2-.2.3-.2.6-.1l1.8.9c.3.1.5.2.5.3.1.1.1.7-.1 1.3Z"/></svg>
-            Falar no WhatsApp
-          </a>
-        )}
+        <div class="space-y-8">
+          {address && (
+            <div>
+              <p class="mono uppercase text-ink-faint text-xs mb-2">Guarujá · SP</p>
+              <p class="font-display text-2xl md:text-3xl font-normal text-ink leading-tight">{address}</p>
+            </div>
+          )}
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            {phone && (
+              <div>
+                <p class="mono uppercase text-ink-faint text-xs mb-1.5">telefone</p>
+                <a href={phoneHref} class="text-lg font-medium text-ink hover:text-primary transition-colors">{phone}</a>
+              </div>
+            )}
+            {whatsapp && (
+              <div>
+                <p class="mono uppercase text-ink-faint text-xs mb-1.5">whatsapp</p>
+                <a href={waUrl} target="_blank" rel="noopener noreferrer" class="text-lg font-medium text-ink hover:text-primary transition-colors">{whatsapp}</a>
+              </div>
+            )}
+            {email && (
+              <div class="sm:col-span-2">
+                <p class="mono uppercase text-ink-faint text-xs mb-1.5">email</p>
+                <a href={`mailto:${email}`} class="text-lg font-medium text-ink hover:text-primary transition-colors break-words">{email}</a>
+              </div>
+            )}
+            {(horarios.atendimentoExterno || horarios.recepcao) && (
+              <div class="sm:col-span-2">
+                <p class="mono uppercase text-ink-faint text-xs mb-1.5">horários</p>
+                {horarios.atendimentoExterno && <p class="text-base text-ink leading-relaxed">{horarios.atendimentoExterno}</p>}
+                {horarios.recepcao && <p class="text-base text-ink leading-relaxed">{horarios.recepcao}</p>}
+              </div>
+            )}
+          </div>
+        </div>
       </div>
 
-      <!-- ===== Formulário ===== -->
-      <div class="bg-surface rounded-lg p-6 md:p-8 shadow-[0_10px_40px_-24px_rgba(60,45,25,0.4)] border border-rule/50">
-        <h2 class="font-display text-2xl font-semibold text-ink mb-1">Envie uma mensagem</h2>
-        <p class="text-ink-muted mb-6">Preencha os campos e retornamos o contato.</p>
-        <form class="space-y-5" action="/api/subscribe" method="POST">
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
-            <div>
-              <label class="block text-sm font-medium text-ink mb-1.5" for="name">Nome</label>
-              <input type="text" id="name" name="name" required placeholder="Seu nome" class={inputCls} />
-            </div>
-            <div>
-              <label class="block text-sm font-medium text-ink mb-1.5" for="whatsapp">WhatsApp</label>
-              <input type="tel" id="whatsapp" name="whatsapp" placeholder="(13) 90000-0000" class={inputCls} />
-            </div>
-          </div>
-          <div>
-            <label class="block text-sm font-medium text-ink mb-1.5" for="email">E-mail</label>
-            <input type="email" id="email" name="email" required placeholder="voce@email.com" class={inputCls} />
-          </div>
-          <div>
-            <label class="block text-sm font-medium text-ink mb-1.5" for="message">Mensagem</label>
-            <textarea id="message" name="message" rows="5" required placeholder="Como podemos ajudar?" class={`${inputCls} resize-y`}></textarea>
-          </div>
-          <button type="submit" class="w-full sm:w-auto inline-flex items-center justify-center min-h-[50px] px-8 rounded-[200px] bg-[#cf3a23] text-bg text-sm font-semibold uppercase tracking-wide no-underline hover:brightness-95 transition-[filter]">
-            Enviar mensagem
-          </button>
-        </form>
-      </div>
+      {(regiao.titulo || regiao.texto) && (
+        <div class="mt-16 md:mt-20 max-w-2xl">
+          <h3 class="font-display text-2xl font-semibold text-ink leading-[1.15] mb-3">{regiao.titulo}</h3>
+          {regiao.texto && <p class="text-lg text-ink-muted leading-relaxed">{regiao.texto}</p>}
+        </div>
+      )}
     </div>
-
-    {(regiao.titulo || regiao.texto) && (
-      <div class="mt-16 md:mt-24 max-w-2xl">
-        <h2 class="font-display text-2xl md:text-3xl font-normal tracking-tight text-ink leading-[1.1] mb-4">{regiao.titulo}</h2>
-        {regiao.texto && <p class="text-lg text-ink-muted leading-relaxed">{regiao.texto}</p>}
-      </div>
-    )}
-  </div>
+  </section>
 </BaseLayout>
