@@ -73,16 +73,6 @@ const mapHref = `https://www.google.com/maps/search/?api=1&query=${mapQuery}`;
         class="booking-bar relative z-20 bg-surface rounded-[20px] lg:rounded-[200px] shadow-2xl p-1 lg:pl-3 flex flex-col gap-1 w-full"
       >
        <div class="flex flex-col lg:flex-row lg:items-stretch gap-1 lg:gap-0 w-full">
-        <!-- Destino (fixo: hotel único no Guarujá) -->
-        <div class="flex items-center gap-2.5 flex-[1.3] px-3.5 py-1.5 rounded-md">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-ink-faint shrink-0" aria-hidden="true"><path d="M21 10c0 6-9 12-9 12s-9-6-9-12a9 9 0 0 1 18 0Z"/><circle cx="12" cy="10" r="3"/></svg>
-          <span class="flex flex-col w-full min-w-0">
-            <span class="mono uppercase text-ink-faint text-xs">{booking.labelDestino}</span>
-            <span class="text-ink font-medium truncate leading-tight">{booking.destino}</span>
-            {booking.destinoSub && <span class="text-ink-faint text-xs truncate leading-tight">{booking.destinoSub}</span>}
-          </span>
-        </div>
-        <div class="hidden lg:block w-px bg-rule/60 my-2"></div>
         <!-- Datas (check-in → check-out) — abre calendário de 2 meses -->
         <div class="relative flex-[1.6]" id="dates-field">
           <button type="button" id="dates-trigger" class="flex items-center gap-2.5 w-full px-3.5 py-1.5 rounded-md hover:bg-elev transition cursor-pointer text-left">
@@ -138,6 +128,15 @@ const mapHref = `https://www.google.com/maps/search/?api=1&query=${mapQuery}`;
             <div class="gp-foot"><button type="button" id="gp-done" class="gp-done">Concluir</button></div>
           </div>
         </div>
+        <div class="hidden lg:block w-px bg-rule/60 my-2"></div>
+        <!-- Código promocional -->
+        <label for="cupom" class="flex items-center gap-2.5 flex-1 px-3.5 py-1.5 rounded-md hover:bg-elev transition cursor-text">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-ink-faint shrink-0" aria-hidden="true"><path d="M20.59 13.41 13.42 20.58a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82Z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
+          <span class="flex flex-col w-full min-w-0">
+            <span class="mono uppercase text-ink-faint text-xs">{booking.labelCupom || 'Cupom'}</span>
+            <input id="cupom" type="text" class="bg-transparent outline-none text-ink font-medium w-full placeholder:text-ink-faint/70 placeholder:font-normal" placeholder={booking.placeholderCupom || 'Código promocional'} aria-label={booking.labelCupom || 'Código promocional'} />
+          </span>
+        </label>
         <!-- Buscar -->
         <button type="submit" class="flex items-center justify-center gap-2 bg-[#55703A] text-bg text-sm font-semibold uppercase tracking-wide rounded-[200px] px-6 py-2 lg:my-0 mt-1 hover:brightness-95 transition shrink-0">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
@@ -338,6 +337,8 @@ const mapHref = `https://www.google.com/maps/search/?api=1&query=${mapQuery}`;
             agesBox.querySelectorAll('select.child-age').forEach(function (s) {
               params.append('childrenage', s.value);
             });
+            var cupom = ((document.getElementById('cupom') || {}).value || '').trim();
+            if (cupom) params.set('promocode', cupom);
 
             // URLSearchParams codifica "/" como %2F; o motor aceita a barra crua,
             // então repõe pra ficar igual ao link nativo (dd/mm/aaaa).
