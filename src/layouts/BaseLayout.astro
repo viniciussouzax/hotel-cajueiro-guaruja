@@ -85,6 +85,7 @@ interface Props {
   type?: 'website' | 'article';
   bodyClass?: string;
   transparentHeader?: boolean;
+  topBar?: boolean;
 }
 
 const defaultTitle = siteConfig.seo?.title || siteConfig.name;
@@ -95,6 +96,7 @@ const {
   type = 'website',
   bodyClass = '',
   transparentHeader = false,
+  topBar = false,
 } = Astro.props;
 
 const formattedTitle = title === defaultTitle ? title : `${title} | ${siteConfig.name}`;
@@ -166,6 +168,12 @@ import CustomCodeBodyStart from '../plugins/custom-code/CustomCodeBodyStart.astr
     pular pro conteúdo
   </a>
 
+  {topBar && (
+    <div class="bg-[#cf3a23] text-white text-center text-[13px] py-2 px-4">
+      <span>Reserve sua suíte no Hotel Cajueiro pelo melhor preço.</span>
+      <a href="/" class="font-semibold uppercase tracking-wide ml-2 underline underline-offset-2 hover:opacity-90">Consultar datas →</a>
+    </div>
+  )}
   <Header transparent={transparentHeader} />
 
   <main id="main">

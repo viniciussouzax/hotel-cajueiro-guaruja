@@ -11,6 +11,7 @@ import EmailInlineBanner from '../plugins/email-list/EmailInlineBanner.astro';
 import AffiliateProducts from '../plugins/affiliates/AffiliateProducts.astro';
 import PostSchemaPlugins from '../plugins/_slots/PostSchemaPlugins.astro';
 import PostBottomPlugins from '../plugins/_slots/PostBottomPlugins.astro';
+import ReserveCTA from '../components/ReserveCTA.astro';
 
 const allCategories = normalizeCategories(readData('categories.json', []));
 
@@ -91,6 +92,7 @@ const processedHtml = isHtmlBody && hasShortcodes(rawBody) ? renderShortcodes(ra
   description={data.description || ''}
   image={data.heroImage || data.cover || ''}
   type="article"
+  topBar={true}
 >
   <PostSchemaPlugins
     title={data.title}
@@ -150,6 +152,18 @@ const processedHtml = isHtmlBody && hasShortcodes(rawBody) ? renderShortcodes(ra
         <div class="prose-msia max-w-none">
           {processedHtml ? (<Fragment set:html={processedHtml} />) : (<Content />)}
         </div>
+
+        <!-- CTA inline (movida pro meio do texto via JS) -->
+        <div id="inline-reserve-source" style="display:none">
+          <div class="rounded-lg p-6 md:p-7 my-8 flex flex-col sm:flex-row sm:items-center gap-4" style="background:#55703A;">
+            <div class="flex-1">
+              <p class="font-display text-lg md:text-xl font-semibold text-white leading-tight mb-1">Reserve sua suíte no Hotel Cajueiro</p>
+              <p class="text-sm text-white/80">A 100m da Praia do Tombo, com o melhor preço direto pelo site.</p>
+            </div>
+            <a href="/" class="shrink-0 inline-flex items-center justify-center gap-2 min-h-[46px] px-6 rounded-[200px] bg-[#cf3a23] text-bg text-sm font-semibold uppercase tracking-wide no-underline hover:brightness-95 transition-[filter]">Consultar datas</a>
+          </div>
+        </div>
+
         {inlineEnabled && (
           <div id="email-inline-source" data-position={inlinePosition} style="display:none">
             <EmailInlineBanner />
@@ -242,6 +256,27 @@ const processedHtml = isHtmlBody && hasShortcodes(rawBody) ? renderShortcodes(ra
         </div>
       </section>
     )}
+
+  <!-- CTA de reserva (fim do artigo) -->
+  <ReserveCTA
+    image="/images/suite-2.jpg"
+    title="Reserve sua suíte no Hotel Cajueiro"
+    subtitle="A 100 metros da Praia do Tombo, com piscina, café da manhã artesanal e o melhor preço direto pelo nosso site."
+  />
+
+  <!-- Insere a CTA inline no meio do texto -->
+  <script is:inline>
+    (function () {
+      var src = document.getElementById('inline-reserve-source');
+      if (!src) return;
+      var paras = document.querySelectorAll('.prose-msia > p');
+      if (!paras.length) { if (src.parentNode) src.parentNode.removeChild(src); return; }
+      var idx = Math.floor(paras.length / 2);
+      var target = paras[idx] || paras[paras.length - 1];
+      target.insertAdjacentElement('afterend', src);
+      src.style.display = 'block';
+    })();
+  </script>
 
   {inlineEnabled && (
     <script>
