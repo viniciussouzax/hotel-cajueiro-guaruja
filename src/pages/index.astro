@@ -73,64 +73,67 @@ const mapHref = `https://www.google.com/maps/search/?api=1&query=${mapQuery}`;
         class="booking-bar bg-surface rounded-[20px] lg:rounded-[200px] shadow-2xl p-1 lg:pl-3 flex flex-col gap-1 w-full"
       >
        <div class="flex flex-col lg:flex-row lg:items-stretch gap-1 lg:gap-0 w-full">
-        <!-- Check-in -->
-        <label for="checkin" class="flex items-center gap-2.5 flex-1 px-3.5 py-1.5 rounded-md hover:bg-elev transition cursor-pointer">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-ink-faint shrink-0" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-          <span class="flex flex-col w-full">
-            <span class="mono uppercase text-ink-faint text-xs">{booking.labelCheckin}</span>
-            <input id="checkin" type="date" class="booking-date bg-transparent outline-none text-ink font-medium w-full" aria-label={booking.labelCheckin} />
-          </span>
-        </label>
+        <!-- Datas (check-in → check-out) — abre calendário de 2 meses -->
+        <div class="relative flex-[1.6]" id="dates-field">
+          <button type="button" id="dates-trigger" class="flex items-center gap-2.5 w-full px-3.5 py-1.5 rounded-md hover:bg-elev transition cursor-pointer text-left">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-ink-faint shrink-0" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            <span class="flex flex-col w-full min-w-0">
+              <span class="mono uppercase text-ink-faint text-xs">Datas</span>
+              <span id="dates-label" class="text-ink font-medium truncate">Selecionar datas</span>
+            </span>
+          </button>
+          <input id="checkin" type="hidden" />
+          <input id="checkout" type="hidden" />
+          <div id="dates-pop" class="cal-pop hidden"></div>
+        </div>
         <div class="hidden lg:block w-px bg-rule/60 my-2"></div>
-        <!-- Check-out -->
-        <label for="checkout" class="flex items-center gap-2.5 flex-1 px-3.5 py-1.5 rounded-md hover:bg-elev transition cursor-pointer">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-ink-faint shrink-0" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-          <span class="flex flex-col w-full">
-            <span class="mono uppercase text-ink-faint text-xs">{booking.labelCheckout}</span>
-            <input id="checkout" type="date" class="booking-date bg-transparent outline-none text-ink font-medium w-full" aria-label={booking.labelCheckout} />
-          </span>
-        </label>
-        <div class="hidden lg:block w-px bg-rule/60 my-2"></div>
-        <!-- Adultos -->
-        <label for="adultos" class="flex items-center gap-2.5 flex-1 px-3.5 py-1.5 rounded-md hover:bg-elev transition cursor-pointer">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-ink-faint shrink-0" aria-hidden="true"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
-          <span class="flex flex-col w-full">
-            <span class="mono uppercase text-ink-faint text-xs">{booking.labelAdultos}</span>
-            <select id="adultos" class="bg-transparent outline-none text-ink font-medium w-full cursor-pointer -ml-0.5" aria-label={booking.labelAdultos}>
-              <option value="1">1 adulto</option>
-              <option value="2" selected>2 adultos</option>
-              <option value="3">3 adultos</option>
-              <option value="4">4 adultos</option>
-              <option value="5">5 adultos</option>
-              <option value="6">6 adultos</option>
-            </select>
-          </span>
-        </label>
-        <div class="hidden lg:block w-px bg-rule/60 my-2"></div>
-        <!-- Crianças -->
-        <label for="criancas" class="flex items-center gap-2.5 flex-1 px-3.5 py-1.5 rounded-md hover:bg-elev transition cursor-pointer">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-ink-faint shrink-0" aria-hidden="true"><circle cx="12" cy="6" r="3"/><path d="M9 22v-6l-1.5-2A2 2 0 019.4 11h5.2a2 2 0 011.9 3l-1.5 2v6"/></svg>
-          <span class="flex flex-col w-full">
-            <span class="mono uppercase text-ink-faint text-xs">{booking.labelCriancas}</span>
-            <select id="criancas" class="bg-transparent outline-none text-ink font-medium w-full cursor-pointer -ml-0.5" aria-label={booking.labelCriancas}>
-              <option value="0" selected>Nenhuma criança</option>
-              <option value="1">1 criança</option>
-              <option value="2">2 crianças</option>
-              <option value="3">3 crianças</option>
-            </select>
-          </span>
-        </label>
+        <!-- Hóspedes — abre seletor de quartos/adultos/crianças -->
+        <div class="relative flex-[1.2]" id="guests-field">
+          <button type="button" id="guests-trigger" class="flex items-center gap-2.5 w-full px-3.5 py-1.5 rounded-md hover:bg-elev transition cursor-pointer text-left">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-ink-faint shrink-0" aria-hidden="true"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+            <span class="flex flex-col w-full min-w-0">
+              <span class="mono uppercase text-ink-faint text-xs">Hóspedes</span>
+              <span id="guests-label" class="text-ink font-medium truncate">2 adultos</span>
+            </span>
+          </button>
+          <input id="rooms" type="hidden" value="1" />
+          <input id="adultos" type="hidden" value="2" />
+          <input id="criancas" type="hidden" value="0" />
+          <div id="guests-pop" class="guests-pop hidden">
+            <div class="gp-row">
+              <div><div class="gp-t">Quartos</div></div>
+              <div class="gp-ctrl">
+                <button type="button" class="gp-btn" data-act="dec" data-t="rooms" aria-label="Menos quartos">&#8722;</button>
+                <span class="gp-n" id="gp-rooms">1</span>
+                <button type="button" class="gp-btn" data-act="inc" data-t="rooms" aria-label="Mais quartos">+</button>
+              </div>
+            </div>
+            <div class="gp-row">
+              <div><div class="gp-t">Adultos</div><div class="gp-s">18+ anos</div></div>
+              <div class="gp-ctrl">
+                <button type="button" class="gp-btn" data-act="dec" data-t="adults" aria-label="Menos adultos">&#8722;</button>
+                <span class="gp-n" id="gp-adults">2</span>
+                <button type="button" class="gp-btn" data-act="inc" data-t="adults" aria-label="Mais adultos">+</button>
+              </div>
+            </div>
+            <div class="gp-row">
+              <div><div class="gp-t">Crianças</div><div class="gp-s">0–17 anos</div></div>
+              <div class="gp-ctrl">
+                <button type="button" class="gp-btn" data-act="dec" data-t="children" aria-label="Menos crianças">&#8722;</button>
+                <span class="gp-n" id="gp-children">0</span>
+                <button type="button" class="gp-btn" data-act="inc" data-t="children" aria-label="Mais crianças">+</button>
+              </div>
+            </div>
+            <div id="gp-ages" class="gp-ages hidden"></div>
+            <div class="gp-foot"><button type="button" id="gp-done" class="gp-done">Concluir</button></div>
+          </div>
+        </div>
         <!-- Buscar -->
-        <button type="submit" class="flex items-center justify-center gap-2 bg-[#cf3a23] text-bg text-sm font-semibold uppercase tracking-wide rounded-[200px] px-6 py-2 lg:my-0 mt-1 hover:brightness-95 transition shrink-0">
+        <button type="submit" class="flex items-center justify-center gap-2 bg-[#55703A] text-bg text-sm font-semibold uppercase tracking-wide rounded-[200px] px-6 py-2 lg:my-0 mt-1 hover:brightness-95 transition shrink-0">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
           {booking.cta}
         </button>
        </div>
-
-        <!-- Idades das crianças (aparecem conforme a quantidade selecionada) -->
-        <div id="children-ages" class="hidden flex-wrap items-center gap-3 px-4 pt-2 pb-1 /50">
-          <span class="mono uppercase text-ink-faint text-xs">Idade das crianças</span>
-        </div>
       </form>
       <script is:inline>
         (function () {
@@ -149,81 +152,182 @@ const mapHref = `https://www.google.com/maps/search/?api=1&query=${mapQuery}`;
             return p.length === 3 ? p[2] + '/' + p[1] + '/' + p[0] : '';
           };
 
-          // Pré-preenche: check-in amanhã, check-out depois de amanhã (1 diária).
+          var MONTHS = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
+          var MSHORT = ['jan','fev','mar','abr','mai','jun','jul','ago','set','out','nov','dez'];
+          var WD = ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'];
+
           var today = new Date(); today.setHours(0, 0, 0, 0);
-          var next = new Date(today); next.setDate(today.getDate() + 1);
-          var after = new Date(today); after.setDate(today.getDate() + 2);
-          ci.min = iso(today); ci.value = iso(next);
-          co.min = iso(after); co.value = iso(after);
+          var parseISO = function (v) { if (!v) return null; var p = v.split('-'); return new Date(+p[0], +p[1] - 1, +p[2]); };
+          var sameDay = function (a, b) { return a && b && a.getFullYear() === b.getFullYear() && a.getMonth() === b.getMonth() && a.getDate() === b.getDate(); };
+          var fmtShort = function (d) { return d.getDate() + ' ' + MSHORT[d.getMonth()]; };
+          var fmtLong = function (d) { return WD[d.getDay()] + ', ' + d.getDate() + ' ' + MSHORT[d.getMonth()]; };
 
-          // Check-out sempre depois do check-in.
-          ci.addEventListener('change', function () {
-            var c = new Date(ci.value + 'T00:00:00');
-            var minOut = new Date(c); minOut.setDate(c.getDate() + 1);
-            co.min = iso(minOut);
-            if (new Date(co.value + 'T00:00:00') <= c) co.value = iso(minOut);
+          // ===================== CALENDÁRIO (datas) =====================
+          var dTrigger = document.getElementById('dates-trigger');
+          var dPop = document.getElementById('dates-pop');
+          var dLabel = document.getElementById('dates-label');
+          var checkin = null, checkout = null;
+          var view = new Date(today.getFullYear(), today.getMonth(), 1);
+          var nights = function () { return (checkin && checkout) ? Math.round((checkout - checkin) / 86400000) : 0; };
+
+          function syncDates() {
+            ci.value = checkin ? iso(checkin) : '';
+            co.value = checkout ? iso(checkout) : '';
+            if (checkin && checkout) {
+              var n = nights();
+              dLabel.innerHTML = fmtShort(checkin) + ' <span class="text-ink-faint">–</span> ' + fmtShort(checkout) + ' <span class="text-ink-faint">· ' + n + (n === 1 ? ' noite' : ' noites') + '</span>';
+            } else if (checkin) {
+              dLabel.innerHTML = fmtShort(checkin) + ' <span class="text-ink-faint">– saída</span>';
+            } else {
+              dLabel.textContent = 'Selecionar datas';
+            }
+          }
+
+          function dayClass(dt) {
+            var c = 'cal-day';
+            if (dt < today) return c + ' is-disabled';
+            if (sameDay(dt, checkin) || sameDay(dt, checkout)) c += ' is-sel';
+            if (checkin && checkout) {
+              if (dt > checkin && dt < checkout) c += ' is-range';
+              if (sameDay(dt, checkin)) c += ' is-start';
+              if (sameDay(dt, checkout)) c += ' is-end';
+            }
+            return c;
+          }
+          function buildMonth(y, m) {
+            var dow = new Date(y, m, 1).getDay();
+            var dim = new Date(y, m + 1, 0).getDate();
+            var h = '<div class="cal-month"><div class="cal-mname">' + MONTHS[m] + ' ' + y + '</div><div class="cal-grid">';
+            for (var w = 0; w < 7; w++) h += '<div class="cal-wd">' + WD[w] + '</div>';
+            for (var b = 0; b < dow; b++) h += '<div></div>';
+            for (var d = 1; d <= dim; d++) {
+              var dt = new Date(y, m, d);
+              var dis = dt < today;
+              h += '<button type="button" class="' + dayClass(dt) + '" data-d="' + iso(dt) + '"' + (dis ? ' disabled' : '') + '>' + d + '</button>';
+            }
+            return h + '</div></div>';
+          }
+          function renderCal() {
+            var y = view.getFullYear(), m = view.getMonth();
+            var nx = new Date(y, m + 1, 1);
+            var canPrev = !(y === today.getFullYear() && m === today.getMonth());
+            var foot;
+            if (checkin && checkout) { var n = nights(); foot = '<strong>' + fmtLong(checkin) + ' – ' + fmtLong(checkout) + '</strong> (' + n + (n === 1 ? ' noite' : ' noites') + ')'; }
+            else if (checkin) foot = 'Selecione a data de saída';
+            else foot = 'Selecione a data de entrada';
+            dPop.innerHTML =
+              '<button type="button" class="cal-arrow cal-prev' + (canPrev ? '' : ' is-off') + '" aria-label="Mês anterior"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="15 18 9 12 15 6"/></svg></button>' +
+              '<button type="button" class="cal-arrow cal-next" aria-label="Próximo mês"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="9 18 15 12 9 6"/></svg></button>' +
+              '<div class="cal-months">' + buildMonth(y, m) + buildMonth(nx.getFullYear(), nx.getMonth()) + '</div>' +
+              '<div class="cal-foot">' + foot + '</div>';
+          }
+          function openDates() { dPop.classList.remove('hidden'); view = new Date((checkin || today).getFullYear(), (checkin || today).getMonth(), 1); renderCal(); }
+          function closeDates() { dPop.classList.add('hidden'); }
+
+          dTrigger.addEventListener('click', function (e) { e.stopPropagation(); if (dPop.classList.contains('hidden')) { closeGuests(); openDates(); } else closeDates(); });
+          dPop.addEventListener('click', function (e) {
+            var prev = e.target.closest('.cal-prev'), next = e.target.closest('.cal-next'), day = e.target.closest('.cal-day');
+            if (prev) { if (!prev.classList.contains('is-off')) { view = new Date(view.getFullYear(), view.getMonth() - 1, 1); renderCal(); } return; }
+            if (next) { view = new Date(view.getFullYear(), view.getMonth() + 1, 1); renderCal(); return; }
+            if (day && !day.hasAttribute('disabled')) {
+              var dt = parseISO(day.getAttribute('data-d'));
+              if (!checkin || checkout) { checkin = dt; checkout = null; }
+              else if (dt > checkin) { checkout = dt; }
+              else { checkin = dt; checkout = null; }
+              syncDates(); renderCal();
+              if (checkin && checkout) setTimeout(closeDates, 180);
+            }
           });
 
-          // Clique em qualquer parte do campo de data abre o calendário nativo.
-          [ci, co].forEach(function (inp) {
-            var lab = inp.closest('label');
-            if (!lab) return;
-            lab.addEventListener('click', function () { try { inp.showPicker(); } catch (e) {} });
-          });
+          // ===================== HÓSPEDES (quartos/adultos/crianças) =====================
+          var gTrigger = document.getElementById('guests-trigger');
+          var gPop = document.getElementById('guests-pop');
+          var gLabel = document.getElementById('guests-label');
+          var agesBox = document.getElementById('gp-ages');
+          var adultosInp = document.getElementById('adultos');
+          var criancasInp = document.getElementById('criancas');
+          var roomsInp = document.getElementById('rooms');
+          var counts = { rooms: 1, adults: 2, children: 0 };
+          var mins = { rooms: 1, adults: 1, children: 0 };
+          var maxs = { rooms: 6, adults: 12, children: 6 };
+          var childAges = [];
 
-          // ---- Idade das crianças: renderiza N selects (0–17) conforme a quantidade ----
-          var criancasSel = document.getElementById('criancas');
-          var agesBox = document.getElementById('children-ages');
           function renderAges() {
-            if (!criancasSel || !agesBox) return;
-            var n = parseInt(criancasSel.value, 10) || 0;
-            agesBox.querySelectorAll('label.child-age-item').forEach(function (el) { el.remove(); });
-            for (var i = 0; i < n; i++) {
+            agesBox.innerHTML = '';
+            for (var i = 0; i < counts.children; i++) {
               var wrap = document.createElement('label');
-              wrap.className = 'child-age-item flex items-center gap-2 text-sm text-ink';
-              var lbl = document.createElement('span');
-              lbl.className = 'text-ink-muted';
-              lbl.textContent = 'Criança ' + (i + 1) + ':';
-              var sel = document.createElement('select');
-              sel.className = 'child-age bg-transparent border border-rule rounded px-2 py-1 text-ink font-medium cursor-pointer';
-              sel.setAttribute('aria-label', 'Idade da criança ' + (i + 1));
+              wrap.className = 'gp-age';
+              var lb = document.createElement('span'); lb.textContent = 'Criança ' + (i + 1);
+              var sel = document.createElement('select'); sel.className = 'child-age'; sel.setAttribute('aria-label', 'Idade da criança ' + (i + 1));
               for (var age = 0; age <= 17; age++) {
-                var opt = document.createElement('option');
-                opt.value = String(age);
-                opt.textContent = age === 0 ? 'menos de 1 ano' : age + (age === 1 ? ' ano' : ' anos');
-                if (age === 8) opt.selected = true;
+                var opt = document.createElement('option'); opt.value = String(age);
+                opt.textContent = age === 0 ? '< 1 ano' : age + (age === 1 ? ' ano' : ' anos');
                 sel.appendChild(opt);
               }
-              wrap.appendChild(lbl); wrap.appendChild(sel);
-              agesBox.appendChild(wrap);
+              sel.value = String(childAges[i] != null ? childAges[i] : 8);
+              (function (idx, s) { s.addEventListener('change', function () { childAges[idx] = parseInt(s.value, 10); }); })(i, sel);
+              wrap.appendChild(lb); wrap.appendChild(sel); agesBox.appendChild(wrap);
             }
-            agesBox.classList.toggle('hidden', n === 0);
-            agesBox.classList.toggle('flex', n > 0);
+            agesBox.classList.toggle('hidden', counts.children === 0);
           }
-          if (criancasSel) criancasSel.addEventListener('change', renderAges);
+          function syncGuests() {
+            document.getElementById('gp-rooms').textContent = counts.rooms;
+            document.getElementById('gp-adults').textContent = counts.adults;
+            document.getElementById('gp-children').textContent = counts.children;
+            roomsInp.value = counts.rooms; adultosInp.value = counts.adults; criancasInp.value = counts.children;
+            gPop.querySelectorAll('.gp-btn').forEach(function (btn) {
+              var t = btn.getAttribute('data-t'), act = btn.getAttribute('data-act');
+              btn.disabled = act === 'dec' ? counts[t] <= mins[t] : counts[t] >= maxs[t];
+            });
+            var parts = [counts.rooms + (counts.rooms === 1 ? ' quarto' : ' quartos'), counts.adults + (counts.adults === 1 ? ' adulto' : ' adultos')];
+            if (counts.children > 0) parts.push(counts.children + (counts.children === 1 ? ' criança' : ' crianças'));
+            gLabel.textContent = parts.join(', ');
+          }
+          function openGuests() { gPop.classList.remove('hidden'); }
+          function closeGuests() { gPop.classList.add('hidden'); }
+
+          gTrigger.addEventListener('click', function (e) { e.stopPropagation(); if (gPop.classList.contains('hidden')) { closeDates(); openGuests(); } else closeGuests(); });
+          gPop.addEventListener('click', function (e) {
+            e.stopPropagation();
+            var btn = e.target.closest('.gp-btn');
+            if (btn && !btn.disabled) {
+              var t = btn.getAttribute('data-t'), act = btn.getAttribute('data-act');
+              counts[t] = Math.max(mins[t], Math.min(maxs[t], counts[t] + (act === 'inc' ? 1 : -1)));
+              if (t === 'children') { childAges = childAges.slice(0, counts.children); renderAges(); }
+              syncGuests();
+              return;
+            }
+            if (e.target.closest('#gp-done')) closeGuests();
+          });
+
+          // Fecha popovers ao clicar fora.
+          document.addEventListener('click', function (e) {
+            if (!dPop.classList.contains('hidden') && !dPop.contains(e.target) && !dTrigger.contains(e.target)) closeDates();
+            if (!gPop.classList.contains('hidden') && !gPop.contains(e.target) && !gTrigger.contains(e.target)) closeGuests();
+          });
+
+          // Pré-preenche: check-in amanhã, check-out depois de amanhã (1 diária).
+          checkin = new Date(today); checkin.setDate(today.getDate() + 1);
+          checkout = new Date(today); checkout.setDate(today.getDate() + 2);
+          syncDates(); syncGuests();
 
           // Ao buscar: monta a URL do motor de reservas com os parâmetros.
           form.addEventListener('submit', function (e) {
             e.preventDefault();
             var base = form.getAttribute('data-engine') || '';
             var company = form.getAttribute('data-company') || '';
-            var adultos = (document.getElementById('adultos') || {}).value || '2';
-            var criancas = (document.getElementById('criancas') || {}).value || '0';
-            var cupom = ((document.getElementById('cupom') || {}).value || '').trim();
 
             var params = new URLSearchParams();
             if (company) params.set('companyId', company);
             params.set('checkin', toBR(ci.value));
             params.set('checkout', toBR(co.value));
-            params.set('adults', adultos);
-            params.set('children', criancas);
+            params.set('adults', String(counts.adults));
+            params.set('children', String(counts.children));
+            params.set('rooms', String(counts.rooms));
             // uma idade por criança: childrenage repetido (childrenage=15&childrenage=17...)
-            if (agesBox) {
-              agesBox.querySelectorAll('select.child-age').forEach(function (s) {
-                params.append('childrenage', s.value);
-              });
-            }
-            if (cupom) params.set('promocode', cupom);
+            agesBox.querySelectorAll('select.child-age').forEach(function (s) {
+              params.append('childrenage', s.value);
+            });
 
             // URLSearchParams codifica "/" como %2F; o motor aceita a barra crua,
             // então repõe pra ficar igual ao link nativo (dd/mm/aaaa).
@@ -238,13 +342,58 @@ const mapHref = `https://www.google.com/maps/search/?api=1&query=${mapQuery}`;
           });
         })();
       </script>
+
+      <style is:global>
+        /* ---- Popovers do buscador (datas + hóspedes) ---- */
+        .cal-pop, .guests-pop {
+          position: absolute; top: 100%; margin-top: .6rem; z-index: 60;
+          background: rgb(var(--c-surface)); border: 1px solid rgb(var(--c-rule));
+          border-radius: 1.1rem; box-shadow: 0 24px 60px -15px rgba(0,0,0,.4);
+        }
+        .cal-pop { left: 0; padding: 2.6rem 1.25rem 1rem; width: min(640px, 94vw); }
+        .guests-pop { right: 0; padding: .35rem .25rem; width: min(340px, 92vw); }
+        @media (max-width: 1023px) { .cal-pop { left: 0; } }
+
+        .cal-months { display: grid; grid-template-columns: 1fr; gap: 1.75rem; }
+        @media (min-width: 640px) { .cal-months { grid-template-columns: 1fr 1fr; } }
+        .cal-mname { text-align: center; font-weight: 600; color: rgb(var(--c-ink)); margin-bottom: .75rem; }
+        .cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px; }
+        .cal-wd { text-align: center; font-size: .68rem; text-transform: uppercase; letter-spacing: .03em; color: rgb(var(--c-ink-faint)); padding-bottom: .35rem; }
+        .cal-day { aspect-ratio: 1; display: flex; align-items: center; justify-content: center; font-size: .9rem; color: rgb(var(--c-ink)); border: 0; background: transparent; cursor: pointer; border-radius: .55rem; transition: background .12s; }
+        .cal-day:hover { background: rgb(var(--c-elev)); }
+        .cal-day.is-disabled { color: rgb(var(--c-ink-faint)); opacity: .4; cursor: default; }
+        .cal-day.is-range { background: rgba(207,58,35,.12); border-radius: 0; }
+        .cal-day.is-sel { background: #cf3a23; color: #fff; }
+        .cal-day.is-start { border-top-right-radius: 0; border-bottom-right-radius: 0; }
+        .cal-day.is-end { border-top-left-radius: 0; border-bottom-left-radius: 0; }
+        .cal-arrow { position: absolute; top: 1rem; width: 2rem; height: 2rem; display: flex; align-items: center; justify-content: center; border-radius: 9999px; color: rgb(var(--c-ink)); background: transparent; border: 0; cursor: pointer; }
+        .cal-arrow:hover { background: rgb(var(--c-elev)); }
+        .cal-prev { left: 1rem; } .cal-next { right: 1rem; }
+        .cal-arrow.is-off { opacity: .25; cursor: default; }
+        .cal-foot { margin-top: 1rem; text-align: right; font-size: .85rem; color: rgb(var(--c-ink-muted)); }
+
+        .gp-row { display: flex; align-items: center; justify-content: space-between; padding: .7rem 1rem; }
+        .gp-t { font-weight: 600; color: rgb(var(--c-ink)); }
+        .gp-s { font-size: .74rem; color: rgb(var(--c-ink-faint)); }
+        .gp-ctrl { display: flex; align-items: center; gap: .9rem; }
+        .gp-btn { width: 2rem; height: 2rem; border-radius: 9999px; border: 1.5px solid #cf3a23; color: #cf3a23; background: transparent; font-size: 1.15rem; line-height: 1; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: background .12s; }
+        .gp-btn:hover { background: rgba(207,58,35,.08); }
+        .gp-btn:disabled { opacity: .35; cursor: default; border-color: rgb(var(--c-rule)); color: rgb(var(--c-ink-faint)); }
+        .gp-n { min-width: 1.5rem; text-align: center; font-weight: 600; color: rgb(var(--c-ink)); }
+        .gp-ages { display: flex; flex-wrap: wrap; gap: .6rem; padding: .3rem 1rem .7rem; }
+        .gp-age { display: flex; flex-direction: column; gap: .25rem; font-size: .7rem; color: rgb(var(--c-ink-faint)); }
+        .gp-age select { border: 1px solid rgb(var(--c-rule)); border-radius: .5rem; padding: .35rem .5rem; font-size: .85rem; color: rgb(var(--c-ink)); background: rgb(var(--c-bg)); }
+        .gp-foot { padding: .5rem 1rem .8rem; display: flex; justify-content: flex-end; }
+        .gp-done { background: #cf3a23; color: #fff; border: 0; border-radius: 9999px; padding: .55rem 1.6rem; font-size: .82rem; font-weight: 600; text-transform: uppercase; letter-spacing: .03em; cursor: pointer; }
+        .gp-done:hover { filter: brightness(.95); }
+      </style>
     </div>
 
   </section>
 
-  <!-- ===== BANNER (abaixo da hero) ===== -->
+  <!-- ===== BANNER (abaixo da hero) — painel arredondado que sobe sobre a imagem ===== -->
   {(banner.title || banner.text) && (
-    <section class="">
+    <section class="relative z-10 bg-bg rounded-t-[50px] -mt-14 md:-mt-24">
       <div class="container-x py-12 md:py-16">
         <div class="bg-elev rounded-lg border border-rule/60 overflow-hidden flex flex-col md:flex-row">
           <!-- Texto (70%) -->
