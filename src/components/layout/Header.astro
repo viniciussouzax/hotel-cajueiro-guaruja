@@ -90,19 +90,41 @@ const { transparent = false } = Astro.props;
     </div>
   </div>
 
-  <div id="mobile-menu" class="hidden lg:hidden bg-surface ">
-    <nav class="container-x py-4 space-y-1" aria-label="Mobile">
+  <!-- Backdrop do drawer -->
+  <div id="mobile-backdrop" class="mobile-backdrop fixed inset-0 z-40 bg-black/45 lg:hidden" aria-hidden="true"></div>
+
+  <!-- Drawer lateral (desliza da direita) -->
+  <aside id="mobile-menu" class="mobile-drawer fixed top-0 right-0 z-50 h-full w-[82%] max-w-xs bg-surface shadow-2xl flex flex-col lg:hidden" aria-label="Menu" aria-hidden="true">
+    <div class="flex items-center justify-between h-[68px] px-5 shrink-0">
+      <img src="/images/logo-preto.png" alt={siteConfig.name} class="w-auto" style="height: 34px" />
+      <button id="menu-close" class="w-10 h-10 -mr-2 flex items-center justify-center rounded text-ink-muted hover:text-ink hover:bg-ink/5 transition-colors" aria-label="Fechar menu">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <nav class="px-5 py-2 flex flex-col overflow-y-auto" aria-label="Mobile">
       {menuItems.map((item: any) => (
         <a
           href={item.href}
           aria-current={isActive(item.href) ? 'page' : undefined}
-          class={`block py-2.5 text-base ${isActive(item.href) ? 'text-ink font-semibold' : 'text-ink-muted'}`}
+          class={`py-3 text-base ${isActive(item.href) ? 'text-ink font-semibold' : 'text-ink-muted'}`}
         >
           {item.label}
         </a>
       ))}
     </nav>
-  </div>
+    {waUrl && (
+      <div class="mt-auto p-5 shrink-0">
+        <a
+          href={waUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="flex items-center justify-center min-h-[48px] px-6 rounded-[200px] bg-[#cf3a23] text-white text-sm font-semibold uppercase tracking-wide no-underline hover:brightness-95 transition-[filter]"
+        >
+          Reservar
+        </a>
+      </div>
+    )}
+  </aside>
 </header>
 
 <style>
@@ -154,6 +176,20 @@ const { transparent = false } = Astro.props;
 
   /* Submenu aberto via clique (funciona com hover ligado ou desligado). */
   [data-submenu].is-open > .submenu-panel { opacity: 1; visibility: visible; }
+
+  /* ---- Drawer lateral (mobile) ---- */
+  .mobile-drawer {
+    transform: translateX(100%);
+    transition: transform .32s cubic-bezier(.4, 0, .2, 1);
+    will-change: transform;
+  }
+  .mobile-drawer.is-open { transform: translateX(0); }
+  .mobile-backdrop {
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .32s ease;
+  }
+  .mobile-backdrop.is-open { opacity: 1; pointer-events: auto; }
 </style>
 
 <script>
@@ -188,18 +224,53 @@ const { transparent = false } = Astro.props;
 
 <script is:inline>
   (function() {
-    const menuBtn  = document.getElementById('menu-toggle');
-    const mobile   = document.getElementById('mobile-menu');
-    const iconOpen = document.getElementById('menu-icon-open');
-    const iconClose= document.getElementById('menu-icon-close');
-    if (menuBtn && mobile) {
-      menuBtn.addEventListener('click', () => {
-        const isOpen = !mobile.classList.contains('hidden');
-        mobile.classList.toggle('hidden');
-        menuBtn.setAttribute('aria-expanded', String(!isOpen));
-        iconOpen?.classList.toggle('hidden', !isOpen ? true : false);
-        iconClose?.classList.toggle('hidden', !isOpen ? false : true);
-      });
+    var menuBtn   = document.getElementById('menu-toggle');
+    var closeBtn  = document.getElementById('menu-close');
+    var drawer    = document.getElementById('mobile-menu');
+    var backdrop  = document.getElementById('mobile-backdrop');
+    var iconOpen  = document.getElementById('menu-icon-open');
+    var iconClose = document.getElementById('menu-icon-close');
+    if (!menuBtn || !drawer || !backdrop) return;
+
+    function setIcons(open) {
+      if (iconOpen) iconOpen.classList.toggle('hidden', open);
+      if (iconClose) iconClose.classList.toggle('hidden', !open);
     }
+    function openMenu() {
+      drawer.classList.add('is-open');
+      backdrop.classList.add('is-open');
+      drawer.style.transform = 'translateX(0)';
+      backdrop.style.opacity = '1';
+      backdrop.style.pointerEvents = 'auto';
+      drawer.setAttribute('aria-hidden', 'false');
+      menuBtn.setAttribute('aria-expanded', 'true');
+      document.body.style.overflow = 'hidden';
+      setIcons(true);
+    }
+    function closeMenu() {
+      drawer.classList.remove('is-open');
+      backdrop.classList.remove('is-open');
+      drawer.style.transform = '';
+      backdrop.style.opacity = '';
+      backdrop.style.pointerEvents = '';
+      drawer.setAttribute('aria-hidden', 'true');
+      menuBtn.setAttribute('aria-expanded', 'false');
+      document.body.style.overflow = '';
+      setIcons(false);
+    }
+    function toggleMenu() {
+      if (drawer.classList.contains('is-open')) closeMenu(); else openMenu();
+    }
+
+    menuBtn.addEventListener('click', toggleMenu);
+    if (closeBtn) closeBtn.addEventListener('click', closeMenu);
+    backdrop.addEventListener('click', closeMenu);
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && drawer.classList.contains('is-open')) closeMenu();
+    });
+    // Fecha ao clicar num link do menu.
+    drawer.querySelectorAll('a[href]').forEach(function (a) {
+      a.addEventListener('click', closeMenu);
+    });
   })();
 </script>
