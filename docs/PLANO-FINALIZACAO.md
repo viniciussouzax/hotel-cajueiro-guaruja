@@ -20,14 +20,14 @@
 ## Onda 2 — Landing Corporativo (EM ANDAMENTO)
 - [x] Copiar imagens do corporativo (corp-1..14.jpg)
 - [x] Criar `src/pages/corporativo.astro` (hero, diferenciais, para quem é, acomodações, estrutura, galeria, onde estamos, entorno, como chegar, CTA)
-- [ ] Verificar build 200 e visual
-- [ ] Menu: item "Corporativo" -> `/corporativo` (interno, era link externo)
+- [x] Verificar build 200 e visual
+- [x] Menu: item "Corporativo" -> `/corporativo` (interno, era link externo)
 
 ## Onda 3 — Landing Grupos e Excursões
-- [ ] Criar `src/pages/grupos-e-excursoes.astro` (conteúdo novo, mesmo padrão visual)
-- [ ] Menu: item "Grupos e Excursões" -> `/grupos-e-excursoes` (era 404)
-- [ ] Imagens (reutilizar corp-*/hero-tombo por ora; trocar por reais depois)
-- [ ] Verificar build 200
+- [x] Criar `src/pages/grupos-e-excursoes.astro` (conteúdo novo, mesmo padrão visual)
+- [x] Menu: item "Grupos e Excursões" -> `/grupos-e-excursoes` (era 404)
+- [x] Imagens (reutilizar corp-*/hero-tombo por ora; trocar por reais depois)
+- [x] Verificar build 200
 
 ## Onda 4 — Fechamento
 - [ ] Build geral OK (todas as rotas 200)
