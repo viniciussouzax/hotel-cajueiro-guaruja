@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import CtaFinal from '../../components/CtaFinal.astro';
 import { getCollection } from 'astro:content';
 import { CATEGORY_ORDER } from '../../lib/categoryColors';
 
@@ -71,4 +72,6 @@ function isoDate(d: any): string | undefined {
       })}
     </div>
   </div>
+
+  <CtaFinal />
 </BaseLayout>

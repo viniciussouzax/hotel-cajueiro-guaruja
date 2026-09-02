@@ -1,0 +1,25 @@
+---
+/**
+ * CtaFinal.astro — bloco de CTA padrão do site (igual ao da home).
+ * Conteúdo vem de home.json (cta.title / cta.subtitle / cta.button),
+ * para ser único em todas as páginas. Fica logo acima do footer.
+ */
+import { readData } from '../lib/readData';
+
+const home = readData('home.json', {}) as any;
+const cta = home.cta || {};
+
+interface Props { href?: string }
+const { href = '/contato' } = Astro.props as Props;
+---
+{(cta.title || cta.button) && (
+  <section id="reservar" class="bg-elev">
+    <div class="container-x py-20 md:py-28 text-center">
+      <h2 class="font-display text-3xl md:text-5xl font-normal tracking-tight text-ink leading-[1.05] max-w-3xl mx-auto mb-5">{cta.title}</h2>
+      {cta.subtitle && <p class="text-lg text-ink-muted leading-relaxed max-w-2xl mx-auto mb-8">{cta.subtitle}</p>}
+      {cta.button && (
+        <a href={href} class="inline-flex items-center justify-center gap-2.5 min-h-[52px] px-8 rounded-[200px] bg-[#cf3a23] text-white text-[15px] font-semibold uppercase tracking-wide no-underline hover:brightness-95 transition-[filter]">{cta.button}</a>
+      )}
+    </div>
+  </section>
+)}

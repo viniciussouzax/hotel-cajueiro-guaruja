@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import CajuButton from '../components/CajuButton.astro';
+import CtaFinal from '../components/CtaFinal.astro';
 import { readData } from '../lib/readData';
 
 const siteConfig = readData('siteConfig.json');
@@ -315,19 +316,8 @@ const rotas = [
     </div>
   </section>
 
-  <!-- ===================== CTA FINAL ===================== -->
-  <section class="relative isolate overflow-hidden bg-primary">
-    <span aria-hidden="true" class="pointer-events-none absolute -left-24 -top-24 w-80 h-80 rounded-full border-[50px] border-white/[0.06]"></span>
-    <span aria-hidden="true" class="pointer-events-none absolute -right-16 -bottom-24 w-64 h-64 rounded-full bg-cat-terracota/20"></span>
-    <div class="container-x py-16 md:py-24 max-w-3xl text-center relative">
-      <h2 class="font-display text-3xl md:text-4xl font-bold tracking-tight text-bg leading-tight mb-4">Peça a proposta para o seu grupo</h2>
-      <p class="text-lg text-[#eef3e7] leading-relaxed mb-9 max-w-xl mx-auto">Conte quantas pessoas, as datas e se precisa de jantar. Enviamos uma cotação sob medida, sem compromisso.</p>
-      <div class="flex flex-col items-center gap-4">
-        <CajuButton href={waUrl} label={ctaButton} />
-        <span class="text-sm text-[#eef3e7]">Prefere e-mail? <span class="text-bg font-semibold">{email}</span></span>
-      </div>
-    </div>
-  </section>
+  <!-- ===================== CTA FINAL (componente padrão, igual em todas as páginas) ===================== -->
+  <CtaFinal />
 
   <!-- ===================== LIGHTBOX DA GALERIA ===================== -->
   <div id="gallery-lightbox" class="fixed inset-0 z-[60] hidden items-center justify-center bg-black/90 backdrop-blur-sm" role="dialog" aria-modal="true" aria-label="Visualizador de imagens">

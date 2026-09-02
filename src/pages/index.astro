@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import CtaFinal from '../components/CtaFinal.astro';
 import { readData } from '../lib/readData';
 
 const siteConfig = readData('siteConfig.json');
@@ -634,16 +635,8 @@ const mapHref = `https://www.google.com/maps/search/?api=1&query=${mapQuery}`;
     </section>
   )}
 
-  <!-- ===== CTA FINAL ===== -->
-  {(cta.title || cta.button) && (
-    <section id="reservar" class="bg-elev ">
-      <div class="container-x py-20 md:py-28 text-center">
-        <h2 class="font-display text-3xl md:text-5xl font-normal tracking-tight text-ink leading-[1.05] max-w-3xl mx-auto mb-5">{cta.title}</h2>
-        {cta.subtitle && <p class="text-lg text-ink-muted leading-relaxed max-w-2xl mx-auto mb-8">{cta.subtitle}</p>}
-        {cta.button && <a href="/contato" class="inline-flex items-center justify-center gap-2.5 min-h-[52px] px-8 rounded-[200px] bg-[#cf3a23] text-white text-[15px] font-semibold uppercase tracking-wide no-underline hover:brightness-95 transition-[filter]">{cta.button}</a>}
-      </div>
-    </section>
-  )}
+  <!-- ===== CTA FINAL (componente padrão, igual em todas as páginas) ===== -->
+  <CtaFinal />
 
 </BaseLayout>
 
