@@ -1,41 +1,15 @@
 [
   {
-    "id": "expert-1",
-    "name": "Nome do redator",
-    "role": "Redator",
+    "id": "equipe-cajueiro",
+    "name": "Equipe Hotel Cajueiro",
+    "role": "Hotel Cajueiro Guarujá",
     "avatar": "",
-    "bio": "Bio curta do expert. Apresente a especialidade e o que ele cobre no blog em 1-2 frases.",
+    "bio": "A equipe do Hotel Cajueiro, a 100 metros da Praia do Tombo no Guarujá. Aqui compartilhamos dicas de viagem, gastronomia e o que fazer na cidade para você aproveitar melhor a sua estadia.",
     "social": {
       "twitter": "",
-      "instagram": "",
+      "instagram": "https://www.instagram.com/hotelcajueiroguaruja/",
       "linkedin": "",
-      "website": ""
-    }
-  },
-  {
-    "id": "expert-2",
-    "name": "Outro especialista",
-    "role": "Editor",
-    "avatar": "",
-    "bio": "Bio curta do segundo membro da equipe. Edite em /admin/authors.",
-    "social": {
-      "twitter": "",
-      "instagram": "",
-      "linkedin": "",
-      "website": ""
-    }
-  },
-  {
-    "id": "expert-3",
-    "name": "Mais um expert",
-    "role": "Redator convidado",
-    "avatar": "",
-    "bio": "Bio curta do terceiro membro. Use o admin pra adicionar quantos quiser.",
-    "social": {
-      "twitter": "",
-      "instagram": "",
-      "linkedin": "",
-      "website": ""
+      "website": "https://www.hotelcajueiroguaruja.com.br"
     }
   }
 ]

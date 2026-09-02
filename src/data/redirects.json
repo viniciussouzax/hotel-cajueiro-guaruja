@@ -1,1 +1,3 @@
-[]
+[
+  { "from": "/contato-hotel-cajueiro-guaruja", "to": "/contato", "type": 301, "enabled": true }
+]

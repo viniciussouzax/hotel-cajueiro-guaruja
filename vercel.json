@@ -1,7 +1,7 @@
 {
   "git": {
     "deploymentEnabled": {
-      "main": true
+      "master": true
     }
   },
   "crons": [
@@ -9,6 +9,9 @@
       "path": "/api/cron/process-sequences",
       "schedule": "0 8 * * *"
     }
+  ],
+  "redirects": [
+    { "source": "/contato-hotel-cajueiro-guaruja", "destination": "/contato", "permanent": true }
   ],
   "rewrites": [
     { "source": "/search/:term", "destination": "/search?q=:term" }
