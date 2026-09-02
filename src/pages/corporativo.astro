@@ -1,0 +1,275 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { readData } from '../lib/readData';
+
+const siteConfig = readData('siteConfig.json');
+
+// Contato corporativo (dedicado).
+const corpEmail = 'corporativo@hotelcajueiroguaruja.com.br';
+const waDigits = '5513991439331';
+const waMsg = encodeURIComponent('Olá! Quero uma proposta de hospedagem corporativa para minha equipe no Hotel Cajueiro (Guarujá/Santos).');
+const waUrl = `https://wa.me/${waDigits}?text=${waMsg}`;
+const endereco = 'Rua Avedis Simonian, 1177, Tombo/Guaiúba, Guarujá/SP';
+const mapQuery = encodeURIComponent('Hotel Cajueiro Guarujá ' + endereco);
+const mapEmbed = `https://www.google.com/maps?q=${mapQuery}&z=15&output=embed`;
+const mapHref = `https://www.google.com/maps/search/?api=1&query=${mapQuery}`;
+
+const diferenciais = [
+  { icon: 'invoice', title: 'Contrato flexível', text: 'Condições especiais para pagamento no ato da reserva ou faturamento por CNPJ, mediante análise prévia.' },
+  { icon: 'clock', title: 'Sem fidelidade', text: 'Não há prazo mínimo obrigatório, podendo ser reservado a partir de uma diária por hóspede.' },
+  { icon: 'tag', title: 'Tarifas acessíveis', text: 'Economia sem abrir mão da qualidade e do mesmo padrão de conforto oferecido ao público de lazer.' },
+];
+
+const perfis = [
+  { title: 'Viagens corporativas', text: 'Para profissionais que vêm à região por alguns dias e buscam uma hospedagem confortável, bem localizada e sem complicações durante a agenda de trabalho.', tag: 'Curta duração' },
+  { title: 'Projetos e obras', text: 'Para equipes envolvidas em operações, obras e projetos na região, com a estrutura necessária para transformar semanas ou meses de trabalho em uma estadia mais confortável.', tag: 'Semanas a meses' },
+  { title: 'Relocação e longa permanência', text: 'Para profissionais em transição, transferência ou novos desafios na região, com a flexibilidade necessária para permanecer pelo tempo que for preciso.', tag: 'Longa permanência' },
+];
+
+const suites = [
+  { nome: 'Suíte com varanda', img: '/images/corp-2.jpg', desc: 'Cama de casal e uma varanda exclusiva, para quem prefere mais espaço e um ambiente para relaxar ao fim do dia.' },
+  { nome: 'Suíte casal', img: '/images/corp-3.jpg', desc: 'Cama de casal em um ambiente aconchegante, ideal para uma estadia confortável e uma boa noite de sono.' },
+  { nome: 'Suíte dupla', img: '/images/corp-4.jpg', desc: 'Duas camas de solteiro, ideal para quem viaja acompanhado, prática e confortável para a rotina de trabalho.' },
+  { nome: 'Suíte dupla com varanda', img: '/images/corp-5.jpg', desc: 'Duas camas de solteiro com a vantagem de uma varanda exclusiva, para relaxar ao ar livre depois do trabalho.' },
+  { nome: 'Suíte tripla', img: '/images/corp-6.jpg', desc: 'Três camas em um ambiente amplo, ideal para acomodar a equipe junta, com todo o conforto para o descanso.' },
+];
+
+const amenities = [
+  'Café da manhã completo', 'Jantar (meia ou pensão completa)', 'Piscina', 'Wi-Fi',
+  'Espaço de trabalho exclusivo', 'Vagas rotativas para carros na propriedade', 'Vagas gratuitas na rua em frente ao hotel',
+  'Ar-condicionado', 'Frigobar', 'Suítes com ou sem varanda', 'Guarda-roupas', 'Enxoval hoteleiro',
+  'Recepção 24h', 'Limpeza diária',
+];
+
+const galeria = [
+  { img: '/images/corp-7.jpg', alt: 'Piscina', big: true },
+  { img: '/images/corp-8.jpg', alt: 'Café da manhã completo' },
+  { img: '/images/corp-9.jpg', alt: 'Acomodação confortável' },
+  { img: '/images/corp-10.jpg', alt: 'Espaço do café da manhã', wide: true },
+  { img: '/images/corp-11.jpg', alt: 'Chegada, na Guaiúba' },
+  { img: '/images/corp-12.jpg', alt: 'Suíte com varanda' },
+  { img: '/images/corp-13.jpg', alt: 'Quartos para equipes', wide: true },
+];
+
+const entorno = [
+  { title: 'Margem esquerda do Porto', text: 'No mesmo lado do Porto de Santos onde operam Santos Brasil e Embraport.' },
+  { title: 'Santos a uma travessia', text: 'Margem direita por balsa em cerca de 7 minutos (24h) ou pela Rodovia Cônego Domênico Rangoni.' },
+  { title: 'Região segura', text: 'Em uma das praias mais seguras do litoral paulista, com base em dados da SSP-SP.' },
+  { title: 'Bairro reservado', text: 'A praia do Tombo é uma área residencial arborizada e tranquila, para o descanso da equipe fora do expediente.' },
+  { title: 'A 100 m do mar', text: 'Cerca de 100 metros (3 minutos a pé) da Praia do Tombo.' },
+  { title: 'Praia Bandeira Azul', text: 'A Praia do Tombo é a única de São Paulo com o selo internacional Bandeira Azul, há 16 temporadas seguidas.' },
+  { title: 'Entre Astúrias e Guaiúba', text: 'Praias de mar calmo a curta distância, ideais para banho.' },
+  { title: 'Saúde e serviços', text: 'Pronto-socorro 24h, farmácias, supermercados, restaurantes e o Shopping La Plage a poucos minutos.' },
+];
+
+const ICON: Record<string, string> = {
+  invoice: '<rect x="4" y="3" width="16" height="18" rx="2"/><line x1="8" y1="8" x2="16" y2="8"/><line x1="8" y1="12" x2="16" y2="12"/><line x1="8" y1="16" x2="13" y2="16"/>',
+  clock: '<circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15.5 14"/>',
+  tag: '<path d="M20.59 13.41 13.42 20.58a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82Z"/><line x1="7" y1="7" x2="7.01" y2="7"/>',
+  pin: '<path d="M21 10c0 6-9 12-9 12s-9-6-9-12a9 9 0 0 1 18 0Z"/><circle cx="12" cy="10" r="3"/>',
+  check: '<polyline points="20 6 9 17 4 12"/>',
+};
+
+const ctaBtn = 'inline-flex items-center justify-center min-h-[52px] px-8 rounded-[200px] bg-[#cf3a23] text-white text-[15px] font-semibold uppercase tracking-wide no-underline hover:brightness-95 transition-[filter]';
+---
+
+<BaseLayout title={`Corporativo · ${siteConfig.name}`} description="Hospedagem corporativa no Hotel Cajueiro, a 100 metros da Praia do Tombo no Guarujá. Café da manhã incluso, jantar opcional, faturamento por CNPJ e recepção 24h.">
+
+  <!-- ===== HERO ===== -->
+  <section>
+    <div class="container-x pt-16 md:pt-24 pb-12 md:pb-20">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
+        <div>
+          <p class="mono uppercase text-primary mb-4">A 100m da Praia do Tombo</p>
+          <h1 class="font-display text-4xl md:text-5xl xl:text-6xl font-semibold tracking-tight text-ink leading-[1.05] mb-6">
+            Estrutura funcional completa e confortável para profissionais
+          </h1>
+          <p class="text-lg text-ink-muted leading-relaxed max-w-xl mb-8">
+            Hospedagem de qualidade para o descanso após a jornada de trabalho, com café da manhã incluso, jantar à la carte opcional, vagas rotativas para carros na propriedade, localização privilegiada e recepção 24h.
+          </p>
+          <a href={waUrl} target="_blank" rel="noopener" class={ctaBtn}>Falar com consultor</a>
+          <p class="mt-4 text-sm text-ink-faint">Prefere e-mail? <a href={`mailto:${corpEmail}`} class="text-ink underline-offset-2 hover:text-primary">{corpEmail}</a></p>
+        </div>
+        <div class="relative">
+          <img src="/images/corp-1.jpg" alt="Hotel Cajueiro, hospedagem corporativa no Guarujá" class="w-full rounded-2xl object-cover aspect-[4/3] shadow-xl" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== DIFERENCIAIS ===== -->
+  <section class="bg-elev">
+    <div class="container-x py-14 md:py-20">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-10">
+        {diferenciais.map((d) => (
+          <div class="flex items-start gap-4">
+            <span class="shrink-0 w-11 h-11 rounded-full bg-surface flex items-center justify-center text-primary">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" set:html={ICON[d.icon]} />
+            </span>
+            <div>
+              <h3 class="font-display text-xl font-semibold text-ink mb-1.5">{d.title}</h3>
+              <p class="text-ink-muted leading-relaxed">{d.text}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== PARA QUEM É ===== -->
+  <section>
+    <div class="container-x py-16 md:py-24">
+      <div class="max-w-2xl mb-10 md:mb-14">
+        <p class="mono uppercase text-primary mb-3">para quem é</p>
+        <h2 class="font-display text-3xl md:text-4xl font-semibold tracking-tight text-ink leading-tight mb-4">Da diária à longa permanência</h2>
+        <p class="text-lg text-ink-muted leading-relaxed">O Hotel Cajueiro atende empresas e profissionais em diferentes necessidades de hospedagem, da diária à longa permanência.</p>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {perfis.map((p) => (
+          <div class="bg-surface rounded-2xl border border-rule/60 p-7 flex flex-col">
+            <h3 class="font-display text-xl font-semibold text-ink mb-3">{p.title}</h3>
+            <p class="text-ink-muted leading-relaxed flex-1">{p.text}</p>
+            <span class="mono uppercase text-xs text-primary mt-5">{p.tag}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== ACOMODAÇÕES ===== -->
+  <section class="bg-elev">
+    <div class="container-x py-16 md:py-24">
+      <div class="max-w-2xl mb-10 md:mb-14">
+        <p class="mono uppercase text-primary mb-3">Acomodações</p>
+        <h2 class="font-display text-3xl md:text-4xl font-semibold tracking-tight text-ink leading-tight mb-4">Suítes pensadas para descansar de verdade</h2>
+        <p class="text-lg text-ink-muted leading-relaxed">O hotel conta com 62 suítes, todas as acomodações com ar-condicionado, enxoval completo, Wi-Fi e frigobar. Montamos a configuração ideal para a sua equipe, com suítes de casal a tripla.</p>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {suites.map((s) => (
+          <div class="bg-surface rounded-2xl border border-rule/60 overflow-hidden flex flex-col">
+            <img src={s.img} alt={s.nome} class="w-full aspect-[4/3] object-cover" />
+            <div class="p-6">
+              <h3 class="font-display text-lg font-semibold text-ink mb-2">{s.nome}</h3>
+              <p class="text-ink-muted leading-relaxed text-[15px]">{s.desc}</p>
+            </div>
+          </div>
+        ))}
+        <div class="rounded-2xl p-7 flex flex-col justify-center" style="background:#26331C; color:#F4EEDD;">
+          <h3 class="font-display text-xl font-semibold mb-3">Configuração para equipes</h3>
+          <p class="leading-relaxed mb-6" style="color:rgba(244,238,221,0.85);">Montamos as suítes conforme a sua operação: casal, duplas ou triplas, próximas umas das outras. Diga o tamanho da equipe e o período, e cuidamos do resto.</p>
+          <a href={waUrl} target="_blank" rel="noopener" class="inline-flex items-center justify-center min-h-[48px] px-6 rounded-[200px] bg-[#cf3a23] text-white text-sm font-semibold uppercase tracking-wide no-underline hover:brightness-95 transition-[filter] self-start">Falar com consultor</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== ESTRUTURA ===== -->
+  <section>
+    <div class="container-x py-16 md:py-24">
+      <div class="max-w-2xl mb-10 md:mb-14">
+        <p class="mono uppercase text-primary mb-3">estrutura</p>
+        <h2 class="font-display text-3xl md:text-4xl font-semibold tracking-tight text-ink leading-tight mb-4">O que o hotel oferece</h2>
+        <p class="text-lg text-ink-muted leading-relaxed">Na modalidade corporativa, sua empresa hospeda a equipe com esse conforto por uma tarifa pensada para estadias de trabalho, com a opção de incluir jantar além do café.</p>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+        {amenities.map((a) => (
+          <div class="flex items-center gap-3 bg-elev rounded-xl px-4 py-3.5">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="text-primary shrink-0" set:html={ICON.check} />
+            <span class="text-ink text-[15px] font-medium">{a}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== GALERIA ===== -->
+  <section class="bg-elev">
+    <div class="container-x py-16 md:py-24">
+      <div class="max-w-2xl mb-10 md:mb-14">
+        <p class="mono uppercase text-primary mb-3">Galeria</p>
+        <h2 class="font-display text-3xl md:text-4xl font-semibold tracking-tight text-ink leading-tight mb-4">Fotos</h2>
+        <p class="text-lg text-ink-muted leading-relaxed">Conforto, praticidade e atenção aos detalhes em cada ambiente.</p>
+      </div>
+      <div class="grid grid-cols-2 md:grid-cols-4 auto-rows-[150px] md:auto-rows-[190px] gap-3">
+        {galeria.map((g) => (
+          <div class={`overflow-hidden rounded-xl ${g.big ? 'col-span-2 row-span-2' : ''} ${g.wide ? 'col-span-2' : ''}`}>
+            <img src={g.img} alt={g.alt} loading="lazy" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500" />
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== ONDE ESTAMOS ===== -->
+  <section>
+    <div class="container-x py-16 md:py-24">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
+        <div>
+          <p class="mono uppercase text-primary mb-3">Onde estamos</p>
+          <h2 class="font-display text-3xl md:text-4xl font-semibold tracking-tight text-ink leading-tight mb-5">Praia do Tombo</h2>
+          <p class="text-lg text-ink-muted leading-relaxed">Em uma das melhores localizações do Guarujá, na praia do Tombo, o Hotel Cajueiro une a tranquilidade de uma região à beira-mar à proximidade dos principais acessos e pontos de interesse da região: um ponto de partida prático e seguro para a rotina de trabalho da sua equipe.</p>
+        </div>
+        <img src="/images/corp-14.jpg" alt="Praia do Tombo, Guarujá" class="w-full rounded-2xl object-cover aspect-[4/3] shadow-xl" />
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== ENTORNO ===== -->
+  <section class="bg-elev">
+    <div class="container-x py-16 md:py-24">
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+        {entorno.map((e) => (
+          <div class="bg-surface rounded-2xl border border-rule/60 p-6">
+            <span class="inline-flex w-9 h-9 rounded-full bg-elev items-center justify-center text-primary mb-4">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" set:html={ICON.pin} />
+            </span>
+            <h3 class="font-display text-base font-semibold text-ink mb-1.5">{e.title}</h3>
+            <p class="text-ink-muted text-[15px] leading-relaxed">{e.text}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== COMO CHEGAR ===== -->
+  <section>
+    <div class="container-x py-16 md:py-24">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-14 items-start">
+        <div>
+          <p class="mono uppercase text-primary mb-3">Como chegar</p>
+          <h2 class="font-display text-3xl md:text-4xl font-semibold tracking-tight text-ink leading-tight mb-5">Fácil acesso, pelos dois lados do porto</h2>
+          <p class="text-ink-muted mb-6">{endereco}</p>
+          <div class="space-y-5">
+            <div>
+              <h3 class="font-semibold text-ink mb-1">De Santos (Margem Direita)</h3>
+              <p class="text-ink-muted text-[15px]">Balsa pela Ponta da Praia (cerca de 7 minutos, 24h) ou pela Rodovia Cônego Domênico Rangoni.</p>
+            </div>
+            <div>
+              <h3 class="font-semibold text-ink mb-1">De São Paulo</h3>
+              <p class="text-ink-muted text-[15px]">Pelas rodovias Anchieta ou Imigrantes até a Baixada Santista, seguindo para o Guarujá.</p>
+            </div>
+            <div>
+              <h3 class="font-semibold text-ink mb-1">Vagas para carros</h3>
+              <p class="text-ink-muted text-[15px]">Rotativas na propriedade e gratuitas na rua em frente ao hotel.</p>
+            </div>
+          </div>
+          <a href={mapHref} target="_blank" rel="noopener" class="mt-7 inline-flex items-center justify-center min-h-[44px] px-6 rounded-[200px] bg-[#26331C] text-[#F4EEDD] text-sm font-semibold uppercase tracking-wide no-underline hover:brightness-110 transition-[filter]">Ver no mapa</a>
+        </div>
+        <div class="rounded-2xl overflow-hidden border border-rule/60 aspect-[4/3] lg:aspect-auto lg:h-full min-h-[320px]">
+          <iframe src={mapEmbed} title="Mapa do Hotel Cajueiro" loading="lazy" referrerpolicy="no-referrer-when-downgrade" class="w-full h-full" style="border:0;"></iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== CTA FINAL ===== -->
+  <section style="background:#55703A;">
+    <div class="container-x py-16 md:py-24 text-center">
+      <h2 class="font-display text-3xl md:text-4xl font-semibold tracking-tight text-white leading-tight mb-4">Solicite um orçamento agora</h2>
+      <p class="text-lg mb-8 max-w-2xl mx-auto" style="color:rgba(255,255,255,0.85);">Solicite uma proposta corporativa sob medida, sem compromisso.</p>
+      <a href={waUrl} target="_blank" rel="noopener" class={ctaBtn}>Falar com consultor</a>
+      <p class="mt-4 text-sm" style="color:rgba(255,255,255,0.75);">Prefere e-mail? <a href={`mailto:${corpEmail}`} class="text-white hover:underline">{corpEmail}</a></p>
+    </div>
+  </section>
+
+</BaseLayout>
