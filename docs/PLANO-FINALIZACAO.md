@@ -29,10 +29,16 @@
 - [x] Imagens (reutilizar corp-*/hero-tombo por ora; trocar por reais depois)
 - [x] Verificar build 200
 
-## Onda 4 — Fechamento
-- [ ] Build geral OK (todas as rotas 200)
-- [ ] Commit + push
-- [ ] Atualizar memória do projeto
+## Onda 4 — Fechamento (CONCLUÍDA)
+- [x] Build geral OK (todas as rotas 200; /contato-hotel-cajueiro-guaruja = 301)
+- [x] Corrigir títulos duplicados (BaseLayout já anexa "| nome") em corporativo, grupos e contato
+- [x] Commit + push
+- [x] Atualizar memória do projeto
+
+### Estado final (consolidado num único projeto)
+Menu: Início · Grupos e Excursões (`/grupos-e-excursoes`) · Corporativo (`/corporativo`) · Blog · Contato.
+Páginas públicas: index, corporativo, grupos-e-excursoes, contato, blog + categoria + 6 artigos SEO, privacidade, termos, search, 404.
+As landings corporativo e grupos agora são páginas DESTE projeto (não mais subdomínios/projetos Vercel separados).
 
 ## Pendências para DEPOIS (fora deste ciclo)
 - Fotos reais do hotel (hero e artigos usam placeholders).
