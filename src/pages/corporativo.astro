@@ -1,29 +1,65 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import CajuButton from '../components/CajuButton.astro';
 import { readData } from '../lib/readData';
 
 const siteConfig = readData('siteConfig.json');
 
-// Contato corporativo (dedicado).
-const corpEmail = 'corporativo@hotelcajueiroguaruja.com.br';
-const waDigits = '5513991439331';
+const company = siteConfig.name || 'Hotel Cajueiro';
+const cityName = 'Guarujá';
+const email = 'corporativo@hotelcajueiroguaruja.com.br';
+const waNumber = '5513991439331';
 const waMsg = encodeURIComponent('Olá! Quero uma proposta de hospedagem corporativa para minha equipe no Hotel Cajueiro (Guarujá/Santos).');
-const waUrl = `https://wa.me/${waDigits}?text=${waMsg}`;
-const endereco = 'Rua Avedis Simonian, 1177, Tombo/Guaiúba, Guarujá/SP';
-const mapQuery = encodeURIComponent('Hotel Cajueiro Guarujá ' + endereco);
-const mapEmbed = `https://www.google.com/maps?q=${mapQuery}&z=15&output=embed`;
-const mapHref = `https://www.google.com/maps/search/?api=1&query=${mapQuery}`;
+const waUrl = `https://wa.me/${waNumber}?text=${waMsg}`;
+const address = 'Rua Avedis Simonian, 1177, Tombo/Guaiúba, Guarujá/SP';
+const mapHref = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent('Hotel Cajueiro ' + address)}`;
+const mapEmbedSrc = `https://www.google.com/maps?q=${encodeURIComponent('Hotel Cajueiro ' + address)}&z=15&output=embed`;
+
+const ctaButton = 'Falar com consultor';
+
+const AICON: Record<string, string> = {
+  coffee: '<path d="M17 8h1a4 4 0 1 1 0 8h-1"/><path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4Z"/><line x1="6" y1="2" x2="6" y2="4.5"/><line x1="10" y1="2" x2="10" y2="4.5"/><line x1="14" y1="2" x2="14" y2="4.5"/>',
+  dinner: '<path d="M5 3v6a2 2 0 1 0 4 0V3"/><line x1="7" y1="9" x2="7" y2="21"/><path d="M17 3v18"/><path d="M17 3c-1.7 0-3 1.9-3 4.5S15.3 12 17 12"/>',
+  pool: '<path d="M2 16c1.5 0 1.5-1.5 3-1.5s1.5 1.5 3 1.5 1.5-1.5 3-1.5 1.5 1.5 3 1.5 1.5-1.5 3-1.5 1.5 1.5 3 1.5"/><path d="M2 11c1.5 0 1.5-1.5 3-1.5s1.5 1.5 3 1.5 1.5-1.5 3-1.5 1.5 1.5 3 1.5 1.5-1.5 3-1.5 1.5 1.5 3 1.5"/>',
+  ac: '<line x1="12" y1="2" x2="12" y2="22"/><line x1="4" y1="6.5" x2="20" y2="17.5"/><line x1="20" y1="6.5" x2="4" y2="17.5"/>',
+  wifi: '<path d="M2 8.8a15 15 0 0 1 20 0"/><path d="M5 12.5a10 10 0 0 1 14 0"/><path d="M8.5 16a5 5 0 0 1 7 0"/><line x1="12" y1="20" x2="12.01" y2="20"/>',
+  parking: '<rect x="3" y="3" width="18" height="18" rx="3"/><path d="M9 17V7h3.5a3 3 0 0 1 0 6H9"/>',
+  bed: '<path d="M2 4v16"/><path d="M2 9h16a3 3 0 0 1 3 3v8"/><path d="M2 16h19"/><path d="M6 9V6h6v3"/>',
+  clock: '<circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15.5 14"/>',
+  invoice: '<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><polyline points="14 2 14 8 20 8"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="16" y2="17"/>',
+  tag: '<path d="M12.586 2.586A2 2 0 0 0 11.172 2H4a2 2 0 0 0-2 2v7.172a2 2 0 0 0 .586 1.414l8.704 8.704a2.426 2.426 0 0 0 3.42 0l6.58-6.58a2.426 2.426 0 0 0 0-3.42z"/><circle cx="7.5" cy="7.5" r=".5" fill="currentColor"/>',
+  beach: '<circle cx="12" cy="12" r="4.2"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M5 5l1.5 1.5M17.5 17.5 19 19M19 5l-1.5 1.5M6.5 17.5 5 19"/>',
+  port: '<circle cx="12" cy="4.5" r="2.5"/><line x1="12" y1="7" x2="12" y2="22"/><path d="M5 13H2a10 10 0 0 0 20 0h-3"/>',
+  shield: '<path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/>',
+  ship: '<path d="M12 10.189V14"/><path d="M12 2v3"/><path d="M19 13V7a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v6"/><path d="M19.38 20A11.6 11.6 0 0 0 21 14l-8.188-3.639a2 2 0 0 0-1.624 0L3 14a11.6 11.6 0 0 0 2.81 7.76"/><path d="M2 21c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1 .6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/>',
+  flag: '<path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/>',
+  home: '<path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>',
+  aid: '<path d="M11 2a2 2 0 0 0-2 2v5H4a2 2 0 0 0-2 2v2a2 2 0 0 0 2 2h5v5a2 2 0 0 0 2 2h2a2 2 0 0 0 2-2v-5h5a2 2 0 0 0 2-2v-2a2 2 0 0 0-2-2h-5V4a2 2 0 0 0-2-2z"/>',
+  route: '<circle cx="6" cy="19" r="3"/><path d="M9 19h8.5a3.5 3.5 0 0 0 0-7h-11a3.5 3.5 0 0 1 0-7H15"/><circle cx="18" cy="5" r="3"/>',
+  fridge: '<rect x="5.5" y="2.5" width="13" height="19" rx="2"/><line x1="5.5" y1="10" x2="18.5" y2="10"/><line x1="8.5" y1="6" x2="8.5" y2="7.5"/><line x1="8.5" y1="13" x2="8.5" y2="15"/>',
+  linen: '<rect x="3" y="6.5" width="18" height="4.5" rx="1.2"/><rect x="3" y="13" width="18" height="4.5" rx="1.2"/><line x1="7" y1="6.5" x2="7" y2="11"/><line x1="7" y1="13" x2="7" y2="17.5"/>',
+  clean: '<path d="m12 3 1.7 4.8L18.5 9.5l-4.8 1.7L12 16l-1.7-4.8L5.5 9.5l4.8-1.7L12 3Z"/><path d="M18.5 14.5v3M17 16h3"/>',
+  laptop: '<path d="M20 16V7a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v9m16 0H4m16 0 1.28 2.55a1 1 0 0 1-.9 1.45H3.62a1 1 0 0 1-.9-1.45L4 16"/>',
+  closet: '<path d="M20.38 3.46 16 2a4 4 0 0 1-8 0L3.62 3.46a2 2 0 0 0-1.34 2.23l.58 3.47a1 1 0 0 0 .99.84H6v10c0 1.1.9 2 2 2h8a2 2 0 0 0 2-2V10h2.15a1 1 0 0 0 .99-.84l.58-3.47a2 2 0 0 0-1.34-2.23z"/>',
+  default: '<polyline points="20 6 9 17 4 12"/>',
+};
+
+const SVCICON = [
+  '<path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"/>',
+  '<path d="M10 10V5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v5"/><path d="M14 6a6 6 0 0 1 6 6v3"/><path d="M4 15v-3a6 6 0 0 1 6-6"/><rect x="2" y="15" width="20" height="4" rx="1"/>',
+  '<circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/>',
+];
 
 const diferenciais = [
-  { icon: 'invoice', title: 'Contrato flexível', text: 'Condições especiais para pagamento no ato da reserva ou faturamento por CNPJ, mediante análise prévia.' },
-  { icon: 'clock', title: 'Sem fidelidade', text: 'Não há prazo mínimo obrigatório, podendo ser reservado a partir de uma diária por hóspede.' },
-  { icon: 'tag', title: 'Tarifas acessíveis', text: 'Economia sem abrir mão da qualidade e do mesmo padrão de conforto oferecido ao público de lazer.' },
+  { icon: 'invoice', title: 'Contrato flexível', desc: 'Condições especiais para pagamento no ato da reserva ou faturamento por CNPJ, mediante análise prévia.' },
+  { icon: 'clock', title: 'Sem fidelidade', desc: 'Não há prazo mínimo obrigatório, podendo ser reservado a partir de uma diária por hóspede.' },
+  { icon: 'tag', title: 'Tarifas acessíveis', desc: 'Economia sem abrir mão da qualidade e do mesmo padrão de conforto oferecido ao público de lazer.' },
 ];
 
 const perfis = [
-  { title: 'Viagens corporativas', text: 'Para profissionais que vêm à região por alguns dias e buscam uma hospedagem confortável, bem localizada e sem complicações durante a agenda de trabalho.', tag: 'Curta duração' },
-  { title: 'Projetos e obras', text: 'Para equipes envolvidas em operações, obras e projetos na região, com a estrutura necessária para transformar semanas ou meses de trabalho em uma estadia mais confortável.', tag: 'Semanas a meses' },
-  { title: 'Relocação e longa permanência', text: 'Para profissionais em transição, transferência ou novos desafios na região, com a flexibilidade necessária para permanecer pelo tempo que for preciso.', tag: 'Longa permanência' },
+  { title: 'Viagens corporativas', desc: 'Para profissionais que vêm à região por alguns dias e buscam uma hospedagem confortável, bem localizada e sem complicações durante a agenda de trabalho.', tag: 'Curta duração' },
+  { title: 'Projetos e obras', desc: 'Para equipes envolvidas em operações, obras e projetos na região, com a estrutura necessária para transformar semanas ou meses de trabalho em uma estadia mais confortável.', tag: 'Semanas a meses' },
+  { title: 'Relocação e longa permanência', desc: 'Para profissionais em transição, transferência ou novos desafios na região, com a flexibilidade necessária para permanecer pelo tempo que for preciso.', tag: 'Longa permanência' },
 ];
 
 const suites = [
@@ -35,80 +71,84 @@ const suites = [
 ];
 
 const amenities = [
-  'Café da manhã completo', 'Jantar (meia ou pensão completa)', 'Piscina', 'Wi-Fi',
-  'Espaço de trabalho exclusivo', 'Vagas rotativas para carros na propriedade', 'Vagas gratuitas na rua em frente ao hotel',
-  'Ar-condicionado', 'Frigobar', 'Suítes com ou sem varanda', 'Guarda-roupas', 'Enxoval hoteleiro',
-  'Recepção 24h', 'Limpeza diária',
+  { icon: 'coffee', label: 'Café da manhã completo' },
+  { icon: 'dinner', label: 'Jantar (meia ou pensão completa)' },
+  { icon: 'pool', label: 'Piscina' },
+  { icon: 'wifi', label: 'Wi-Fi' },
+  { icon: 'laptop', label: 'Espaço de trabalho exclusivo' },
+  { icon: 'parking', label: 'Vagas rotativas para carros na propriedade' },
+  { icon: 'parking', label: 'Vagas gratuitas na rua em frente ao hotel' },
+  { icon: 'ac', label: 'Ar-condicionado' },
+  { icon: 'fridge', label: 'Frigobar' },
+  { icon: 'bed', label: 'Suítes com ou sem varanda' },
+  { icon: 'closet', label: 'Guarda-roupas' },
+  { icon: 'linen', label: 'Enxoval hoteleiro' },
+  { icon: 'clock', label: 'Recepção 24h' },
+  { icon: 'clean', label: 'Limpeza diária' },
 ];
 
 const galeria = [
-  { img: '/images/corp-7.jpg', alt: 'Piscina', big: true },
-  { img: '/images/corp-8.jpg', alt: 'Café da manhã completo' },
-  { img: '/images/corp-9.jpg', alt: 'Acomodação confortável' },
-  { img: '/images/corp-10.jpg', alt: 'Espaço do café da manhã', wide: true },
-  { img: '/images/corp-11.jpg', alt: 'Chegada, na Guaiúba' },
-  { img: '/images/corp-12.jpg', alt: 'Suíte com varanda' },
-  { img: '/images/corp-13.jpg', alt: 'Quartos para equipes', wide: true },
+  { n: 7, cap: 'Piscina', cls: 'col-span-2 row-span-2' },
+  { n: 8, cap: 'Café da manhã completo', cls: '' },
+  { n: 9, cap: 'Acomodação confortável', cls: '' },
+  { n: 10, cap: 'Espaço do café da manhã', cls: 'col-span-2' },
+  { n: 11, cap: 'Chegada, na Guaiúba', cls: '' },
+  { n: 12, cap: 'Suíte com varanda', cls: '' },
+  { n: 13, cap: 'Quartos para equipes', cls: 'col-span-2' },
 ];
 
 const entorno = [
-  { title: 'Margem esquerda do Porto', text: 'No mesmo lado do Porto de Santos onde operam Santos Brasil e Embraport.' },
-  { title: 'Santos a uma travessia', text: 'Margem direita por balsa em cerca de 7 minutos (24h) ou pela Rodovia Cônego Domênico Rangoni.' },
-  { title: 'Região segura', text: 'Em uma das praias mais seguras do litoral paulista, com base em dados da SSP-SP.' },
-  { title: 'Bairro reservado', text: 'A praia do Tombo é uma área residencial arborizada e tranquila, para o descanso da equipe fora do expediente.' },
-  { title: 'A 100 m do mar', text: 'Cerca de 100 metros (3 minutos a pé) da Praia do Tombo.' },
-  { title: 'Praia Bandeira Azul', text: 'A Praia do Tombo é a única de São Paulo com o selo internacional Bandeira Azul, há 16 temporadas seguidas.' },
-  { title: 'Entre Astúrias e Guaiúba', text: 'Praias de mar calmo a curta distância, ideais para banho.' },
-  { title: 'Saúde e serviços', text: 'Pronto-socorro 24h, farmácias, supermercados, restaurantes e o Shopping La Plage a poucos minutos.' },
+  { icon: 'port', title: 'Margem esquerda do Porto', desc: 'No mesmo lado do Porto de Santos onde operam Santos Brasil e Embraport.' },
+  { icon: 'ship', title: 'Santos a uma travessia', desc: 'Margem direita por balsa em cerca de 7 minutos (24h) ou pela Rodovia Cônego Domênico Rangoni.' },
+  { icon: 'shield', title: 'Região Segura', desc: 'Em uma das praias mais seguras do litoral paulista, com base em dados da SSP-SP.' },
+  { icon: 'home', title: 'Bairro reservado', desc: 'A praia do Tombo é uma área residencial arborizada e tranquila, para o descanso da equipe fora do expediente.' },
+  { icon: 'beach', title: 'A 100 m do mar', desc: 'Cerca de 100 metros (3 minutos a pé) da Praia do Tombo.' },
+  { icon: 'flag', title: 'Praia Bandeira Azul', desc: 'A Praia do Tombo é a única de São Paulo com o selo internacional Bandeira Azul, há 16 temporadas seguidas.' },
+  { icon: 'pool', title: 'Entre Astúrias e Guaiúba', desc: 'Praias de mar calmo a curta distância, ideais para banho.' },
+  { icon: 'aid', title: 'Saúde e serviços', desc: 'Pronto-socorro 24h, farmácias, supermercados, restaurantes e o Shopping La Plage a poucos minutos.' },
 ];
 
-const ICON: Record<string, string> = {
-  invoice: '<rect x="4" y="3" width="16" height="18" rx="2"/><line x1="8" y1="8" x2="16" y2="8"/><line x1="8" y1="12" x2="16" y2="12"/><line x1="8" y1="16" x2="13" y2="16"/>',
-  clock: '<circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15.5 14"/>',
-  tag: '<path d="M20.59 13.41 13.42 20.58a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82Z"/><line x1="7" y1="7" x2="7.01" y2="7"/>',
-  pin: '<path d="M21 10c0 6-9 12-9 12s-9-6-9-12a9 9 0 0 1 18 0Z"/><circle cx="12" cy="10" r="3"/>',
-  check: '<polyline points="20 6 9 17 4 12"/>',
-};
-
-const ctaBtn = 'inline-flex items-center justify-center min-h-[52px] px-8 rounded-[200px] bg-[#cf3a23] text-white text-[15px] font-semibold uppercase tracking-wide no-underline hover:brightness-95 transition-[filter]';
+const rotas = [
+  { icon: 'ship', t: 'De Santos (Margem Direita)', d: 'Balsa pela Ponta da Praia (cerca de 7 minutos, 24h) ou pela Rodovia Cônego Domênico Rangoni.' },
+  { icon: 'route', t: 'De São Paulo', d: 'Pelas rodovias Anchieta ou Imigrantes até a Baixada Santista, seguindo para o Guarujá.' },
+  { icon: 'parking', t: 'Vagas para carros', d: 'Rotativas na propriedade e gratuitas na rua em frente ao hotel.' },
+];
 ---
 
 <BaseLayout title="Corporativo" description="Hospedagem corporativa no Hotel Cajueiro, a 100 metros da Praia do Tombo no Guarujá. Café da manhã incluso, jantar opcional, faturamento por CNPJ e recepção 24h.">
 
-  <!-- ===== HERO ===== -->
-  <section>
-    <div class="container-x pt-16 md:pt-24 pb-12 md:pb-20">
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
+  <!-- ===================== HERO ===================== -->
+  <section class="bg-bg">
+    <div class="container-x pt-12 md:pt-16 pb-14 md:pb-20">
+      <div class="grid lg:grid-cols-2 gap-10 lg:gap-14 items-center">
         <div>
-          <p class="mono uppercase text-primary mb-4">A 100m da Praia do Tombo</p>
-          <h1 class="font-display text-4xl md:text-5xl xl:text-6xl font-semibold tracking-tight text-ink leading-[1.05] mb-6">
-            Estrutura funcional completa e confortável para profissionais
-          </h1>
-          <p class="text-lg text-ink-muted leading-relaxed max-w-xl mb-8">
-            Hospedagem de qualidade para o descanso após a jornada de trabalho, com café da manhã incluso, jantar à la carte opcional, vagas rotativas para carros na propriedade, localização privilegiada e recepção 24h.
-          </p>
-          <a href={waUrl} target="_blank" rel="noopener" class={ctaBtn}>Falar com consultor</a>
-          <p class="mt-4 text-sm text-ink-faint">Prefere e-mail? <a href={`mailto:${corpEmail}`} class="text-ink underline-offset-2 hover:text-primary">{corpEmail}</a></p>
+          <p class="text-xs font-bold uppercase tracking-[0.16em] text-cat-terracota mb-5">A 100m da Praia do Tombo</p>
+          <h1 class="font-display text-ink text-3xl md:text-4xl lg:text-[48px] font-bold leading-[1.05] tracking-tight">Estrutura funcional completa e confortável para profissionais</h1>
+          <p class="text-lg leading-relaxed text-ink-muted mt-6 max-w-xl">Hospedagem de qualidade para o descanso após a jornada de trabalho, com café da manhã incluso, jantar à la carte opcional, vagas rotativas para carros na propriedade, localização privilegiada e recepção 24h.</p>
+          <div class="flex flex-col items-start gap-4 mt-8">
+            <CajuButton href={waUrl} label={ctaButton} />
+            <span class="text-sm text-ink-faint">Prefere e-mail? <span class="text-primary font-semibold">{email}</span></span>
+          </div>
         </div>
         <div class="relative">
-          <img src="/images/corp-1.jpg" alt="Hotel Cajueiro, hospedagem corporativa no Guarujá" class="w-full rounded-2xl object-cover aspect-[4/3] shadow-xl" />
+          <img src="/images/corp-1.jpg" alt="Fachada do Hotel Cajueiro" width="1000" height="667" loading="eager" class="w-full h-72 md:h-96 lg:h-[500px] object-cover rounded-lg shadow-[0_34px_64px_-30px_rgba(60,45,25,.55)]" />
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ===== DIFERENCIAIS ===== -->
+  <!-- ===================== DIFERENCIAIS ===================== -->
   <section class="bg-elev">
-    <div class="container-x py-14 md:py-20">
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-10">
-        {diferenciais.map((d) => (
+    <div class="container-x py-10 md:py-12">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-10">
+        {diferenciais.map((f) => (
           <div class="flex items-start gap-4">
-            <span class="shrink-0 w-11 h-11 rounded-full bg-surface flex items-center justify-center text-primary">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" set:html={ICON[d.icon]} />
+            <span class="shrink-0 w-12 h-12 rounded-[20px] bg-cat-terracota/10 flex items-center justify-center">
+              <svg class="w-6 h-6 text-cat-terracota" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" set:html={AICON[f.icon] || AICON.default}></svg>
             </span>
             <div>
-              <h3 class="font-display text-xl font-semibold text-ink mb-1.5">{d.title}</h3>
-              <p class="text-ink-muted leading-relaxed">{d.text}</p>
+              <p class="font-display text-base md:text-lg font-bold text-ink leading-snug">{f.title}</p>
+              <p class="text-sm text-ink-muted leading-relaxed mt-1">{f.desc}</p>
             </div>
           </div>
         ))}
@@ -116,160 +156,293 @@ const ctaBtn = 'inline-flex items-center justify-center min-h-[52px] px-8 rounde
     </div>
   </section>
 
-  <!-- ===== PARA QUEM É ===== -->
-  <section>
+  <!-- ===================== PARA QUEM É ===================== -->
+  <section class="bg-bg">
     <div class="container-x py-16 md:py-24">
-      <div class="max-w-2xl mb-10 md:mb-14">
-        <p class="mono uppercase text-primary mb-3">para quem é</p>
-        <h2 class="font-display text-3xl md:text-4xl font-semibold tracking-tight text-ink leading-tight mb-4">Da diária à longa permanência</h2>
-        <p class="text-lg text-ink-muted leading-relaxed">O Hotel Cajueiro atende empresas e profissionais em diferentes necessidades de hospedagem, da diária à longa permanência.</p>
+      <div class="max-w-xl mb-12">
+        <p class="text-xs font-bold uppercase tracking-[0.16em] text-cat-terracota mb-3.5">para quem é</p>
+        <h2 class="font-display text-2xl md:text-3xl font-bold tracking-tight text-ink mb-4">Da diária à longa permanência</h2>
+        <p class="text-ink-muted leading-relaxed">O {company} atende empresas e profissionais em diferentes necessidades de hospedagem, da diária à longa permanência.</p>
       </div>
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        {perfis.map((p) => (
-          <div class="bg-surface rounded-2xl border border-rule/60 p-7 flex flex-col">
-            <h3 class="font-display text-xl font-semibold text-ink mb-3">{p.title}</h3>
-            <p class="text-ink-muted leading-relaxed flex-1">{p.text}</p>
-            <span class="mono uppercase text-xs text-primary mt-5">{p.tag}</span>
+        {perfis.map((svc, i) => (
+          <div class="flex flex-col bg-surface rounded-lg p-7 shadow-[0_22px_44px_-30px_rgba(60,45,25,.45)]">
+            <div class="w-14 h-14 rounded-xl bg-cat-terracota/10 flex items-center justify-center mb-6">
+              <svg class="w-7 h-7 text-cat-terracota" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" set:html={SVCICON[i % 3]}></svg>
+            </div>
+            <h3 class="font-display text-xl font-bold text-ink leading-tight mb-2.5">{svc.title}</h3>
+            <p class="text-sm text-ink-muted leading-relaxed flex-1">{svc.desc}</p>
+            <span class="inline-flex self-start items-center mt-5 px-3 py-1.5 rounded-[20px] text-[11px] font-bold uppercase tracking-wide bg-[#55703a] text-bg">{svc.tag}</span>
           </div>
         ))}
       </div>
     </div>
   </section>
 
-  <!-- ===== ACOMODAÇÕES ===== -->
+  <!-- ===================== ACOMODAÇÕES ===================== -->
   <section class="bg-elev">
     <div class="container-x py-16 md:py-24">
-      <div class="max-w-2xl mb-10 md:mb-14">
-        <p class="mono uppercase text-primary mb-3">Acomodações</p>
-        <h2 class="font-display text-3xl md:text-4xl font-semibold tracking-tight text-ink leading-tight mb-4">Suítes pensadas para descansar de verdade</h2>
-        <p class="text-lg text-ink-muted leading-relaxed">O hotel conta com 62 suítes, todas as acomodações com ar-condicionado, enxoval completo, Wi-Fi e frigobar. Montamos a configuração ideal para a sua equipe, com suítes de casal a tripla.</p>
+      <div class="max-w-xl mb-12">
+        <p class="text-xs font-bold uppercase tracking-[0.16em] text-cat-terracota mb-3.5">Acomodações</p>
+        <h2 class="font-display text-2xl md:text-3xl font-bold tracking-tight text-ink mb-4">Suítes pensadas para descansar de verdade</h2>
+        <p class="text-ink-muted leading-relaxed">O hotel conta com 62 suítes, todas as acomodações com ar-condicionado, enxoval completo, Wi-Fi e frigobar. Montamos a configuração ideal para a sua equipe, com suítes de casal a tripla.</p>
       </div>
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
         {suites.map((s) => (
-          <div class="bg-surface rounded-2xl border border-rule/60 overflow-hidden flex flex-col">
-            <img src={s.img} alt={s.nome} class="w-full aspect-[4/3] object-cover" />
+          <div class="bg-bg border border-border rounded-lg overflow-hidden shadow-[0_22px_44px_-32px_rgba(60,45,25,.4)] hover:-translate-y-1 transition-transform duration-300">
+            <img src={s.img} alt={s.nome} width="600" height="400" loading="lazy" class="w-full object-cover" style="height:200px" />
             <div class="p-6">
-              <h3 class="font-display text-lg font-semibold text-ink mb-2">{s.nome}</h3>
-              <p class="text-ink-muted leading-relaxed text-[15px]">{s.desc}</p>
+              <h3 class="text-lg font-bold text-ink mb-2">{s.nome}</h3>
+              <p class="text-sm text-ink-muted leading-relaxed">{s.desc}</p>
             </div>
           </div>
         ))}
-        <div class="rounded-2xl p-7 flex flex-col justify-center" style="background:#26331C; color:#F4EEDD;">
-          <h3 class="font-display text-xl font-semibold mb-3">Configuração para equipes</h3>
-          <p class="leading-relaxed mb-6" style="color:rgba(244,238,221,0.85);">Montamos as suítes conforme a sua operação: casal, duplas ou triplas, próximas umas das outras. Diga o tamanho da equipe e o período, e cuidamos do resto.</p>
-          <a href={waUrl} target="_blank" rel="noopener" class="inline-flex items-center justify-center min-h-[48px] px-6 rounded-[200px] bg-[#cf3a23] text-white text-sm font-semibold uppercase tracking-wide no-underline hover:brightness-95 transition-[filter] self-start">Falar com consultor</a>
+        <div class="bg-[#2C3A20] rounded-lg p-8 flex flex-col">
+          <div class="w-12 h-12 rounded-md bg-cat-ocre/15 flex items-center justify-center mb-5">
+            <svg class="w-6 h-6 text-cat-ocre" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" set:html={AICON.bed}></svg>
+          </div>
+          <h3 class="text-lg font-bold text-[#F4EEDD] mb-2.5">Configuração para equipes</h3>
+          <p class="text-sm leading-relaxed text-[#b9bea9] mb-6 flex-1">Montamos as suítes conforme a sua operação: casal, duplas ou triplas, próximas umas das outras. Diga o tamanho da equipe e o período, e cuidamos do resto.</p>
+          <CajuButton href={waUrl} label={ctaButton} class="self-start" />
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ===== ESTRUTURA ===== -->
-  <section>
+  <!-- ===================== ESTRUTURA ===================== -->
+  <section class="bg-bg">
     <div class="container-x py-16 md:py-24">
-      <div class="max-w-2xl mb-10 md:mb-14">
-        <p class="mono uppercase text-primary mb-3">estrutura</p>
-        <h2 class="font-display text-3xl md:text-4xl font-semibold tracking-tight text-ink leading-tight mb-4">O que o hotel oferece</h2>
-        <p class="text-lg text-ink-muted leading-relaxed">Na modalidade corporativa, sua empresa hospeda a equipe com esse conforto por uma tarifa pensada para estadias de trabalho, com a opção de incluir jantar além do café.</p>
+      <div class="mb-11">
+        <p class="text-xs font-bold uppercase tracking-[0.16em] text-cat-terracota mb-3.5">estrutura</p>
+        <h2 class="font-display text-2xl md:text-3xl font-bold tracking-tight text-ink mb-4">O que o hotel oferece</h2>
+        <p class="text-ink-muted leading-relaxed max-w-2xl">Na modalidade corporativa, sua empresa hospeda a equipe com esse conforto por uma tarifa pensada para estadias de trabalho, com a opção de incluir jantar além do café.</p>
       </div>
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+      <ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {amenities.map((a) => (
-          <div class="flex items-center gap-3 bg-elev rounded-xl px-4 py-3.5">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="text-primary shrink-0" set:html={ICON.check} />
-            <span class="text-ink text-[15px] font-medium">{a}</span>
-          </div>
+          <li class="flex items-center gap-3.5 bg-surface rounded-md px-5 py-4 shadow-[0_1px_2px_rgba(60,45,25,.06)]">
+            <svg class="w-5 h-5 shrink-0 text-cat-terracota" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" set:html={AICON[a.icon] || AICON.default}></svg>
+            <span class="text-sm font-medium text-ink leading-snug">{a.label}</span>
+          </li>
         ))}
-      </div>
+      </ul>
     </div>
   </section>
 
-  <!-- ===== GALERIA ===== -->
+  <!-- ===================== GALERIA ===================== -->
   <section class="bg-elev">
     <div class="container-x py-16 md:py-24">
-      <div class="max-w-2xl mb-10 md:mb-14">
-        <p class="mono uppercase text-primary mb-3">Galeria</p>
-        <h2 class="font-display text-3xl md:text-4xl font-semibold tracking-tight text-ink leading-tight mb-4">Fotos</h2>
-        <p class="text-lg text-ink-muted leading-relaxed">Conforto, praticidade e atenção aos detalhes em cada ambiente.</p>
+      <div class="max-w-xl mb-11">
+        <p class="text-xs font-bold uppercase tracking-[0.16em] text-cat-terracota mb-3.5">Galeria</p>
+        <h2 class="font-display text-2xl md:text-3xl font-bold tracking-tight text-ink mb-4">Fotos</h2>
+        <p class="text-ink-muted leading-relaxed">Conforto, praticidade e atenção aos detalhes em cada ambiente.</p>
       </div>
-      <div class="grid grid-cols-2 md:grid-cols-4 auto-rows-[150px] md:auto-rows-[190px] gap-3">
-        {galeria.map((g) => (
-          <div class={`overflow-hidden rounded-xl ${g.big ? 'col-span-2 row-span-2' : ''} ${g.wide ? 'col-span-2' : ''}`}>
-            <img src={g.img} alt={g.alt} loading="lazy" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500" />
-          </div>
+      <div class="grid grid-cols-2 md:grid-cols-4 auto-rows-[150px] md:auto-rows-[200px] gap-3.5">
+        {galeria.map((g, i) => (
+          <button type="button" data-gallery-open={i} aria-label={`Ampliar foto ${g.n}`}
+            class={`group block m-0 p-0 border-0 bg-transparent cursor-pointer rounded-md overflow-hidden shadow-[0_18px_40px_-28px_rgba(60,45,25,.5)] ${g.cls}`}>
+            <img src={`/images/corp-${g.n}.jpg`} alt={g.cap} loading="lazy" class={`w-full h-full object-cover transition-transform duration-500 group-hover:scale-105 ${(g.n === 10 || g.n === 13) ? 'object-bottom' : ''}`} />
+          </button>
         ))}
       </div>
     </div>
   </section>
 
-  <!-- ===== ONDE ESTAMOS ===== -->
-  <section>
-    <div class="container-x py-16 md:py-24">
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
+  <!-- ===================== ONDE ESTAMOS ===================== -->
+  <section class="bg-bg">
+    <div class="container-x pt-16 md:pt-24 pb-8 md:pb-10">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-14 items-start">
         <div>
-          <p class="mono uppercase text-primary mb-3">Onde estamos</p>
-          <h2 class="font-display text-3xl md:text-4xl font-semibold tracking-tight text-ink leading-tight mb-5">Praia do Tombo</h2>
-          <p class="text-lg text-ink-muted leading-relaxed">Em uma das melhores localizações do Guarujá, na praia do Tombo, o Hotel Cajueiro une a tranquilidade de uma região à beira-mar à proximidade dos principais acessos e pontos de interesse da região: um ponto de partida prático e seguro para a rotina de trabalho da sua equipe.</p>
+          <p class="text-xs font-bold uppercase tracking-[0.16em] text-cat-terracota mb-3.5">Onde estamos</p>
+          <h2 class="font-display text-2xl md:text-3xl font-bold tracking-tight text-ink mb-6">Praia do Tombo</h2>
+          <p class="text-ink-muted leading-relaxed mb-4">Em uma das melhores localizações do Guarujá, na praia do Tombo, o Hotel Cajueiro une a tranquilidade de uma região à beira-mar à proximidade dos principais acessos e pontos de interesse da região: um ponto de partida prático e seguro para a rotina de trabalho da sua equipe.</p>
         </div>
-        <img src="/images/corp-14.jpg" alt="Praia do Tombo, Guarujá" class="w-full rounded-2xl object-cover aspect-[4/3] shadow-xl" />
+        <aside>
+          <div class="rounded-lg overflow-hidden shadow-[0_30px_60px_-30px_rgba(60,45,25,.55)]">
+            <img src="/images/corp-14.jpg" alt="Praia do Tombo" width="800" height="600" loading="lazy" class="w-full object-cover" style="height:300px" />
+          </div>
+        </aside>
       </div>
     </div>
   </section>
 
-  <!-- ===== ENTORNO ===== -->
-  <section class="bg-elev">
-    <div class="container-x py-16 md:py-24">
+  <!-- ===================== LOCALIZAÇÃO ===================== -->
+  <section class="bg-bg">
+    <div class="container-x pt-8 md:pt-10 pb-16 md:pb-24">
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-        {entorno.map((e) => (
-          <div class="bg-surface rounded-2xl border border-rule/60 p-6">
-            <span class="inline-flex w-9 h-9 rounded-full bg-elev items-center justify-center text-primary mb-4">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" set:html={ICON.pin} />
+        {entorno.map((c) => (
+          <div class="bg-surface border border-border rounded-lg p-6 shadow-[0_1px_2px_rgba(60,45,25,.06)]">
+            <span class="inline-flex w-11 h-11 rounded-[20px] bg-cat-terracota/10 items-center justify-center mb-4">
+              <svg class="w-5 h-5 text-cat-terracota" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" set:html={AICON[c.icon] || AICON.default}></svg>
             </span>
-            <h3 class="font-display text-base font-semibold text-ink mb-1.5">{e.title}</h3>
-            <p class="text-ink-muted text-[15px] leading-relaxed">{e.text}</p>
+            <h3 class="font-display text-base font-bold text-ink mb-1.5">{c.title}</h3>
+            <p class="text-[13.5px] text-ink-muted leading-relaxed">{c.desc}</p>
           </div>
         ))}
       </div>
     </div>
   </section>
 
-  <!-- ===== COMO CHEGAR ===== -->
-  <section>
+  <!-- ===================== COMO CHEGAR ===================== -->
+  <section class="bg-elev">
     <div class="container-x py-16 md:py-24">
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-14 items-start">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-14 items-center">
         <div>
-          <p class="mono uppercase text-primary mb-3">Como chegar</p>
-          <h2 class="font-display text-3xl md:text-4xl font-semibold tracking-tight text-ink leading-tight mb-5">Fácil acesso, pelos dois lados do porto</h2>
-          <p class="text-ink-muted mb-6">{endereco}</p>
-          <div class="space-y-5">
-            <div>
-              <h3 class="font-semibold text-ink mb-1">De Santos (Margem Direita)</h3>
-              <p class="text-ink-muted text-[15px]">Balsa pela Ponta da Praia (cerca de 7 minutos, 24h) ou pela Rodovia Cônego Domênico Rangoni.</p>
-            </div>
-            <div>
-              <h3 class="font-semibold text-ink mb-1">De São Paulo</h3>
-              <p class="text-ink-muted text-[15px]">Pelas rodovias Anchieta ou Imigrantes até a Baixada Santista, seguindo para o Guarujá.</p>
-            </div>
-            <div>
-              <h3 class="font-semibold text-ink mb-1">Vagas para carros</h3>
-              <p class="text-ink-muted text-[15px]">Rotativas na propriedade e gratuitas na rua em frente ao hotel.</p>
-            </div>
+          <p class="text-xs font-bold uppercase tracking-[0.16em] text-cat-terracota mb-3.5">Como chegar</p>
+          <h2 class="font-display text-2xl md:text-3xl font-bold tracking-tight text-ink mb-5">Fácil acesso, pelos dois lados do porto</h2>
+          <div class="flex gap-2.5 items-start mb-6">
+            <svg class="w-5 h-5 mt-0.5 shrink-0 text-cat-terracota" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 10c0 6-9 12-9 12s-9-6-9-12a9 9 0 0 1 18 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+            <span class="text-[15px] leading-relaxed text-ink">{address}</span>
           </div>
-          <a href={mapHref} target="_blank" rel="noopener" class="mt-7 inline-flex items-center justify-center min-h-[44px] px-6 rounded-[200px] bg-[#26331C] text-[#F4EEDD] text-sm font-semibold uppercase tracking-wide no-underline hover:brightness-110 transition-[filter]">Ver no mapa</a>
+          <div class="flex flex-col gap-4 mb-7">
+            {rotas.map((r) => (
+              <div class="flex gap-3.5 items-start">
+                <span class="shrink-0 w-10 h-10 rounded-[20px] bg-cat-terracota/10 flex items-center justify-center">
+                  <svg class="w-5 h-5 text-cat-terracota" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" set:html={AICON[r.icon] || AICON.default}></svg>
+                </span>
+                <div>
+                  <div class="text-[15px] font-bold text-ink">{r.t}</div>
+                  <div class="text-[13.5px] text-ink-muted leading-relaxed">{r.d}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+          <a href={mapHref} target="_blank" rel="noopener" class="inline-flex items-center justify-center gap-2 min-h-[44px] px-6 rounded-[20px] bg-[#26331C] text-[#F4EEDD] text-sm font-semibold uppercase tracking-wide no-underline hover:brightness-110 transition-[filter]">
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 6-9 12-9 12s-9-6-9-12a9 9 0 0 1 18 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+            Ver no mapa
+          </a>
         </div>
-        <div class="rounded-2xl overflow-hidden border border-rule/60 aspect-[4/3] lg:aspect-auto lg:h-full min-h-[320px]">
-          <iframe src={mapEmbed} title="Mapa do Hotel Cajueiro" loading="lazy" referrerpolicy="no-referrer-when-downgrade" class="w-full h-full" style="border:0;"></iframe>
+        <div class="rounded-lg overflow-hidden border border-border shadow-[0_30px_60px_-30px_rgba(60,45,25,.55)]">
+          <iframe src={mapEmbedSrc} title={`Como chegar ao ${company}`} loading="lazy" referrerpolicy="no-referrer-when-downgrade" class="w-full block" style="border:0; height:380px;"></iframe>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ===== CTA FINAL ===== -->
-  <section style="background:#55703A;">
-    <div class="container-x py-16 md:py-24 text-center">
-      <h2 class="font-display text-3xl md:text-4xl font-semibold tracking-tight text-white leading-tight mb-4">Solicite um orçamento agora</h2>
-      <p class="text-lg mb-8 max-w-2xl mx-auto" style="color:rgba(255,255,255,0.85);">Solicite uma proposta corporativa sob medida, sem compromisso.</p>
-      <a href={waUrl} target="_blank" rel="noopener" class={ctaBtn}>Falar com consultor</a>
-      <p class="mt-4 text-sm" style="color:rgba(255,255,255,0.75);">Prefere e-mail? <a href={`mailto:${corpEmail}`} class="text-white hover:underline">{corpEmail}</a></p>
+  <!-- ===================== CTA FINAL ===================== -->
+  <section class="relative isolate overflow-hidden bg-primary">
+    <span aria-hidden="true" class="pointer-events-none absolute -left-24 -top-24 w-80 h-80 rounded-full border-[50px] border-white/[0.06]"></span>
+    <span aria-hidden="true" class="pointer-events-none absolute -right-16 -bottom-24 w-64 h-64 rounded-full bg-cat-terracota/20"></span>
+    <div class="container-x py-16 md:py-24 max-w-3xl text-center relative">
+      <h2 class="font-display text-3xl md:text-4xl font-bold tracking-tight text-bg leading-tight mb-4">Solicite um orçamento agora</h2>
+      <p class="text-lg text-[#eef3e7] leading-relaxed mb-9 max-w-xl mx-auto">Solicite uma proposta corporativa sob medida, sem compromisso.</p>
+      <div class="flex flex-col items-center gap-4">
+        <CajuButton href={waUrl} label={ctaButton} />
+        <span class="text-sm text-[#eef3e7]">Prefere e-mail? <span class="text-bg font-semibold">{email}</span></span>
+      </div>
     </div>
   </section>
+
+  <!-- ===================== LIGHTBOX DA GALERIA ===================== -->
+  <div id="gallery-lightbox" class="fixed inset-0 z-[60] hidden items-center justify-center bg-black/90 backdrop-blur-sm" role="dialog" aria-modal="true" aria-label="Visualizador de imagens">
+    <button type="button" id="gallery-close" aria-label="Fechar" class="absolute top-4 right-4 w-11 h-11 inline-flex items-center justify-center rounded-[20px] bg-white/10 text-white hover:bg-white/20 transition-colors">
+      <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+    </button>
+    <button type="button" id="gallery-prev" aria-label="Imagem anterior" class="absolute left-3 md:left-6 w-12 h-12 inline-flex items-center justify-center rounded-[20px] bg-white/10 text-white hover:bg-white/20 transition-colors">
+      <svg class="w-7 h-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+    </button>
+    <img id="gallery-img" src="" alt="" class="max-h-[88vh] max-w-[92vw] object-contain rounded-md shadow-2xl select-none" />
+    <button type="button" id="gallery-next" aria-label="Próxima imagem" class="absolute right-3 md:right-6 w-12 h-12 inline-flex items-center justify-center rounded-[20px] bg-white/10 text-white hover:bg-white/20 transition-colors">
+      <svg class="w-7 h-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+    </button>
+    <span id="gallery-counter" class="absolute bottom-5 left-1/2 -translate-x-1/2 text-white/80 text-sm font-medium"></span>
+  </div>
+
+  <!-- ===================== MODAL DE CONTATO ===================== -->
+  <div id="contact-modal" class="fixed inset-0 z-[70] hidden items-center justify-center bg-black/60 backdrop-blur-sm px-4" role="dialog" aria-modal="true" aria-label="Falar com consultor">
+    <div class="bg-[#55703a] rounded-lg shadow-[0_40px_80px_-20px_rgba(0,0,0,.45)] w-full max-w-md p-7 relative">
+      <button type="button" id="contact-close" aria-label="Fechar" class="absolute top-3.5 right-3.5 w-9 h-9 inline-flex items-center justify-center rounded-[20px] text-[#eef3e7] hover:bg-white/10 transition-colors">
+        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+      </button>
+      <h3 class="font-display text-2xl font-bold text-[#F4EEDD] mb-1.5">Fale com um consultor</h3>
+      <p class="text-sm text-[#cdd9bf] mb-6 leading-relaxed">Deixe seus dados e um de nossos consultores entrará em contato pelo WhatsApp.</p>
+      <form id="contact-form" class="flex flex-col gap-4" data-wa={waNumber}>
+        <label class="flex flex-col gap-1.5">
+          <span class="text-[13px] font-semibold text-[#F4EEDD]">Nome</span>
+          <input name="nome" type="text" required autocomplete="name" placeholder="Seu nome completo" class="h-11 w-full px-3.5 rounded-md bg-white text-ink text-[15px] outline-none border-2 border-transparent focus:border-cat-ocre transition-colors" />
+        </label>
+        <label class="flex flex-col gap-1.5">
+          <span class="text-[13px] font-semibold text-[#F4EEDD]">E-mail</span>
+          <input name="email" type="email" required autocomplete="email" placeholder="seu@email.com.br" class="h-11 w-full px-3.5 rounded-md bg-white text-ink text-[15px] outline-none border-2 border-transparent focus:border-cat-ocre transition-colors" />
+        </label>
+        <label class="flex flex-col gap-1.5">
+          <span class="text-[13px] font-semibold text-[#F4EEDD]">Telefone (WhatsApp)</span>
+          <input name="telefone" type="tel" required inputmode="tel" autocomplete="tel" placeholder="(13) 90000-0000" class="h-11 w-full px-3.5 rounded-md bg-white text-ink text-[15px] outline-none border-2 border-transparent focus:border-cat-ocre transition-colors" />
+        </label>
+        <CajuButton label="Confirmar" submit fullWidth class="mt-1" />
+      </form>
+    </div>
+  </div>
+
+  <script is:inline>
+    (function () {
+      // ---- Lightbox da galeria ----
+      var lb = document.getElementById('gallery-lightbox');
+      if (lb) {
+        var imgEl = document.getElementById('gallery-img');
+        var counter = document.getElementById('gallery-counter');
+        var btns = Array.prototype.slice.call(document.querySelectorAll('[data-gallery-open]'));
+        if (btns.length) {
+          var srcs = btns.map(function (b) { var im = b.querySelector('img'); return im ? im.getAttribute('src') : ''; });
+          var alts = btns.map(function (b) { var im = b.querySelector('img'); return im ? (im.getAttribute('alt') || '') : ''; });
+          var idx = 0;
+          var render = function () { imgEl.setAttribute('src', srcs[idx]); imgEl.setAttribute('alt', alts[idx]); if (counter) counter.textContent = (idx + 1) + ' / ' + srcs.length; };
+          var showImg = function (i) { idx = (i + srcs.length) % srcs.length; render(); };
+          var openAt = function (i) { showImg(i); lb.classList.remove('hidden'); lb.classList.add('flex'); document.body.style.overflow = 'hidden'; };
+          var closeLb = function () { lb.classList.add('hidden'); lb.classList.remove('flex'); document.body.style.overflow = ''; };
+          btns.forEach(function (b, i) { b.addEventListener('click', function () { openAt(i); }); });
+          var p = document.getElementById('gallery-prev'), n = document.getElementById('gallery-next'), c = document.getElementById('gallery-close');
+          if (p) p.addEventListener('click', function (e) { e.stopPropagation(); showImg(idx - 1); });
+          if (n) n.addEventListener('click', function (e) { e.stopPropagation(); showImg(idx + 1); });
+          if (c) c.addEventListener('click', closeLb);
+          lb.addEventListener('click', function (e) { if (e.target === lb) closeLb(); });
+          document.addEventListener('keydown', function (e) {
+            if (lb.classList.contains('hidden')) return;
+            if (e.key === 'Escape') closeLb();
+            else if (e.key === 'ArrowLeft') showImg(idx - 1);
+            else if (e.key === 'ArrowRight') showImg(idx + 1);
+          });
+          var sx = null;
+          lb.addEventListener('touchstart', function (e) { sx = e.touches[0].clientX; }, { passive: true });
+          lb.addEventListener('touchend', function (e) { if (sx === null) return; var dx = e.changedTouches[0].clientX - sx; if (Math.abs(dx) > 40) showImg(dx < 0 ? idx + 1 : idx - 1); sx = null; }, { passive: true });
+        }
+      }
+
+      // ---- Modal de contato ----
+      var modal = document.getElementById('contact-modal');
+      if (modal) {
+        var form = document.getElementById('contact-form');
+        var closeBtn = document.getElementById('contact-close');
+        var openModal = function () { modal.classList.remove('hidden'); modal.classList.add('flex'); document.body.style.overflow = 'hidden'; var f = form && form.querySelector('input'); if (f) setTimeout(function () { try { f.focus(); } catch (e) {} }, 60); };
+        var closeModal = function () { modal.classList.add('hidden'); modal.classList.remove('flex'); document.body.style.overflow = ''; };
+        Array.prototype.slice.call(document.querySelectorAll('[data-contact-open]')).forEach(function (b) {
+          b.addEventListener('click', function (e) { e.preventDefault(); openModal(); });
+        });
+        if (closeBtn) closeBtn.addEventListener('click', closeModal);
+        modal.addEventListener('click', function (e) { if (e.target === modal) closeModal(); });
+        document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !modal.classList.contains('hidden')) closeModal(); });
+        if (form) form.addEventListener('submit', function (e) {
+          e.preventDefault();
+          var submitBtn = form.querySelector('button[type="submit"]');
+          var d = new FormData(form);
+          var nome = (d.get('nome') || '').toString().trim();
+          var tel = (d.get('telefone') || '').toString().trim();
+          var mail = (d.get('email') || '').toString().trim();
+          var wa = form.getAttribute('data-wa') || '';
+          var linhas = ['Olá! Gostaria de uma proposta de hospedagem corporativa no Hotel Cajueiro.', ''];
+          if (nome) linhas.push('Nome: ' + nome);
+          if (tel) linhas.push('Telefone: ' + tel);
+          if (mail) linhas.push('E-mail: ' + mail);
+          var waLink = 'https://wa.me/' + wa + '?text=' + encodeURIComponent(linhas.join('\n'));
+          if (submitBtn) { submitBtn.setAttribute('disabled', ''); submitBtn.style.opacity = '0.7'; }
+          try {
+            fetch('https://formsubmit.co/ajax/corporativo@hotelcajueiroguaruja.com.br', {
+              method: 'POST', headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+              body: JSON.stringify({ _subject: 'Corporativo - Nova solicitacao (' + (nome || 'sem nome') + ')', _template: 'table', Modalidade: 'Corporativo', Nome: nome, Telefone: tel, 'E-mail': mail, Origem: 'Formulario do site - Hospedagem Corporativa' })
+            }).finally(function () { window.location.href = waLink; });
+          } catch (err) { window.location.href = waLink; }
+        });
+      }
+    })();
+  </script>
 
 </BaseLayout>
