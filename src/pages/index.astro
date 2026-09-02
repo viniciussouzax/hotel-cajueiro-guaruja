@@ -362,7 +362,7 @@ const mapHref = `https://www.google.com/maps/search/?api=1&query=${mapQuery}`;
         }
         .cal-pop { left: 0; padding: 2.6rem 1.25rem 1rem; width: min(640px, 94vw); }
         .guests-pop { right: 0; padding: .35rem .25rem .7rem; width: min(340px, 92vw); }
-        @media (max-width: 1023px) { .cal-pop { left: 0; } }
+        @media (max-width: 1023px) { .cal-pop { left: 50%; transform: translateX(-50%); } }
 
         .cal-months { display: grid; grid-template-columns: 1fr; gap: 1.75rem; }
         @media (min-width: 640px) { .cal-months { grid-template-columns: 1fr 1fr; } }
