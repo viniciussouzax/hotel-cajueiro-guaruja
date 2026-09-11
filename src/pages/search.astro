@@ -28,8 +28,27 @@ const results = q
       <p class="mono text-ink-muted">
         {q
           ? `${results.length} ${results.length === 1 ? 'resultado' : 'resultados'}`
-          : 'use a busca no menu'}
+          : 'digite abaixo o que você procura'}
       </p>
+
+      <!-- Campo de busca: antes a página mandava usar a busca do menu, que não existe. -->
+      <form action="/search" method="get" role="search" class="mt-7 flex gap-2 max-w-xl">
+        <label for="q" class="sr-only">Buscar no site</label>
+        <input
+          id="q"
+          name="q"
+          type="search"
+          value={q}
+          placeholder="praia, café da manhã, suítes..."
+          class="flex-1 min-w-0 rounded-[200px] bg-surface border border-rule px-5 py-3 text-ink outline-none transition-colors focus:border-[#cf3a23] placeholder:text-ink-faint"
+        />
+        <button
+          type="submit"
+          class="inline-flex items-center justify-center min-h-[48px] px-6 rounded-[200px] bg-[#cf3a23] text-bg text-sm font-semibold uppercase tracking-wide hover:brightness-95 transition-[filter] shrink-0"
+        >
+          Buscar
+        </button>
+      </form>
     </div>
   </section>
 
