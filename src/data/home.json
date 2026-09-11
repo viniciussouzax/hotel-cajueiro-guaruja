@@ -54,11 +54,31 @@
     "text": "O hotel conta com 62 suítes, todas com ar-condicionado, enxoval completo, Wi-Fi e frigobar. Escolha a acomodação ideal para a sua viagem, de casal a tripla.",
     "cta": "Escolha a sua",
     "suites": [
-      { "nome": "Suíte com varanda", "img": "/images/suite-2.jpg", "desc": "Cama de casal e uma varanda exclusiva, para quem prefere mais espaço e um ambiente para relaxar ao fim do dia." },
-      { "nome": "Suíte casal", "img": "/images/suite-3.jpg", "desc": "Cama de casal em um ambiente aconchegante, ideal para uma estadia confortável e uma boa noite de sono." },
-      { "nome": "Suíte dupla", "img": "/images/suite-4.jpg", "desc": "Duas camas de solteiro, ideal para quem viaja acompanhado, prática e confortável para o dia a dia." },
-      { "nome": "Suíte dupla com varanda", "img": "/images/suite-5.jpg", "desc": "Duas camas de solteiro com a vantagem de uma varanda exclusiva, para relaxar ao ar livre." },
-      { "nome": "Suíte tripla", "img": "/images/suite-6.jpg", "desc": "Três camas em um ambiente amplo, ideal para acomodar todos juntos, com todo o conforto para o descanso." }
+      {
+        "nome": "Suíte com varanda",
+        "img": "/images/suite-2.jpg",
+        "desc": "Cama de casal e uma varanda exclusiva, para quem prefere mais espaço e um ambiente para relaxar ao fim do dia."
+      },
+      {
+        "nome": "Suíte casal",
+        "img": "/images/suite-3.jpg",
+        "desc": "Cama de casal em um ambiente aconchegante, ideal para uma estadia confortável e uma boa noite de sono."
+      },
+      {
+        "nome": "Suíte dupla",
+        "img": "/images/suite-4.jpg",
+        "desc": "Duas camas de solteiro, ideal para quem viaja acompanhado, prática e confortável para o dia a dia."
+      },
+      {
+        "nome": "Suíte dupla com varanda",
+        "img": "/images/suite-5.jpg",
+        "desc": "Duas camas de solteiro com a vantagem de uma varanda exclusiva, para relaxar ao ar livre."
+      },
+      {
+        "nome": "Suíte tripla",
+        "img": "/images/suite-6.jpg",
+        "desc": "Três camas em um ambiente amplo, ideal para acomodar todos juntos, com todo o conforto para o descanso."
+      }
     ],
     "destaque": {
       "title": "Não encontrou a ideal?",
@@ -71,20 +91,62 @@
     "title": "O que o hotel oferece",
     "text": "Tudo o que você precisa para uma estadia tranquila e confortável, do café da manhã artesanal à recepção 24 horas.",
     "itens": [
-      { "icon": "coffee", "label": "Café da manhã completo" },
-      { "icon": "dinner", "label": "Jantar (meia ou pensão completa)" },
-      { "icon": "pool", "label": "Piscina" },
-      { "icon": "wifi", "label": "Wi-Fi" },
-      { "icon": "laptop", "label": "Espaço de trabalho exclusivo" },
-      { "icon": "parking", "label": "Vagas rotativas para carros na propriedade" },
-      { "icon": "parking", "label": "Vagas gratuitas na rua em frente ao hotel" },
-      { "icon": "ac", "label": "Ar-condicionado" },
-      { "icon": "fridge", "label": "Frigobar" },
-      { "icon": "bed", "label": "Suítes com ou sem varanda" },
-      { "icon": "closet", "label": "Guarda-roupas" },
-      { "icon": "linen", "label": "Enxoval hoteleiro" },
-      { "icon": "clock", "label": "Recepção 24h" },
-      { "icon": "clean", "label": "Limpeza diária" }
+      {
+        "icon": "coffee",
+        "label": "Café da manhã completo"
+      },
+      {
+        "icon": "dinner",
+        "label": "Jantar (meia ou pensão completa)"
+      },
+      {
+        "icon": "pool",
+        "label": "Piscina"
+      },
+      {
+        "icon": "wifi",
+        "label": "Wi-Fi"
+      },
+      {
+        "icon": "laptop",
+        "label": "Espaço de trabalho exclusivo"
+      },
+      {
+        "icon": "parking",
+        "label": "Vagas rotativas para carros na propriedade"
+      },
+      {
+        "icon": "parking",
+        "label": "Vagas gratuitas na rua em frente ao hotel"
+      },
+      {
+        "icon": "ac",
+        "label": "Ar-condicionado"
+      },
+      {
+        "icon": "fridge",
+        "label": "Frigobar"
+      },
+      {
+        "icon": "bed",
+        "label": "Suítes com ou sem varanda"
+      },
+      {
+        "icon": "closet",
+        "label": "Guarda-roupas"
+      },
+      {
+        "icon": "linen",
+        "label": "Enxoval hoteleiro"
+      },
+      {
+        "icon": "clock",
+        "label": "Recepção 24h"
+      },
+      {
+        "icon": "clean",
+        "label": "Limpeza diária"
+      }
     ]
   },
   "piscina": {
@@ -101,12 +163,30 @@
     "subtitle": "Conforto, atendimento impecável e a melhor localização.",
     "cta": "Nós garantimos o melhor preço!",
     "items": [
-      { "title": "Restaurantes", "text": "Veja nossas dicas de lugares deliciosos para desfrutar da culinária local!" },
-      { "title": "Piscina", "text": "Desfrute de uma tarde agradável com um drink à beira da piscina." },
-      { "title": "Praia", "text": "A Praia do Tombo é famosa por sua beleza. Descanse em barracas na praia com todo o conforto que merece." },
-      { "title": "Varanda", "text": "Escolha suíte com varanda para mais espaço." },
-      { "title": "Café da Manhã", "text": "Nosso café da manhã é preparado artesanalmente todos os dias." },
-      { "title": "Sol", "text": "É sem dúvida o protagonista de qualquer viagem para o Guarujá." }
+      {
+        "title": "Restaurantes",
+        "text": "Veja nossas dicas de lugares deliciosos para desfrutar da culinária local!"
+      },
+      {
+        "title": "Piscina",
+        "text": "Desfrute de uma tarde agradável com um drink à beira da piscina."
+      },
+      {
+        "title": "Praia",
+        "text": "A Praia do Tombo é famosa por sua beleza. Descanse em barracas na praia com todo o conforto que merece."
+      },
+      {
+        "title": "Varanda",
+        "text": "Escolha suíte com varanda para mais espaço."
+      },
+      {
+        "title": "Café da Manhã",
+        "text": "Nosso café da manhã é preparado artesanalmente todos os dias."
+      },
+      {
+        "title": "Sol",
+        "text": "É sem dúvida o protagonista de qualquer viagem para o Guarujá."
+      }
     ]
   },
   "depoimentos": [
@@ -120,9 +200,18 @@
     "title": "Fácil acesso, pelos dois lados do porto",
     "endereco": "Rua Avedis Simonian, 1177 - Guaiuba, Guarujá/SP, CEP 11421-060",
     "acessos": [
-      { "titulo": "De Santos (Margem Direita)", "texto": "Balsa pela Ponta da Praia (cerca de 7 minutos, 24h) ou pela Rodovia Cônego Domênico Rangoni." },
-      { "titulo": "De São Paulo", "texto": "Pelas rodovias Anchieta ou Imigrantes até a Baixada Santista, seguindo para o Guarujá." },
-      { "titulo": "Vagas para carros", "texto": "Rotativas na propriedade e gratuitas na rua em frente ao hotel." }
+      {
+        "titulo": "De Santos (Margem Direita)",
+        "texto": "Balsa pela Ponta da Praia (cerca de 7 minutos, 24h) ou pela Rodovia Cônego Domênico Rangoni."
+      },
+      {
+        "titulo": "De São Paulo",
+        "texto": "Pelas rodovias Anchieta ou Imigrantes até a Baixada Santista, seguindo para o Guarujá."
+      },
+      {
+        "titulo": "Vagas para carros",
+        "texto": "Rotativas na propriedade e gratuitas na rua em frente ao hotel."
+      }
     ]
   },
   "cta": {
@@ -151,5 +240,95 @@
       "q": "Como consigo o melhor preço?",
       "a": "Reservando direto pelo nosso site você sempre garante o melhor preço, sem intermediários."
     }
-  ]
+  ],
+  "galeria": {
+    "eyebrow": "Galeria",
+    "title": "O hotel por dentro",
+    "text": "Piscina, café da manhã, suítes e a rua do hotel, a uma quadra da Praia do Tombo.",
+    "fotos": [
+      {
+        "n": 7,
+        "cap": "Piscina com bar",
+        "cls": "col-span-2 row-span-2"
+      },
+      {
+        "n": 8,
+        "cap": "Café da manhã artesanal",
+        "cls": ""
+      },
+      {
+        "n": 9,
+        "cap": "Suíte confortável",
+        "cls": ""
+      },
+      {
+        "n": 10,
+        "cap": "Espaço do café da manhã",
+        "cls": "col-span-2"
+      },
+      {
+        "n": 11,
+        "cap": "A caminho da praia",
+        "cls": ""
+      },
+      {
+        "n": 12,
+        "cap": "Suíte com varanda",
+        "cls": ""
+      },
+      {
+        "n": 13,
+        "cap": "Quartos para a família toda",
+        "cls": "col-span-2"
+      }
+    ]
+  },
+  "entorno": {
+    "eyebrow": "Arredores",
+    "title": "O que você tem por perto",
+    "text": "A Praia do Tombo é uma área residencial arborizada, com serviço e comércio no mesmo quarteirão.",
+    "itens": [
+      {
+        "icon": "beach",
+        "title": "A 100 m do mar",
+        "desc": "Cerca de 3 minutos a pé até a faixa de areia da Praia do Tombo."
+      },
+      {
+        "icon": "flag",
+        "title": "Praia Bandeira Azul",
+        "desc": "O Tombo é a única praia de São Paulo com o selo internacional Bandeira Azul, há 16 temporadas seguidas."
+      },
+      {
+        "icon": "aid",
+        "title": "Serviços no quarteirão",
+        "desc": "Farmácia, mercado, restaurantes e pronto-socorro 24h a poucos minutos."
+      },
+      {
+        "icon": "shield",
+        "title": "Região tranquila",
+        "desc": "Uma das praias mais seguras do litoral paulista, segundo dados da SSP-SP."
+      }
+    ]
+  },
+  "modalidades": {
+    "eyebrow": "Outras formas de se hospedar",
+    "title": "Viaja a trabalho ou em grupo?",
+    "text": "O Cajueiro tem condições próprias para equipes de empresas e para excursões, com tarifa e configuração de suítes sob medida.",
+    "itens": [
+      {
+        "icon": "briefcase",
+        "title": "Hospedagem corporativa",
+        "desc": "Tarifa para estadias de trabalho, café da manhã incluso, jantar à la carte opcional e recepção 24h.",
+        "cta": "Ver condições corporativas",
+        "href": "/corporativo"
+      },
+      {
+        "icon": "users",
+        "title": "Grupos e excursões",
+        "desc": "Suítes próximas umas das outras, café da manhã para o grupo todo e apoio na organização da viagem.",
+        "cta": "Ver condições para grupos",
+        "href": "/grupos-e-excursoes"
+      }
+    ]
+  }
 }
