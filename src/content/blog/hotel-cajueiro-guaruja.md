@@ -2,7 +2,7 @@
 title: "Hotel Cajueiro no Guarujá: estrutura, piscina e localização na Praia do Tombo"
 description: "Conheça o Hotel Cajueiro, a 100 metros da Praia do Tombo no Guarujá. Piscina com bar, café da manhã artesanal, recepção 24h e a melhor localização para a sua estadia."
 pubDate: "2026-09-02"
-heroImage: "/images/hero-tombo.jpg"
+heroImage: "/images/corp-1.jpg"
 category: "Hospedagem"
 author: "Equipe Hotel Cajueiro"
 ---

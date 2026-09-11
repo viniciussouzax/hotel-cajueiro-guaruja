@@ -2,7 +2,7 @@
 title: "Café da manhã do Hotel Cajueiro Guarujá: artesanal e todos os dias"
 description: "O café da manhã do Hotel Cajueiro é preparado artesanalmente todos os dias e está incluso na diária. A melhor forma de começar o dia antes da Praia do Tombo."
 pubDate: "2026-09-02"
-heroImage: "/images/hero-tombo.jpg"
+heroImage: "/images/corp-8.jpg"
 category: "Gastronomia"
 author: "Equipe Hotel Cajueiro"
 ---

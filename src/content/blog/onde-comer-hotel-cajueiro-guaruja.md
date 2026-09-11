@@ -2,7 +2,7 @@
 title: "Onde comer no Guarujá: dicas perto da Praia do Tombo e do Hotel Cajueiro"
 description: "Dicas de onde comer no Guarujá perto da Praia do Tombo: quiosques na areia, frutos do mar e restaurantes a poucos minutos do Hotel Cajueiro."
 pubDate: "2026-09-02"
-heroImage: "/images/hero-tombo.jpg"
+heroImage: "/images/corp-10.jpg"
 category: "Gastronomia"
 author: "Equipe Hotel Cajueiro"
 ---

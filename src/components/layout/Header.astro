@@ -71,13 +71,13 @@ const { transparent = false } = Astro.props;
 
     <div class="flex items-center gap-1">
       {waUrl && (
-        <div class="hidden sm:flex items-center mr-1">
-          <img src="/images/caju.avif" alt="" aria-hidden="true" width="126" height="104" class="h-9 md:h-[2.85rem] w-auto -mr-3 md:-mr-4 relative z-10 pointer-events-none select-none -scale-x-100 translate-x-2.5 md:translate-x-2" />
+        <div class="flex items-center mr-1">
+          <img src="/images/caju.avif" alt="" aria-hidden="true" width="126" height="104" class="hidden sm:block h-9 md:h-[2.85rem] w-auto -mr-3 md:-mr-4 relative z-10 pointer-events-none select-none -scale-x-100 translate-x-2.5 md:translate-x-2" />
           <a
             href={waUrl}
             target="_blank"
             rel="noopener noreferrer"
-            class="inline-flex items-center min-h-[38px] pl-7 pr-5 rounded-[200px] bg-[#cf3a23] text-white text-[13px] md:text-sm font-semibold uppercase tracking-wide no-underline hover:brightness-95 transition-[filter] whitespace-nowrap"
+            class="inline-flex items-center min-h-[38px] px-4 sm:pl-7 sm:pr-5 rounded-[200px] bg-[#cf3a23] text-white text-[13px] md:text-sm font-semibold uppercase tracking-wide no-underline hover:brightness-95 transition-[filter] whitespace-nowrap"
           >
             Reservar
           </a>
