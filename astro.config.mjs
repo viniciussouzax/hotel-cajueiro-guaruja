@@ -26,7 +26,8 @@ export default defineConfig({
     integrations: [
         react(),
         tailwind({ applyBaseStyles: false }),
-        ...(sitemap ? [sitemap()] : []),
+        // O painel não pode ser indexado: fica fora do sitemap.
+        ...(sitemap ? [sitemap({ filter: (page) => !/\/admin\/?/.test(page) })] : []),
     ],
     vite: {
         optimizeDeps: {

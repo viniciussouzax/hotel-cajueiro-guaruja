@@ -34,5 +34,8 @@
   },
   "menuHoverEnabled": true,
   "favicon": "/favicon.png",
-  "logoHeight": 50
+  "logoHeight": 50,
+  "seo": {
+    "ogImage": "/images/corp-1.jpg"
+  }
 }

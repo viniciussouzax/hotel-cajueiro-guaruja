@@ -114,7 +114,9 @@ function toAbsoluteUrl(path: string, base: string): string {
     return path; // fallback: path relativo (não derruba o build)
   }
 }
-const socialImage = toAbsoluteUrl(image, siteUrl);
+// Sem imagem social o link compartilhado (WhatsApp, Instagram, Facebook) sai sem
+// foto. Cai para a imagem padrão do site quando a página não define uma.
+const socialImage = toAbsoluteUrl(image || siteConfig.seo?.ogImage || '/images/corp-1.jpg', siteUrl);
 import CustomCodeBodyStart from '../plugins/custom-code/CustomCodeBodyStart.astro';
 ---
 <!DOCTYPE html>
