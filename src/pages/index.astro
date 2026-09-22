@@ -103,7 +103,12 @@ const mapHref = `https://www.google.com/maps/search/?api=1&query=${mapQuery}`;
           mesmo do título. Some sozinha se a Places API não responder. */}
       <GoogleRating tone="light" class="mb-5" />
       {hero.eyebrow && <p class="mono uppercase text-white/75 mb-4">{hero.eyebrow}</p>}
-      <h1 class="font-display font-semibold tracking-tight text-white leading-[1.03] mb-4 whitespace-nowrap" style="font-size: clamp(1.75rem, 6.2vw, 4rem)">
+      {/* Mesmo tamanho do h1 das outras páginas (corporativo, grupos):
+          text-3xl → md:text-4xl → lg:text-[48px]. Antes usava um `clamp()`
+          próprio que rendia menor que as outras páginas em boa parte das
+          larguras — duas réguas de tamanho para o mesmo elemento (h1 de
+          hero) no site. */}
+      <h1 class="font-display text-3xl md:text-4xl lg:text-[48px] font-bold tracking-tight text-white leading-[1.05] mb-4">
         {hero.title}
       </h1>
       {hero.lead && <p class="text-lg md:text-xl text-white/90 leading-relaxed max-w-2xl mb-6 md:mb-9">{hero.lead}</p>}

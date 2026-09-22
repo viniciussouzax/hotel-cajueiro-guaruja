@@ -221,6 +221,15 @@ const suites = nomes?.length
   }
 
   /* ── Modal da suite ───────────────────────────────────────────────────── */
+  /* SEM `position` aqui: o navegador já centra um `<dialog>` aberto por
+     `showModal()` na viewport (posição `fixed` da folha de estilo nativa).
+     Uma versão anterior tinha `position: relative`, o que anulava essa
+     centralização — o dialog passava a se posicionar no FLUXO NORMAL da
+     página, no lugar onde `<SuitesDestaque>` está no HTML (perto da hero),
+     em vez de no meio da tela onde o usuário está olhando. O botão de
+     fechar (`position: absolute`) continua funcionando normalmente: mesmo em
+     `position: fixed`, o dialog já é o bloco de referência dos descendentes
+     absolutos. */
   .suite-modal {
     width: min(34rem, calc(100vw - 2rem));
     max-height: min(90vh, 46rem);
@@ -230,7 +239,6 @@ const suites = nomes?.length
     background: rgb(var(--c-surface));
     color: rgb(var(--c-ink));
     overflow: hidden;
-    position: relative;
   }
   .suite-modal::backdrop { background: rgb(12 14 10 / 0.6); }
 

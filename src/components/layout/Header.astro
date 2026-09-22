@@ -183,16 +183,6 @@ const { transparent = false } = Astro.props;
   .site-header[data-transparent]:not(.is-solid) .nav-icon { color: rgb(255 255 255 / 0.82); }
   .site-header[data-transparent]:not(.is-solid) .nav-icon:hover { color: #fff; background: rgb(255 255 255 / 0.12); }
 
-  /* Escondido durante a rolagem da hero (ver o script no fim do arquivo).
-     `visibility` junto com o deslocamento para o menu não continuar clicável
-     enquanto está fora da tela. Sem transição, como o resto das trocas de
-     estado deste menu. */
-  .site-header.is-oculto {
-    transform: translateY(-100%);
-    visibility: hidden;
-    pointer-events: none;
-  }
-
   /* Home depois do scroll: fica fixo e branco sólido. */
   .site-header[data-transparent].is-solid {
     position: sticky;
@@ -251,36 +241,35 @@ const { transparent = false } = Astro.props;
 </style>
 
 <script>
-  /* Header transparente → sólido: o gatilho é o FIM DA HERO, não uma altura
-     fixa de scroll. Com `scrollY > 40` o menu branco aparecia com a hero
-     inteira ainda na tela, cortando a foto — mais visível no celular, onde a
-     hero ocupa quase o aparelho todo.
+  /* Header transparente → sólido: o gatilho é o CARD BRANCO DO BUSCADOR
+     chegando perto do menu, não o fim da hero inteira. Antes o menu SUMIA
+     (transform translateY(-100%)) assim que o scroll começava e só voltava,
+     já sólido, quando a hero INTEIRA tinha passado — no celular isso é ~600px
+     de rolagem sem logo, sem telefone e sem menu nenhum na tela, o que lia
+     como bug ("sumiu e não volta").
 
-     Agora ele vira sólido quando a base da hero encosta na base do menu: até
-     ali o menu flutua transparente sobre a foto; dali em diante ele está sobre
-     conteúdo claro e precisa de fundo. O "Reservar" acompanha, porque o CSS
-     dele também depende de `is-solid`.
+     Agora comparamos o TOPO do card (`#booking-form`) com a base do menu: até
+     ali o menu flutua transparente sobre a foto (texto branco, legível). No
+     instante em que o card começa a passar por baixo do menu, o menu já troca
+     para sólido (fundo branco, texto escuro) — o card nunca fica encoberto
+     por um menu transparente, e o menu nunca precisa desaparecer para isso.
 
-     Sem hero na página, nada disso se aplica (o menu já nasce sólido). */
+     Sem `#booking-form` (nenhuma hero com buscador usa header transparente
+     hoje), cai no fim da hero como antes. Sem hero na página, nada disso se
+     aplica (o menu já nasce sólido). */
   (function () {
     const header = document.getElementById('site-header');
     if (!header || !header.hasAttribute('data-transparent')) return;
 
-    const hero = document.getElementById('reservar');
+    const gatilho = document.getElementById('booking-form') || document.getElementById('reservar');
     let agendado = false;
 
     const avaliar = () => {
       agendado = false;
-      const passou = hero
-        ? hero.getBoundingClientRect().bottom <= header.offsetHeight
+      const passou = gatilho
+        ? gatilho.getBoundingClientRect().top <= header.offsetHeight
         : window.scrollY > 40;          // sem hero: régua antiga
       header.classList.toggle('is-solid', passou);
-
-      // Enquanto a hero rola, o menu SOME. Transparente ele ficaria por cima
-      // do conteúdo da hero — a logo branca e o telefone apareciam em cima do
-      // card de busca. Ele volta, já sólido, quando a hero acaba.
-      // No topo (scroll 0) ele continua visível sobre a foto, como no desenho.
-      header.classList.toggle('is-oculto', !passou && window.scrollY > 8);
     };
     const aoRolar = () => {
       if (agendado) return;
