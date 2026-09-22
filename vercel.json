@@ -11,7 +11,7 @@
     }
   ],
   "redirects": [
-    { "source": "/contato-hotel-cajueiro-guaruja", "destination": "/contato", "permanent": true }
+    { "source": "/contato-hotel-cajueiro-guaruja", "destination": "/", "permanent": true }
   ],
   "rewrites": [
     { "source": "/search/:term", "destination": "/search?q=:term" }

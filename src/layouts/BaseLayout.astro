@@ -4,7 +4,9 @@ import { readData } from '../lib/readData';
 import HeadPlugins from '../plugins/_slots/HeadPlugins.astro';
 import BodyEndPlugins from '../plugins/_slots/BodyEndPlugins.astro';
 import Header from '../components/layout/Header.astro';
+import CampaignBar from '../components/layout/CampaignBar.astro';
 import Footer from '../components/layout/Footer.astro';
+import BotaoWhatsapp from '../components/BotaoWhatsapp.astro';
 
 const siteConfig = readData('siteConfig.json');
 const pluginsConfig = readData('pluginsConfig.json', {});
@@ -86,6 +88,9 @@ interface Props {
   bodyClass?: string;
   transparentHeader?: boolean;
   hideTopBars?: boolean;
+  hideCampaignBar?: boolean;
+  /** Tira a página do índice do Google. Usado em páginas de rascunho/comparação. */
+  noindex?: boolean;
 }
 
 const defaultTitle = siteConfig.seo?.title || siteConfig.name;
@@ -97,6 +102,8 @@ const {
   bodyClass = '',
   transparentHeader = false,
   hideTopBars = false,
+  hideCampaignBar = false,
+  noindex = false,
 } = Astro.props;
 
 const formattedTitle = title === defaultTitle ? title : `${title} | ${siteConfig.name}`;
@@ -117,6 +124,11 @@ function toAbsoluteUrl(path: string, base: string): string {
 // Sem imagem social o link compartilhado (WhatsApp, Instagram, Facebook) sai sem
 // foto. Cai para a imagem padrão do site quando a página não define uma.
 const socialImage = toAbsoluteUrl(image || siteConfig.seo?.ogImage || '/images/corp-1.jpg', siteUrl);
+
+// URL canônica auto-referente. Sem ela, variações de endereço (com/sem www,
+// com/sem barra final, query de campanha) viram páginas distintas pro Google.
+const canonicalPath = Astro.url.pathname.replace(/\/index\.html$/, '/');
+const canonicalUrl = toAbsoluteUrl(canonicalPath, siteUrl) || Astro.url.href;
 import CustomCodeBodyStart from '../plugins/custom-code/CustomCodeBodyStart.astro';
 ---
 <!DOCTYPE html>
@@ -126,6 +138,8 @@ import CustomCodeBodyStart from '../plugins/custom-code/CustomCodeBodyStart.astr
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>{formattedTitle}</title>
   <meta name="description" content={description} />
+  {noindex && <meta name="robots" content="noindex, nofollow" />}
+  {!noindex && <link rel="canonical" href={canonicalUrl} />}
   <link rel="icon" href={siteConfig.favicon || '/favicon.svg'} />
   {font.href && <link rel="stylesheet" href={font.href} />}
   {/* Fonte da marca (override dos títulos): Google Fonts ou arquivo self-hosted */}
@@ -170,6 +184,14 @@ import CustomCodeBodyStart from '../plugins/custom-code/CustomCodeBodyStart.astr
     pular pro conteúdo
   </a>
 
+
+
+
+  {!hideCampaignBar && <CampaignBar />}
+
+
+
+
   <Header transparent={transparentHeader} />
 
   <main id="main">
@@ -177,6 +199,8 @@ import CustomCodeBodyStart from '../plugins/custom-code/CustomCodeBodyStart.astr
   </main>
 
   <Footer />
+  {/* Botão flutuante do WhatsApp em todas as páginas públicas. */}
+  <BotaoWhatsapp />
 
   <BodyEndPlugins />
 </body>

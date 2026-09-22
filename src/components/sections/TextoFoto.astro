@@ -1,0 +1,93 @@
+---
+/**
+ * TextoFoto.astro — bloco de texto + foto, lado alternável.
+ *
+ * Existe para os três blocos seguidos da home (o hotel → piscina → localização)
+ * serem o MESMO componente, e não três markups "quase iguais": mesma proporção
+ * de imagem, mesmo raio de canto, mesma sombra, mesmo espaçamento e mesma ordem
+ * de leitura no celular.
+ *
+ * Regra que ele existe para cumprir: nenhuma seção de duas colunas pode ter
+ * texto nos dois lados — uma coluna sempre carrega a foto.
+ *
+ * `lado` alterna a posição da imagem no desktop. No celular a imagem vem sempre
+ * antes do texto (a foto apresenta o assunto, o título vem logo abaixo dela).
+ *
+ * O CTA é opcional de propósito: um bloco pode ter botão e o outro não sem que
+ * o espaçamento fique torto, porque o botão entra no fluxo da coluna de texto.
+ *
+ * DOIS SLOTS, para o bloco caber em casos que não são "foto + parágrafos":
+ *   - `midia`  — substitui a imagem. É o que permite a seção "Como chegar"
+ *                entrar no mesmo ritmo com um MAPA no lugar da foto, herdando
+ *                proporção, raio, borda e alternância sem duplicar geometria.
+ *   - default  — conteúdo extra na coluna de texto (listas, endereço, um CTA
+ *                próprio), abaixo dos parágrafos.
+ */
+interface Props {
+  eyebrow?: string;
+  title: string;
+  /** Parágrafos já separados. Use `texto.split('\n\n')` na página. */
+  paragraphs?: string[];
+  /** Opcional quando a midia vem pelo slot `midia` (ex.: um mapa). */
+  image?: string;
+  alt?: string;
+  /** Lado da FOTO no desktop. No celular é sempre no topo. */
+  lado?: 'esquerda' | 'direita';
+  ctaLabel?: string;
+  ctaHref?: string;
+  /** `eager` só no bloco mais alto da página. */
+  loading?: 'eager' | 'lazy';
+}
+
+const {
+  eyebrow = '',
+  title,
+  paragraphs = [],
+  image,
+  alt,
+  lado = 'direita',
+  ctaLabel = '',
+  ctaHref = '',
+  loading = 'lazy',
+} = Astro.props as Props;
+
+// No celular a ordem é sempre foto → texto; a alternância só vale no desktop.
+const ordemFoto = lado === 'esquerda' ? 'lg:order-1' : 'lg:order-2';
+const ordemTexto = lado === 'esquerda' ? 'lg:order-2' : 'lg:order-1';
+---
+
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-14 items-center">
+  <div class={`rounded-lg overflow-hidden shadow-sm border border-rule/40 ${ordemFoto}`}>
+    {Astro.slots.has('midia')
+      ? <slot name="midia" />
+      : image && (
+          <img
+            src={image}
+            alt={alt}
+            width="900"
+            height="600"
+            loading={loading}
+            class="w-full object-cover aspect-[4/3] lg:aspect-[3/2]"
+          />
+        )}
+  </div>
+
+  <div class={`max-w-[60ch] ${ordemTexto}`}>
+    {eyebrow && <p class="mono uppercase text-[#cf3a23] mb-3">{eyebrow}</p>}
+    <h2 class="font-display text-2xl md:text-3xl font-normal tracking-tight text-ink leading-[1.1] mb-4">{title}</h2>
+    {paragraphs.length > 0 && (
+      <div class="text-lg text-ink-muted leading-relaxed space-y-4">
+        {paragraphs.map((p: string) => <p>{p}</p>)}
+      </div>
+    )}
+    <slot />
+    {ctaLabel && ctaHref && (
+      <a
+        href={ctaHref}
+        class="inline-flex items-center justify-center min-h-[44px] px-6 mt-7 rounded-[200px] border border-ink/15 text-ink text-sm font-semibold uppercase tracking-wide no-underline hover:bg-ink/5 transition-colors"
+      >
+        {ctaLabel}
+      </a>
+    )}
+  </div>
+</div>

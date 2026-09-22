@@ -1,0 +1,179 @@
+{
+  "_nota": "Depoimentos do Hotel Cajueiro vindos da API OFICIAL do Google Business Profile (perfil do proprio hotel). Fonte bruta preservada em data-fonte/gbp-reviews-2026-08-11.json. Nao vem da Places API e nao foi raspado. Criterio: 4 ou 5 estrelas, texto de 90 a 520 caracteres, e SEM RESSALVA — descartamos qualquer texto com marcador de critica, inclusive a critica embutida no elogio (\"otimo, MAS...\"). O campo `comment` do Google traz ORIGINAL e TRADUCAO juntos; guardamos so o texto do autor. Para atualizar: rodar gbp/gbp.py e regerar. NAO marcar como Review/AggregateRating em JSON-LD: avaliacao sobre o proprio negocio e self-serving e inelegivel para rich result.",
+  "origem": "google-business-profile",
+  "geradoEm": "2026-09-21",
+  "exportadoEm": "2026-08-11",
+  "totalNoPerfil": 792,
+  "candidatasPositivas": 165,
+  "placeId": "ChIJE0nduKj_0ZQRqVzAmizx3F4",
+  "itens": [
+    {
+      "autor": "Elaine Almeida",
+      "foto": "https://lh3.googleusercontent.com/a/ACg8ocLEIMsEnPkVKFI6YDpDDo6E8JYvspW2JFgPXdhsVwNeqbmETg=s120-c-rp-mo-ba12-br100",
+      "nota": 5,
+      "data": "2026-08-03",
+      "texto": "Minha diária foi maravilhosa, recepção super simpáticos , quarto limpo , toalhas branquinhas , chuveiro excelente, café da manhã perfeito.\nSó agradecer a todos pelo carinho, eu amei tudo , muito obrigada"
+    },
+    {
+      "autor": "Felipe Rossi",
+      "foto": "https://lh3.googleusercontent.com/a-/ALV-UjVcws0CgC5fdj8rl4uB0mP5X_iaDmxmL_9ynwpP3cdE59lpW96v=s120-c-rp-mo-ba12-br100",
+      "nota": 5,
+      "data": "2026-05-11",
+      "texto": "Fui neste final de semana ficar hospedado no hotel Cajueiro, junto com a minha namorada, e gostamos muito do hotel, é um ótimo custo benefício, pagamos um valor super bom com café da manhã incluso, em um quarto superior com tudo novinho e ar condicionado gelando, o hotel fica a poucos passos da praia do tombo, e também relativamente perto das outras praias do Guarujá, asturias, enseada, pra mim e pra minha namorada, valeu muito a pena, gostamos e iremos voltar, com certeza"
+    },
+    {
+      "autor": "Rafael Martineli",
+      "foto": "https://lh3.googleusercontent.com/a-/ALV-UjWGBZDljvEakC6Y9Nht61trYwUetZzYUK4Ka52bOTHYFUjrqf4=s120-c-rp-mo-br100",
+      "nota": 5,
+      "data": "2026-04-30",
+      "texto": "Equipe muito atenciosa, ambiente limpo, café da manhã muito bom, 200m da praia do tombo, muito bom mesmo !"
+    },
+    {
+      "autor": "andreza sousa",
+      "foto": "https://lh3.googleusercontent.com/a-/ALV-UjWtN-V5WNH_o0QWhWpyn1a2xkzumGmlaSmN8RTI1y2aIRuJJ-HZ=s120-c-rp-mo-br100",
+      "nota": 5,
+      "data": "2026-04-27",
+      "texto": "Eu amei a minha estadia, funcionarios extremametne educados e receptivos, café da manhã completo agradevel, localização perfeita poucos metros da praia, quarto ótimo tambem! Certamente irei voltar mais vezes!"
+    },
+    {
+      "autor": "Pamelete Oliveira",
+      "foto": "https://lh3.googleusercontent.com/a/ACg8ocI8SnEprFCRZwFhYpx9pfZ49mzT_DxtJNY5VU1PNC4JlvLdJQ=s120-c-rp-mo-br100",
+      "nota": 5,
+      "data": "2026-04-21",
+      "texto": "Foi uma experiência maravilhosa , hotel limpo organizado o café da manhã maravilhoso ao lado da praia com uma localização top , irei voltar mais vezes 🙏🏻❤️"
+    },
+    {
+      "autor": "Roberta Isis",
+      "foto": "https://lh3.googleusercontent.com/a-/ALV-UjW3cd43Ua3J5Ipv3ozpab-aCZ3sefkc2B-7NXi8siuBDQrF2Mr1iA=s120-c-rp-mo-br100",
+      "nota": 5,
+      "data": "2026-04-02",
+      "texto": "Simplesmente sou apaixonada por esse hotel. Sempre fomos muito bem atendidos. Café da manhã delicioso e demais refeições."
+    },
+    {
+      "autor": "Eugenio Martinelli",
+      "foto": "https://lh3.googleusercontent.com/a-/ALV-UjUbFH74hJ4_b1xY3KwAYcjKlzGmsmTaSg9R5VnTfcn3LHq_XG3h5A=s120-c-rp-mo-ba12-br100",
+      "nota": 5,
+      "data": "2026-03-27",
+      "texto": "Foi muito bom , gostei muito, descansei , curti a piscina, após horas de trabalho um lugar pra descansar, café regado deliciosos, .... Recomendo a todos"
+    },
+    {
+      "autor": "Alcino Júlio Silva Oliveira Martins",
+      "foto": "https://lh3.googleusercontent.com/a-/ALV-UjXsI3QGPNmNHfo7P4chiMXErL44pDVCGWr15FjvyppOMTBxlszG3g=s120-c-rp-mo-ba12-br100",
+      "nota": 5,
+      "data": "2026-03-18",
+      "texto": "Não foi a primeira vez que me hospedei neste hotel\nCafé da manhã fabuloso, funcionários do melhor!"
+    },
+    {
+      "autor": "Tamara Riani",
+      "foto": "https://lh3.googleusercontent.com/a-/ALV-UjV_LRtg4B-j50_N3Wy1PSauuVKBpLcSSjg_Mz7XiQ4_jRdkBHVK=s120-c-rp-mo-ba12-br100",
+      "nota": 5,
+      "data": "2026-02-08",
+      "texto": "Ya fuimos dos veces, una zona super tranquila nos gusta mucho y el hotel muy comodo y a muy buen precio, con buen servicio.\nSeguro volveremos"
+    },
+    {
+      "autor": "Alcione Galdino",
+      "foto": "https://lh3.googleusercontent.com/a/ACg8ocJdqMxswQII7zG2SivQKYjoTH6rtJGRjM6Ma1iD_YS3fthqcg=s120-c-rp-mo-br100",
+      "nota": 5,
+      "data": "2026-02-04",
+      "texto": "Muito bom ! Nota 10 , inclusive os funcionários super atenciosos. O funcionário Lúcio um menino de ouro, super prestativo."
+    },
+    {
+      "autor": "Emerson Meireles",
+      "foto": "https://lh3.googleusercontent.com/a-/ALV-UjUvZ9AyAFmCd7HQ8NH-PkXBG598FhW-mTWTo9czOOP4PfpwsPAnJQ=s120-c-rp-mo-br100",
+      "nota": 5,
+      "data": "2026-02-03",
+      "texto": "Fomos bem recepcionado pelo funcionário lucio bem atencioso quarto ok muito bom banheiro otimo tambem\nCafe da manhã 100% super indico"
+    },
+    {
+      "autor": "James Pissi",
+      "foto": "https://lh3.googleusercontent.com/a-/ALV-UjUKC2e5QkSOl-UDuj0GHmLDzrhUH_Zeu_MfUokwzNIt-343A7t-=s120-c-rp-mo-ba12-br100",
+      "nota": 5,
+      "data": "2026-02-02",
+      "texto": "Hotel muito bem localizado, funcionários atenciosos e excelente café da manhã !! Voltaremos mais vezes !!"
+    },
+    {
+      "autor": "Diego Marcel",
+      "foto": "https://lh3.googleusercontent.com/a/ACg8ocIyIsHNf9QDPztv0C4JBXB1Of6qCErM1LKICv9HSVShL05OPg=s120-c-rp-mo-br100",
+      "nota": 5,
+      "data": "2026-02-02",
+      "texto": "Lúcio atendente merece 10 estrelas pela simpatia e recepção! Deus abençoe sua vida meu amigo! Profissional como vc é difícil encontrar continue sempre assim com essa humildade"
+    },
+    {
+      "autor": "joy villanueva",
+      "foto": "https://lh3.googleusercontent.com/a/ACg8ocInNTh3u8Jj9wpm7vwFv1zg4XfwHc4wtHLk4EXtW6PWEAPb-qk=s120-c-rp-mo-br100",
+      "nota": 5,
+      "data": "2026-02-01",
+      "texto": "Lucio el recepcionista muy atento, muy amable, las chicas de la limpieza muy atentas , también , el restaurante, abundante , el hotel muy limpio y cómodo , cerca de la playa , almacenes , restaurantes . Muy buena la atención que brindan ."
+    },
+    {
+      "autor": "Joel Junior",
+      "foto": "https://lh3.googleusercontent.com/a/ACg8ocJu0qpSJhCVCIuGBXRIhqlkTK6CE-_Mr2ARg1Ff91Hk2EwKHw=s120-c-rp-mo-br100",
+      "nota": 5,
+      "data": "2026-01-31",
+      "texto": "Ambiente tranquilo, comida boa e em especial ótimo atendimento o Jovem Lúcio também, muito simpático e educado!"
+    },
+    {
+      "autor": "Deilson Pires Motta",
+      "foto": "https://lh3.googleusercontent.com/a/ACg8ocI5azxbHtse1RLmIvbpQbA6-ASpwNYHwfdSGtPFkyoTvekTuaGL=s120-c-rp-mo-ba12-br100",
+      "nota": 5,
+      "data": "2026-01-18",
+      "texto": "Tirando uma informação que deixei nos detalhes importantes, estou gostando de tudo do hotel, quartos bem aconchegantes, A/C bem silencioso, cama confortável, café da manhã e almoço muitos gostosos, no geral gostamos muito parabéns a todos os envolvidos por trás dessa recepção."
+    },
+    {
+      "autor": "Marcela Cabral",
+      "foto": "https://lh3.googleusercontent.com/a-/ALV-UjVnZ96wUgWvEli-jHuKOfzvMKkpwK4y-Yxz0SjjiWkHrUTa66I02g=s120-c-rp-mo-ba12-br100",
+      "nota": 5,
+      "data": "2026-01-17",
+      "texto": "Super perto da Praia! Praia limpa, bonita e mar agitado. Adoro o hotel. Frequento há anos. Sou bem recebida pelos funcionários e, principalmente, pela funcionária Adriana que é um amor de pessoa. Comida do hotel maravilhosa!!!!"
+    },
+    {
+      "autor": "Paulo Eduardo",
+      "foto": "https://lh3.googleusercontent.com/a-/ALV-UjW5iuHyH6Lh_lEhfXIkhXU-HIPAcrzZ6YdzanYnd_VaIImcbtM=s120-c-rp-mo-br100",
+      "nota": 5,
+      "data": "2026-01-06",
+      "texto": "Única ressalva que faço foi em relação ao check in, achei um pouco tarde. Fora isso eu e minha mulher tivemos uma experiência maravilhosa, gostaria de ressaltar o atendimento da recepção e principalmente da equipe da cozinha em especial Adriana, que nos tratou com ml o parte da sua família\nVoltaremos com certeza!\nSuper recomendo."
+    },
+    {
+      "autor": "Pedro Henrique / p3drinhofc",
+      "foto": "https://lh3.googleusercontent.com/a-/ALV-UjVhhpOt-OJPgZrB0MJxzY8zqFs2H2AuMBDzdOSD0o1ixixWh_6l=s120-c-rp-mo-br100",
+      "nota": 5,
+      "data": "2026-01-04",
+      "texto": "Fiquei hospedado do dia 02 as 04 de janeiro de 2026, e fui mto bem atendido, principalmente pelas meninas que servem as porções mtoooo gente boa, comido gostosa e de quantidade legal, porções bem servidas, o hotel e gostoso aconchegante, otima localização, café da manha maravilhoso, ar condicionado perfeito gela mtoooo.\nVoltarei mais vezes e recomendo para quem quer ir conhecer"
+    },
+    {
+      "autor": "Douglas Coutinho",
+      "foto": "https://lh3.googleusercontent.com/a-/ALV-UjXePomhoh1invLfu8rogWVGDbuBjFly8jiJwMFmmiQfaxG3FaqsKg=s120-c-rp-mo-br100",
+      "nota": 5,
+      "data": "2025-12-22",
+      "texto": "Atendeu todas expectativas , com todo carinho e respeito de todos funcionários independente da função ."
+    },
+    {
+      "autor": "carlos carvalho",
+      "foto": "https://lh3.googleusercontent.com/a-/ALV-UjXIuMhW2oATmqYcxlpygCzO9G13pqeNLHrlV2g2SOAae-kfgXwNJw=s120-c-rp-mo-br100",
+      "nota": 5,
+      "data": "2025-12-22",
+      "texto": "Quero agradecer a todos que trabalha no hotel cajueiro pelo excelente atendimento trabalho o pessoal em si mesmo muito carinhoso com os hóspedes muito top hotel maravilhoso gostei muito de ficar aí por 17 dias agradecer também a Tamires a gerente pelo seu belo atendimento a noemi tbm muito gente boa a Adriana todos pessoas maravilhosos obg por tudo 🙏 muito sucesso pra vc"
+    },
+    {
+      "autor": "João Carlos",
+      "foto": "https://lh3.googleusercontent.com/a-/ALV-UjUKfi64WHuAhxNDnqcOvG5ON42lovPa9KlTnzWDBDZ4PGko8SU=s120-c-rp-mo-br100",
+      "nota": 5,
+      "data": "2025-12-13",
+      "texto": "Uma ótima recepção pelo pessoal que trabalha no local pela gerente Tamires Noemi um ótimo atendimento"
+    },
+    {
+      "autor": "Juli Ramaldes",
+      "foto": "https://lh3.googleusercontent.com/a/ACg8ocKICAoXrMkOg894IgqbJFvH-QoceifL2GwobMJ-_4EmN8AOMA=s120-c-rp-mo-br100",
+      "nota": 5,
+      "data": "2025-12-08",
+      "texto": "Tive duas diárias para 3 adultos e uma criança, e tive um probleminha na entrada, a gerente Thamiris prontamente resolveu, muito educada e simpática está de parabéns, parabéns também para Adriana do restaurante maravilhosa, educada simpática e sempre disposta a ajudar está de parabéns excelente profissional, café da manhã perfeito, várias opções,cama ótima e chuveiro quentinho, comida também almoço pedi fritas com frango a milanesa muito bom nota 10, com certeza voltarei novamente."
+    },
+    {
+      "autor": "João",
+      "foto": "https://lh3.googleusercontent.com/a/ACg8ocJuBT_jbXhinujSea-U-ExMzRomvUvosjktOwMzMcM75mIcjQ=s120-c-rp-mo-br100",
+      "nota": 5,
+      "data": "2025-08-19",
+      "texto": "Atendimento muito bom, Quartos e banheiro limpinhos gostaria de destacar o atendimento da Recepcionista (Noemi) muito educada e prestativa voltarei mais vezes."
+    }
+  ]
+}

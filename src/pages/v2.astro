@@ -1,0 +1,531 @@
+---
+/**
+ * v2.astro — home versão 2 (rota /v2, noindex, fora do sitemap)
+ *
+ * Reestruturação da home segundo a crítica de direção de arte: menos seções,
+ * menos alternância de fundo, suítes com protagonismo, "por que Cajueiro" como
+ * argumento comercial real, textos institucionais fundidos numa seção só.
+ *
+ * De 14 seções para 10, e de ~7 trocas de cor de fundo para 2 momentos de cor
+ * (o bloco "Por que Cajueiro" e o CTA final). O resto flui no mesmo tom, com
+ * respiro entre as seções fazendo a separação em vez de faixas coloridas.
+ *
+ * FATOS: copy nova vem de homeV2.json; suítes, FAQ, galeria, arredores e como
+ * chegar continuam lendo home.json — fato não é duplicado entre as versões.
+ *
+ * CTAs de reserva: exatamente 4 (hero, suítes, pós-diferenciais, final), todos
+ * com o mesmo rótulo e todos apontando para o buscador de datas.
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import BookingBar from '../components/BookingBar.astro';
+import GoogleReviews from '../components/sections/GoogleReviews.astro';
+import HotelSchema from '../components/layout/HotelSchema.astro';
+import { readData } from '../lib/readData';
+
+const siteConfig = readData('siteConfig.json');
+const home = readData('home.json', {}) as any;
+const v2 = readData('homeV2.json', {}) as any;
+
+const suitesHome = home.suitesTeaser?.suites || [];
+const estrutura = home.estrutura?.itens || [];
+const galeria = home.galeria || {};
+const entorno = home.entorno?.itens || [];
+const comoChegar = home.comoChegar || {};
+const faqTodas = home.faq || [];
+
+// FAQ da home: só as 6 perguntas que pesam na decisão de reservar (o resto vive
+// em /termos, linkado no pé da seção).
+const faqEscolhidas = (v2.faq?.perguntas || [])
+  .map((q: string) => faqTodas.find((f: any) => f.q === q))
+  .filter(Boolean);
+
+// A suíte de destaque sai da lista pra não repetir no grid abaixo.
+const destaque = suitesHome.find((s: any) => s.nome === v2.suites?.destaqueNome) || suitesHome[0];
+const outrasSuites = suitesHome.filter((s: any) => s !== destaque);
+
+// Comodidades: as 4 que viram destaque com texto próprio saem da lista compacta.
+const JA_DESTACADAS = ['coffee', 'pool', 'parking', 'clock'];
+const restantes = estrutura.filter((i: any) => !JA_DESTACADAS.includes(i.icon));
+
+const waDigits = (siteConfig.contact?.whatsapp || '').replace(/\D/g, '');
+const waUrl = waDigits
+  ? `https://wa.me/55${waDigits}?text=${encodeURIComponent('Olá! Vim pelo site e gostaria de fazer uma reserva.')}`
+  : '';
+
+const endereco = comoChegar.endereco || siteConfig.contact?.address || '';
+const mapQuery = encodeURIComponent('Hotel Cajueiro Guarujá ' + endereco);
+const mapEmbed = `https://www.google.com/maps?q=${mapQuery}&z=16&output=embed`;
+const mapHref = `https://www.google.com/maps/search/?api=1&query=${mapQuery}`;
+
+const ICON: Record<string, string> = {
+  coffee: '<path d="M17 8h1a4 4 0 1 1 0 8h-1"/><path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4Z"/><line x1="6" y1="2" x2="6" y2="4.5"/><line x1="10" y1="2" x2="10" y2="4.5"/><line x1="14" y1="2" x2="14" y2="4.5"/>',
+  pool: '<path d="M2 16c1.5 0 1.5-1.5 3-1.5s1.5 1.5 3 1.5 1.5-1.5 3-1.5 1.5 1.5 3 1.5 1.5-1.5 3-1.5 1.5 1.5 3 1.5"/><path d="M2 11c1.5 0 1.5-1.5 3-1.5s1.5 1.5 3 1.5 1.5-1.5 3-1.5 1.5 1.5 3 1.5 1.5-1.5 3-1.5 1.5 1.5 3 1.5"/>',
+  parking: '<rect x="3" y="3" width="18" height="18" rx="3"/><path d="M9 17V7h3.5a3 3 0 0 1 0 6H9"/>',
+  clock: '<circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15.5 14"/>',
+};
+
+// Rótulo único do CTA de reserva em toda a página.
+const CTA = v2.ctaFinal?.button || 'Ver disponibilidade';
+const btnPrimary =
+  'inline-flex items-center justify-center gap-2.5 min-h-[52px] px-8 rounded-[200px] bg-[#cf3a23] text-white text-[15px] font-semibold uppercase tracking-wide no-underline hover:brightness-95 transition-[filter]';
+const btnGhost =
+  'inline-flex items-center justify-center gap-2 min-h-[48px] px-6 rounded-[200px] border border-ink/15 text-ink text-sm font-semibold uppercase tracking-wide no-underline hover:bg-ink/5 transition-colors';
+const eyebrow = 'mono uppercase text-ink-faint mb-4';
+const h2 = 'font-display text-3xl md:text-[2.75rem] font-normal tracking-tight text-ink leading-[1.06]';
+---
+
+<BaseLayout
+  title="Home v2 (rascunho)"
+  description={siteConfig.description}
+  transparentHeader={true}
+  hideTopBars={true}
+  noindex={true}
+>
+  <HotelSchema />
+
+  <!-- ════════ 1. HERO ════════
+       Mais alto que a v1, com a promessa no H1 em vez de "Hospedagem no
+       Guarujá". id="reservar" é o destino de todo CTA da página. -->
+  <section id="reservar" class="relative scroll-mt-[68px]">
+    <div
+      class="absolute inset-0 -z-10 bg-cover bg-center"
+      style={`background-image: linear-gradient(180deg, rgba(38,51,28,.35) 0%, rgba(38,51,28,.55) 55%, rgba(38,51,28,.78) 100%), url('${v2.promessa?.image || '/images/hero-tombo.jpg'}')`}
+    ></div>
+
+    <div class="container-x pt-32 md:pt-44 pb-16 md:pb-24">
+      <div class="max-w-3xl">
+        {v2.hero?.eyebrow && (
+          <p class="mono uppercase text-white/70 mb-5 tracking-[0.14em]">{v2.hero.eyebrow}</p>
+        )}
+        <h1
+          class="font-display font-normal tracking-tight text-white leading-[1.02] mb-6"
+          style="font-size: clamp(2.25rem, 6vw, 4.25rem)"
+        >
+          {v2.hero?.title}
+        </h1>
+        {v2.hero?.lead && (
+          <p class="text-lg md:text-xl text-white/85 leading-relaxed max-w-xl">{v2.hero.lead}</p>
+        )}
+      </div>
+
+      <div class="mt-10 md:mt-14">
+        <BookingBar />
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════ 2. PROMESSA / LOCALIZAÇÃO ════════
+       Substitui o banner promocional da v1 e absorve os dois blocos de texto
+       ("Relaxe depois de um dia de praia" + "Localização perfeita"), que eram
+       argumento bom em formato de conteúdo institucional. -->
+  <section class="bg-bg">
+    <div class="container-x py-20 md:py-32">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+        <div class="lg:col-span-6">
+          <p class={eyebrow}>{v2.promessa?.eyebrow}</p>
+          <h2 class={`${h2} mb-6`}>{v2.promessa?.title}</h2>
+          <p class="text-lg text-ink-muted leading-relaxed mb-10 max-w-prose-lg">{v2.promessa?.text}</p>
+
+          <dl class="grid grid-cols-3 gap-6 md:gap-8 mb-10 pt-8 border-t border-rule/50">
+            {(v2.promessa?.stats || []).map((s: any) => (
+              <div>
+                <dt class="font-display text-3xl md:text-4xl font-normal text-ink leading-none mb-2">{s.valor}</dt>
+                <dd class="text-sm text-ink-muted leading-snug">{s.label}</dd>
+              </div>
+            ))}
+          </dl>
+
+          <a href="#suites" class={btnGhost}>{v2.promessa?.cta}</a>
+        </div>
+
+        <div class="lg:col-span-6">
+          <img
+            src="/images/corp-11.jpg"
+            alt={v2.promessa?.imageAlt || 'A caminho da Praia do Tombo'}
+            width="900" height="1100" loading="lazy"
+            class="w-full h-[380px] md:h-[560px] object-cover rounded-lg"
+          />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════ 3. SUÍTES ════════
+       Era um catálogo de 5 cards iguais. Agora: uma suíte em destaque com foto
+       grande, características e CTA, e as demais em cards menores embaixo. -->
+  <section id="suites" class="bg-bg scroll-mt-20">
+    <div class="container-x pb-20 md:pb-32">
+      <div class="max-w-2xl mb-12 md:mb-16">
+        <p class={eyebrow}>{v2.suites?.eyebrow}</p>
+        <h2 class={`${h2} mb-5`}>{v2.suites?.title}</h2>
+        <p class="text-lg text-ink-muted leading-relaxed">{v2.suites?.lead}</p>
+      </div>
+
+      {destaque && (
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-0 rounded-lg overflow-hidden bg-surface shadow-[0_30px_70px_-45px_rgba(60,45,25,.5)]">
+          <div class="lg:col-span-7">
+            <img
+              src={destaque.img} alt={`Suíte do Hotel Cajueiro: ${destaque.nome}`}
+              width="1200" height="800" loading="lazy"
+              class="w-full h-[280px] sm:h-[380px] lg:h-full lg:min-h-[460px] object-cover"
+            />
+          </div>
+          <div class="lg:col-span-5 p-8 md:p-12 flex flex-col justify-center">
+            <p class="mono uppercase text-ink-faint text-xs mb-4">em destaque</p>
+            <h3 class="font-display text-3xl md:text-4xl font-normal text-ink leading-[1.08] mb-4">{destaque.nome}</h3>
+            <p class="text-ink-muted leading-relaxed mb-7">{destaque.desc}</p>
+
+            <ul class="flex flex-col gap-3 mb-8">
+              {(v2.suites?.destaqueCaracteristicas || []).map((c: string) => (
+                <li class="flex items-center gap-3 text-ink">
+                  <span class="shrink-0 w-5 h-5 rounded-full flex items-center justify-center" style="background:#DCE4CC;">
+                    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#55703A" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+                  </span>
+                  <span class="text-[15px]">{c}</span>
+                </li>
+              ))}
+            </ul>
+
+            <a href="#reservar" class={`${btnPrimary} self-start`}>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+              {CTA}
+            </a>
+            {v2.suites?.precoNota && (
+              <p class="text-sm text-ink-faint mt-4 leading-snug">{v2.suites.precoNota}</p>
+            )}
+          </div>
+        </div>
+      )}
+
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5 mt-5">
+        {outrasSuites.map((s: any) => (
+          <article>
+            <img
+              src={s.img} alt={`Suíte do Hotel Cajueiro: ${s.nome}`}
+              width="600" height="450" loading="lazy"
+              class="w-full h-40 md:h-52 object-cover rounded-md mb-4"
+            />
+            <h3 class="font-display text-lg text-ink leading-snug mb-1.5">{s.nome}</h3>
+            <p class="text-sm text-ink-muted leading-relaxed">{s.desc}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════ 4. EXPERIÊNCIA DO HOTEL ════════
+       Antes: 14 comodidades como lista de features. Agora: 4 com texto próprio
+       e o resto numa linha compacta. Em seguida a galeria, em formato editorial
+       (imagens maiores, quase nada de texto ao redor). -->
+  <section class="bg-bg">
+    <div class="container-x pb-20 md:pb-28">
+      <div class="max-w-2xl mb-12">
+        <p class={eyebrow}>{v2.experiencia?.eyebrow}</p>
+        <h2 class={h2}>{v2.experiencia?.title}</h2>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 md:gap-8">
+        {(v2.experiencia?.destaques || []).map((d: any) => (
+          <div>
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#55703A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="mb-5" set:html={ICON[d.icon] || ICON.clock}></svg>
+            <h3 class="font-display text-xl text-ink leading-snug mb-2.5">{d.title}</h3>
+            <p class="text-ink-muted leading-relaxed text-[15px]">{d.text}</p>
+          </div>
+        ))}
+      </div>
+
+      {restantes.length > 0 && (
+        <div class="mt-14 pt-8 border-t border-rule/50 flex flex-wrap items-baseline gap-x-3 gap-y-2">
+          <span class="mono uppercase text-ink-faint text-xs mr-1">{v2.experiencia?.restanteLabel}</span>
+          {restantes.map((i: any, idx: number) => (
+            <>
+              <span class="text-[15px] text-ink-muted">{i.label}</span>
+              {idx < restantes.length - 1 && <span class="text-ink-faint/40" aria-hidden="true">·</span>}
+            </>
+          ))}
+        </div>
+      )}
+    </div>
+
+    <!-- Galeria editorial: full-bleed, sem cartões, legenda discreta -->
+    {galeria.fotos && galeria.fotos.length > 0 && (
+      <div class="pb-20 md:pb-28">
+        <div class="container-x mb-8">
+          <h3 class="font-display text-2xl md:text-3xl font-normal text-ink leading-tight">{galeria.title}</h3>
+        </div>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-3 px-2 md:px-3">
+          {galeria.fotos.map((g: any, i: number) => (
+            <button
+              type="button"
+              data-gallery-open
+              class={`group relative block overflow-hidden rounded-md cursor-zoom-in ${i === 0 ? 'col-span-2 row-span-2' : ''} ${g.cls?.includes('col-span-2') && i !== 0 ? 'md:col-span-2' : ''}`}
+              aria-label={`Ampliar foto: ${g.cap}`}
+            >
+              <img
+                src={`/images/corp-${g.n}.jpg`} alt={g.cap}
+                width="900" height="700" loading="lazy"
+                class={`w-full object-cover transition-transform duration-500 group-hover:scale-[1.03] ${i === 0 ? 'h-[320px] md:h-[560px]' : 'h-[155px] md:h-[275px]'}`}
+              />
+              <span class="absolute inset-x-0 bottom-0 p-3 md:p-4 text-xs md:text-sm text-white bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity text-left">
+                {g.cap}
+              </span>
+            </button>
+          ))}
+        </div>
+      </div>
+    )}
+  </section>
+
+  <!-- ════════ 5. POR QUE CAJUEIRO ════════
+       Primeiro dos dois momentos de cor da página. Era 6 cartões genéricos
+       ("Sol", "Praia", "Varanda"); agora 4 argumentos numerados que respondem
+       "por que aqui e não em outro hotel". CTA de reserva vem logo depois. -->
+  <section class="relative overflow-hidden" style="background:#26331C;">
+    <div aria-hidden="true" class="absolute -top-40 -right-32 w-[34rem] h-[34rem] rounded-full" style="background:rgba(255,255,255,0.035);"></div>
+    <div class="container-x py-20 md:py-32 relative">
+      <div class="max-w-2xl mb-14 md:mb-20">
+        <p class="mono uppercase mb-4 tracking-[0.14em]" style="color:rgba(244,238,221,0.55);">{v2.porque?.eyebrow}</p>
+        <h2 class="font-display text-3xl md:text-[2.75rem] font-normal tracking-tight leading-[1.06]" style="color:#F4EEDD;">
+          {v2.porque?.title}
+        </h2>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-x-12 lg:gap-x-20 gap-y-12 md:gap-y-16">
+        {(v2.porque?.itens || []).map((it: any, i: number) => (
+          <div class="pt-6 border-t" style="border-color:rgba(244,238,221,0.18);">
+            <p class="mono text-sm mb-4" style="color:#E8A33D;">{String(i + 1).padStart(2, '0')}</p>
+            <h3 class="font-display text-2xl leading-snug mb-3" style="color:#F4EEDD;">{it.title}</h3>
+            <p class="leading-relaxed" style="color:rgba(244,238,221,0.72);">{it.text}</p>
+          </div>
+        ))}
+      </div>
+
+      {v2.porque?.notaPreco && (
+        <p class="mt-16 md:mt-20 max-w-xl leading-relaxed" style="color:rgba(244,238,221,0.72);">{v2.porque.notaPreco}</p>
+      )}
+
+      <div class="mt-7 flex flex-wrap items-center gap-5">
+        <a href="#reservar" class={btnPrimary}>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          {v2.porque?.cta || CTA}
+        </a>
+        {waUrl && (
+          <a href={waUrl} target="_blank" rel="noopener" class="text-sm font-semibold underline underline-offset-4" style="color:rgba(244,238,221,0.8);">
+            ou fale com a recepção no WhatsApp
+          </a>
+        )}
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════ 6. GUARUJÁ / ARREDORES ════════
+       Era texto explicativo competindo com o resto. Agora: dados curtos em
+       linha + um CTA que manda pro artigo "O que fazer no Guarujá". -->
+  <section class="bg-bg">
+    <div class="container-x py-20 md:py-28">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-start">
+        <div class="lg:col-span-4">
+          <p class={eyebrow}>{v2.guaruja?.eyebrow}</p>
+          <h2 class={`${h2} mb-5`}>{v2.guaruja?.title}</h2>
+          <p class="text-ink-muted leading-relaxed mb-8">{v2.guaruja?.text}</p>
+          <a href={v2.guaruja?.ctaHref || '/o-que-fazer-hotel-cajueiro-guaruja'} class={btnGhost}>{v2.guaruja?.cta}</a>
+        </div>
+
+        <div class="lg:col-span-8 grid grid-cols-1 sm:grid-cols-2 gap-x-10 gap-y-0">
+          {entorno.map((e: any) => (
+            <div class="py-6 border-b border-rule/50 flex items-baseline gap-5">
+              <span class="font-display text-lg text-ink leading-snug flex-1 min-w-0">{e.title}</span>
+              <span class="text-sm text-ink-muted text-right max-w-[62%] leading-snug">{e.desc}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════ 7. AVALIAÇÕES ════════ -->
+  <GoogleReviews />
+
+  <!-- ════════ 8. FAQ ════════
+       6 perguntas (as que pesam na reserva), em accordion. As demais condições
+       ficam em /termos, linkado no pé. -->
+  {faqEscolhidas.length > 0 && (
+    <section class="bg-bg">
+      <div class="container-x pb-20 md:pb-28">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16">
+          <div class="lg:col-span-4">
+            <p class={eyebrow}>{v2.faq?.eyebrow}</p>
+            <h2 class={h2}>{v2.faq?.title}</h2>
+          </div>
+          <div class="lg:col-span-8">
+            <div class="flex flex-col">
+              {faqEscolhidas.map((f: any) => (
+                <details class="faq-v2 border-b border-rule/60">
+                  <summary>{f.q}</summary>
+                  <p class="text-ink-muted leading-relaxed pb-6 pr-8">{f.a}</p>
+                </details>
+              ))}
+            </div>
+            {v2.faq?.rodape && (
+              <p class="text-sm text-ink-faint leading-relaxed mt-7">
+                {v2.faq.rodape} <a href="/termos" class="underline underline-offset-2 hover:text-ink transition-colors">Ver Termos</a>.
+              </p>
+            )}
+          </div>
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- ════════ 9. LOCALIZAÇÃO / COMO CHEGAR ════════
+       Mapa com mais protagonismo (antes era um bloco lateral). -->
+  <section class="bg-bg">
+    <div class="container-x pb-20 md:pb-28">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 items-stretch">
+        <div class="lg:col-span-7 order-2 lg:order-1 rounded-lg overflow-hidden shadow-[0_24px_60px_-40px_rgba(60,45,25,.45)]">
+          <iframe
+            src={mapEmbed}
+            title="Mapa com a localização do Hotel Cajueiro Guarujá"
+            loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+            class="w-full h-[340px] md:h-full md:min-h-[460px] border-0"
+          ></iframe>
+        </div>
+
+        <div class="lg:col-span-5 order-1 lg:order-2 flex flex-col justify-center">
+          <p class={eyebrow}>{comoChegar.eyebrow || 'Como chegar'}</p>
+          <h2 class={`${h2} mb-5`}>{comoChegar.title}</h2>
+          {endereco && <p class="text-ink-muted leading-relaxed mb-8">{endereco}</p>}
+
+          <dl class="flex flex-col">
+            {(comoChegar.acessos || []).map((a: any) => (
+              <div class="py-4 border-t border-rule/50">
+                <dt class="font-semibold text-ink text-[15px] mb-1">{a.titulo}</dt>
+                <dd class="text-sm text-ink-muted leading-relaxed">{a.texto}</dd>
+              </div>
+            ))}
+          </dl>
+
+          <a href={mapHref} target="_blank" rel="noopener" class={`${btnGhost} self-start mt-8`}>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            Abrir no Google Maps
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════ 10. CTA FINAL ════════
+       Segundo e último momento de cor. Fechamento emocional. -->
+  <section class="relative overflow-hidden" style="background:#55703A;">
+    <div aria-hidden="true" class="absolute -top-32 -left-28 w-[30rem] h-[30rem] rounded-full" style="background:rgba(255,255,255,0.06);"></div>
+    <div aria-hidden="true" class="absolute -bottom-40 -right-24 w-[28rem] h-[28rem] rounded-full" style="background:rgba(0,0,0,0.10);"></div>
+    <div class="container-x py-24 md:py-36 relative text-center">
+      <h2 class="font-display text-4xl md:text-6xl font-normal tracking-tight text-white leading-[1.02] max-w-3xl mx-auto mb-6">
+        {v2.ctaFinal?.title}
+      </h2>
+      <p class="text-lg md:text-xl leading-relaxed max-w-2xl mx-auto mb-10" style="color:rgba(255,255,255,0.82);">
+        {v2.ctaFinal?.subtitle}
+      </p>
+      <a href="#reservar" class={btnPrimary}>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        {v2.ctaFinal?.button}
+      </a>
+      {waUrl && (
+        <p class="text-sm mt-6" style="color:rgba(255,255,255,0.72);">
+          Prefere falar? <a href={waUrl} target="_blank" rel="noopener" class="font-semibold text-white underline underline-offset-2">Chamar a recepção no WhatsApp</a>
+        </p>
+      )}
+    </div>
+  </section>
+
+  <!-- Lightbox da galeria -->
+  <div id="gallery-lightbox" class="fixed inset-0 z-[60] hidden items-center justify-center bg-black/92 backdrop-blur-sm" role="dialog" aria-modal="true" aria-label="Visualizador de imagens">
+    <button type="button" id="gallery-close" aria-label="Fechar" class="absolute top-4 right-4 w-11 h-11 inline-flex items-center justify-center rounded-[20px] bg-white/10 text-white hover:bg-white/20 transition-colors">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg>
+    </button>
+    <button type="button" id="gallery-prev" aria-label="Imagem anterior" class="absolute left-3 md:left-6 w-12 h-12 inline-flex items-center justify-center rounded-[20px] bg-white/10 text-white hover:bg-white/20 transition-colors">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>
+    </button>
+    <img id="gallery-img" alt="" class="max-h-[88vh] max-w-[92vw] object-contain rounded-md shadow-2xl select-none" />
+    <button type="button" id="gallery-next" aria-label="Próxima imagem" class="absolute right-3 md:right-6 w-12 h-12 inline-flex items-center justify-center rounded-[20px] bg-white/10 text-white hover:bg-white/20 transition-colors">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
+    </button>
+    <span id="gallery-counter" class="absolute bottom-5 left-1/2 -translate-x-1/2 text-white/80 text-sm font-medium"></span>
+  </div>
+
+  <style>
+    /* Accordion da FAQ — leve, sem caixa, só a régua separando. */
+    .faq-v2 > summary {
+      list-style: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.5rem;
+      padding: 1.35rem 0;
+      font-family: var(--font-display);
+      font-size: 1.175rem;
+      line-height: 1.35;
+      color: rgb(var(--c-ink));
+      transition: color 0.2s ease;
+    }
+    .faq-v2 > summary:hover { color: rgb(var(--c-primary)); }
+    .faq-v2 > summary::-webkit-details-marker { display: none; }
+    .faq-v2 > summary::after {
+      content: '';
+      flex-shrink: 0;
+      width: 0.55rem;
+      height: 0.55rem;
+      border-right: 2px solid #cf3a23;
+      border-bottom: 2px solid #cf3a23;
+      transform: rotate(45deg) translateY(-2px);
+      transition: transform 0.25s ease;
+    }
+    .faq-v2[open] > summary::after { transform: rotate(-135deg) translateY(-2px); }
+  </style>
+
+  <script is:inline>
+    (function () {
+      var lb = document.getElementById('gallery-lightbox');
+      if (!lb) return;
+      var imgEl = document.getElementById('gallery-img');
+      var counter = document.getElementById('gallery-counter');
+      var btns = Array.prototype.slice.call(document.querySelectorAll('[data-gallery-open]'));
+      if (!btns.length) return;
+
+      var srcs = btns.map(function (b) { var im = b.querySelector('img'); return im ? im.getAttribute('src') : ''; });
+      var alts = btns.map(function (b) { var im = b.querySelector('img'); return im ? (im.getAttribute('alt') || '') : ''; });
+      var idx = 0;
+
+      function render() {
+        imgEl.setAttribute('src', srcs[idx]);
+        imgEl.setAttribute('alt', alts[idx]);
+        if (counter) counter.textContent = idx + 1 + ' / ' + srcs.length;
+      }
+      function show(i) { idx = (i + srcs.length) % srcs.length; render(); }
+      function open(i) { show(i); lb.classList.remove('hidden'); lb.classList.add('flex'); document.body.style.overflow = 'hidden'; }
+      function close() { lb.classList.add('hidden'); lb.classList.remove('flex'); document.body.style.overflow = ''; }
+
+      btns.forEach(function (b, i) { b.addEventListener('click', function () { open(i); }); });
+      var p = document.getElementById('gallery-prev'), n = document.getElementById('gallery-next'), c = document.getElementById('gallery-close');
+      if (p) p.addEventListener('click', function (e) { e.stopPropagation(); show(idx - 1); });
+      if (n) n.addEventListener('click', function (e) { e.stopPropagation(); show(idx + 1); });
+      if (c) c.addEventListener('click', close);
+      lb.addEventListener('click', function (e) { if (e.target === lb) close(); });
+      document.addEventListener('keydown', function (e) {
+        if (lb.classList.contains('hidden')) return;
+        if (e.key === 'Escape') close();
+        else if (e.key === 'ArrowLeft') show(idx - 1);
+        else if (e.key === 'ArrowRight') show(idx + 1);
+      });
+      var sx = null;
+      lb.addEventListener('touchstart', function (e) { sx = e.touches[0].clientX; }, { passive: true });
+      lb.addEventListener('touchend', function (e) {
+        if (sx === null) return;
+        var dx = e.changedTouches[0].clientX - sx;
+        if (Math.abs(dx) > 40) show(dx < 0 ? idx + 1 : idx - 1);
+        sx = null;
+      }, { passive: true });
+    })();
+  </script>
+</BaseLayout>

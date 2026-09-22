@@ -1,0 +1,324 @@
+---
+/**
+ * SuitesDestaque.astro — as suítes num slider horizontal.
+ *
+ * O CARTÃO é o mesmo da seção de acomodações (`#acomodacoes` em index.astro):
+ * mesmas classes, mesmo `h3` serifado com hover
+ * terracota. Três coisas diferem de propósito: aqui o cartão NÃO é clicável
+ * (é informativo, sem link e sem estados de hover), e mais:
+ * o ARRANJO (lá é grade, aqui é pista horizontal) e o TAMANHO — este cartão é
+ * ~20% menor, porque numa pista horizontal cabem mais na tela e o conjunto
+ * pesa menos. Se o padrão de `#acomodacoes` mudar, rever este junto.
+ *
+ * O desvanecimento nas duas pontas é `mask-image` sobre a pista: são OS
+ * PRÓPRIOS CARTÕES que ficam transparentes, não um retângulo da cor do fundo
+ * pintado por cima. A diferença importa porque a seção pode mudar de fundo —
+ * com máscara não há cor nenhuma para manter em sincronia.
+ *
+ * O SLIDER só existe no celular e no tablet. A partir de 1024px as cinco
+ * suítes cabem na tela, então a pista deixa de rolar e vira uma linha
+ * centrada — e, por serem cinco (ímpar), a terceira cai no meio da tela sem
+ * nenhum cálculo.
+ *
+ * Onde rola, a rolagem é nativa: `overflow-x: auto` + `scroll-snap`. Funciona
+ * com dedo, trackpad, roda do mouse e teclado, e não quebra com JS desligado.
+ *
+ * FATOS: nome, foto e descrição vêm de `home.json → suitesTeaser.suites`, que
+ * já existia. Nada aqui é inventado — os nomes das suítes são os do arquivo.
+ *
+ * ⚠️ A nomenclatura das suítes está em conflito no projeto (home.json diz
+ * "Suíte casal/dupla/tripla", suites.json diz "Luxo/Luxo com Sacada/Standard",
+ * e os artigos falam em "62 suítes"). Isso está registrado como pendência em
+ * docs/PENDENCIAS-CONTEUDO.md e precisa da versão oficial do hotel.
+ */
+import { readData } from '../../lib/readData';
+
+interface Props {
+  /** Classe de fundo da seção (ex.: `bg-elev`), para a alternância da home. */
+  bg?: string;
+  /** Restringe e ordena as suítes. Sem isto, mostra todas as de home.json. */
+  nomes?: string[];
+  /** Respiro extra até a próxima seção. Zero por padrão: a seção seguinte
+   *  traz o próprio recuo (`py-16 md:py-20`), e somar os dois abria um vão
+   *  enorme entre as suítes e os depoimentos. */
+  espacoAbaixo?: string;
+}
+const { bg = '', nomes, espacoAbaixo = '0px' } = Astro.props as Props;
+
+const home = readData('home.json', {}) as any;
+const todas: any[] = home?.suitesTeaser?.suites || [];
+
+const norm = (v: string) => String(v || '').trim().toLowerCase();
+const suites = nomes?.length
+  ? nomes.map((n) => todas.find((s) => norm(s?.nome) === norm(n))).filter(Boolean)
+  : todas;
+
+---
+
+{suites.length > 0 && (
+<section class:list={['suites-slider', bg]} style={`--espaco-abaixo: ${espacoAbaixo}`} aria-labelledby="suites-slider-titulo">
+  <h2 id="suites-slider-titulo" class="sr-only">Nossas suítes</h2>
+
+  <ul class="suites-pista" tabindex="0" role="list" aria-label="Suítes — role para o lado para ver todas">
+    {suites.map((s: any) => (
+      <li class="suites-item">
+      <button
+          type="button"
+          class="suite-card bg-surface rounded-lg overflow-hidden border border-rule/40 flex flex-col h-full w-full text-left"
+          data-nome={s.nome}
+          data-img={s.img}
+          data-desc={s.desc}
+          aria-haspopup="dialog"
+        >
+          <div class="overflow-hidden">
+            <img
+              src={s.img}
+              alt={s.nome}
+              width="600"
+              height="400"
+              loading="lazy"
+              class="w-full object-cover"
+              style="height:160px"
+            />
+          </div>
+          <div class="p-5 flex flex-col flex-1">
+            <h3 class="font-display text-lg font-semibold text-ink mb-1.5">{s.nome}</h3>
+            <p class="text-sm text-ink-muted leading-relaxed">{s.desc}</p>
+          </div>
+        </button>
+      </li>
+    ))}
+  </ul>
+
+  {/* UM dialog para todas as suites: o conteudo e' trocado no clique. Cinco
+      modais no HTML seriam cinco copias do mesmo markup.
+      `<dialog>` nativo entrega Esc, trava de foco e camada superior sem
+      JavaScript de acessibilidade escrito a mao. */}
+  <dialog class="suite-modal" aria-labelledby="suite-modal-titulo">
+    <button type="button" class="suite-modal-fechar" data-fechar aria-label="Fechar">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+    <img class="suite-modal-foto" alt="" />
+    <div class="suite-modal-corpo">
+      <h3 id="suite-modal-titulo" class="suite-modal-titulo"></h3>
+      <p class="suite-modal-texto"></p>
+    </div>
+  </dialog>
+</section>
+)}
+
+<style>
+  /* O respiro vertical vive NUM LUGAR SO, aqui. Estava repartido entre a
+     secao e a pista, que nao se falavam: dava 37px em cima e 24px embaixo.
+     A pista mantem 0.5rem em cima e embaixo — simetricos — apenas para a
+     sombra dos cartoes nao ser cortada; esse par entra igual nos dois lados,
+     entao nao desequilibra. */
+  .suites-slider {
+    position: relative;
+    --espaco-vertical: 1.5rem;
+    padding-top: var(--espaco-vertical);
+    /* `--espaco-abaixo` e' folga EXTRA opcional (prop do componente), zero por
+       padrao — por isso nao quebra a simetria. */
+    padding-bottom: calc(var(--espaco-vertical) + var(--espaco-abaixo));
+  }
+  @media (min-width: 1024px) {
+    .suites-slider { --espaco-vertical: 2rem; }
+  }
+
+  /* Desvanecimento nas duas pontas. São os cartões que ficam transparentes,
+     via máscara — não um degradê da cor do fundo pintado por cima. */
+  .suites-pista {
+    -webkit-mask-image: linear-gradient(to right, transparent 0, #000 6%, #000 94%, transparent 100%);
+            mask-image: linear-gradient(to right, transparent 0, #000 6%, #000 94%, transparent 100%);
+
+    list-style: none;
+    margin: 0;
+    display: flex;
+    gap: 1.25rem;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    /* O recuo lateral acompanha a máscara: sem ele o primeiro e o último
+       cartão nasceriam já apagados pela ponta do degradê. */
+    padding: 0.5rem 8vw;               /* simetrico: so a folga da sombra */
+    scroll-padding-inline: 8vw;
+    /* Barra de rolagem escondida: o desvanecimento nas pontas já diz que há
+       mais conteúdo para o lado. */
+    scrollbar-width: none;
+  }
+  .suites-pista::-webkit-scrollbar { display: none; }
+  /* A pista é focável pelo teclado (as setas rolam) — o foco precisa aparecer. */
+  .suites-pista:focus-visible {
+    outline: 2px solid rgb(var(--c-primary));
+    outline-offset: 4px;
+  }
+
+  .suites-item {
+    flex: 0 0 auto;
+    width: 14rem;                      /* 224px */
+    scroll-snap-align: start;
+    display: flex;
+  }
+  @media (min-width: 768px) {
+    .suites-item { width: 16rem; }     /* 256px */
+    .suites-pista { padding-inline: 6vw; scroll-padding-inline: 6vw; }
+  }
+
+  /* ── DESKTOP: sem slider ──────────────────────────────────────────────
+     As cinco suites cabem na tela de uma vez, entao a pista deixa de rolar e
+     vira uma linha CENTRADA. Como sao cinco (numero impar) e o conjunto esta
+     centrado no container, a TERCEIRA cai exatamente no meio da tela — nao
+     ha calculo, e' consequencia de centralizar um numero impar de itens.
+
+     A mascara sai junto: ela existe para dizer "ha mais para o lado", e aqui
+     nao ha. Deixa-la apagaria as pontas do primeiro e do ultimo cartao sem
+     motivo.
+
+     Os cartoes passam a DIVIDIR a largura (`flex: 1 1 0`) em vez de ter
+     medida fixa, com teto de 16rem: assim os cinco cabem entre 1024px e telas
+     largas sem transbordar nem esticar demais. */
+  @media (min-width: 1024px) {
+    .suites-pista {
+      -webkit-mask-image: none;
+              mask-image: none;
+      overflow-x: visible;
+      scroll-snap-type: none;
+      justify-content: center;
+      gap: 1rem;
+      max-width: 85rem;
+      margin-inline: auto;
+      /* Sem recuo lateral: os cartoes vao ate as bordas da pista. O recuo de
+         cima segura a sombra dos cartoes, e o de baixo separa da proxima
+         secao — so o horizontal saiu. */
+      padding: 0.5rem 0;
+    }
+    .suites-item {
+      flex: 1 1 0;
+      width: auto;
+      min-width: 0;
+      /* Sem teto: os cinco DIVIDEM a largura liberada em vez de pararem em
+         256px e deixarem folga nas pontas. */
+      max-width: none;
+      scroll-snap-align: none;
+    }
+  }
+
+  /* Sombra um degrau mais presente que o `shadow-sm` de `#acomodacoes`: aqui
+     os cartões ficam sobre fundo claro e chapado, e a borda sozinha some. */
+  .suite-card {
+    box-shadow: 0 14px 34px -24px rgb(20 20 24 / 0.45);
+    cursor: pointer;
+    padding: 0;
+    transition: box-shadow .18s ease, transform .18s ease;
+  }
+  /* O cartao voltou a ser clicavel (abre o modal), entao volta a ter resposta
+     ao mouse — um botao que nao reage ao toque parece quebrado. */
+  .suite-card:hover { transform: translateY(-2px); box-shadow: 0 18px 40px -22px rgb(20 20 24 / 0.5); }
+  .suite-card:focus-visible { outline: 2px solid rgb(var(--c-primary)); outline-offset: 3px; }
+  @media (prefers-reduced-motion: reduce) {
+    .suite-card { transition: none; }
+    .suite-card:hover { transform: none; }
+  }
+
+  /* ── Modal da suite ───────────────────────────────────────────────────── */
+  .suite-modal {
+    width: min(34rem, calc(100vw - 2rem));
+    max-height: min(90vh, 46rem);
+    padding: 0;
+    border: 1px solid rgb(var(--c-rule) / 0.6);
+    border-radius: 1rem;
+    background: rgb(var(--c-surface));
+    color: rgb(var(--c-ink));
+    overflow: hidden;
+    position: relative;
+  }
+  .suite-modal::backdrop { background: rgb(12 14 10 / 0.6); }
+
+  .suite-modal-foto {
+    display: block;
+    width: 100%;
+    height: 15rem;
+    object-fit: cover;
+    background: rgb(var(--c-elev));
+  }
+  .suite-modal-corpo { padding: 1.5rem; }
+  .suite-modal-titulo {
+    margin: 0 0 0.625rem;
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    font-weight: 600;
+    line-height: 1.2;
+  }
+  .suite-modal-texto {
+    margin: 0;
+    font-size: 0.9375rem;
+    line-height: 1.65;
+    color: rgb(var(--c-ink-muted));
+  }
+
+  /* Fechar: sobre a foto, com fundo proprio para nao sumir em imagem clara. */
+  .suite-modal-fechar {
+    position: absolute;
+    top: 0.75rem;
+    right: 0.75rem;
+    width: 2.25rem;
+    height: 2.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 9999px;
+    border: 0;
+    cursor: pointer;
+    background: rgb(255 255 255 / 0.92);
+    color: rgb(var(--c-ink));
+    box-shadow: 0 2px 10px -2px rgb(20 20 24 / 0.35);
+  }
+  .suite-modal-fechar:hover { background: #fff; }
+  .suite-modal-fechar svg { width: 1.125rem; height: 1.125rem; }
+
+  @media (min-width: 1024px) {
+    .suite-modal-foto { height: 17.5rem; }
+    .suite-modal-corpo { padding: 1.75rem; }
+  }
+
+  /* Sem movimento: o snap atrapalha quem usa rolagem assistida. */
+  @media (prefers-reduced-motion: reduce) {
+    .suites-pista { scroll-snap-type: none; }
+  }
+</style>
+
+<script is:inline>
+  (function () {
+    // UM dialog para todas as suites: o conteudo e' trocado no clique.
+    var dlg = document.querySelector('.suite-modal');
+    if (!dlg) return;
+
+    var foto = dlg.querySelector('.suite-modal-foto');
+    var titulo = dlg.querySelector('.suite-modal-titulo');
+    var texto = dlg.querySelector('.suite-modal-texto');
+
+    document.querySelectorAll('.suite-card').forEach(function (card) {
+      card.addEventListener('click', function () {
+        foto.src = card.dataset.img || '';
+        foto.alt = card.dataset.nome || '';
+        titulo.textContent = card.dataset.nome || '';
+        texto.textContent = card.dataset.desc || '';
+        // `showModal` e' o que ativa Esc, trava de foco e o ::backdrop.
+        if (typeof dlg.showModal === 'function') dlg.showModal();
+      });
+    });
+
+    dlg.querySelector('[data-fechar]').addEventListener('click', function () {
+      dlg.close();
+    });
+
+    // Clique FORA da caixa fecha. O dialog ocupa a tela toda como alvo de
+    // clique, entao comparamos o ponto do clique com os limites dele.
+    dlg.addEventListener('click', function (e) {
+      var r = dlg.getBoundingClientRect();
+      var fora = e.clientX < r.left || e.clientX > r.right ||
+                 e.clientY < r.top  || e.clientY > r.bottom;
+      if (fora) dlg.close();
+    });
+  })();
+</script>

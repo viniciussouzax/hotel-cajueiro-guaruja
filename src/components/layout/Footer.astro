@@ -1,6 +1,6 @@
 ---
 import { readData } from '../../lib/readData';
-import { normalizeCategories, collectOrphanCategories } from '../../lib/categorySlug';
+import { normalizeCategories, collectOrphanCategories, categoryMatches } from '../../lib/categorySlug';
 import { getCollection } from 'astro:content';
 import { BRAND_ICONS } from '../../lib/brandIcons';
 
@@ -22,7 +22,12 @@ const categoriesData = readData('categories.json', []);
 const registered = normalizeCategories(categoriesData);
 const postCats = [...new Set(posts.map(p => p.data.category).filter(Boolean))];
 const orphans = collectOrphanCategories(postCats, registered);
-const allCategories = registered.length > 0 ? registered : orphans;
+// Só listamos tópico que tem artigo publicado. Sem esse filtro o rodapé de TODAS
+// as páginas linkava as 9 categorias do categories.json — 6 delas sem nenhum
+// artigo, levando o visitante para uma página vazia.
+const allCategories = [...registered, ...orphans].filter((cat) =>
+  posts.some((p: any) => categoryMatches(p.data.category, cat))
+);
 
 const year = new Date().getFullYear();
 const legal = siteConfig.legal || {};
@@ -128,8 +133,8 @@ const igProfile = siteConfig.social?.instagram || '';
     <div class="container-x py-6 flex items-center justify-between flex-wrap gap-3 text-xs">
       <span class="mono" style="color:#9aa089;">© {year} {razaoSocial}.{cnpj && ` CNPJ ${cnpj}`} | Todos os direitos reservados.</span>
       <div class="flex gap-5">
-        <a href="/privacidade" class="transition-colors hover:!text-[#FFEAB0]" style="color:#9aa089;">privacidade</a>
-        <a href="/termos" class="transition-colors hover:!text-[#FFEAB0]" style="color:#9aa089;">termos</a>
+        <a href="/privacidade" class="transition-colors hover:!text-[#FFEAB0]" style="color:#9aa089;">Privacidade</a>
+        <a href="/termos" class="transition-colors hover:!text-[#FFEAB0]" style="color:#9aa089;">Termos</a>
       </div>
     </div>
   </div>

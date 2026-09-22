@@ -1,0 +1,115 @@
+---
+/**
+ * GoogleRating.astro — a nota do hotel no Google, em uma linha.
+ *
+ *   4,3  ★★★★☆  802 avaliações  Google Maps
+ *
+ * Vem de `/api/reviews` (Places API New) e é preenchida no cliente. O HTML sai
+ * do servidor ESCONDIDO e só aparece quando o dado chega: sem chave, com erro
+ * ou sem avaliações, ele simplesmente não aparece — nunca um "0,0" na tela.
+ *
+ * A nota e o total são SEMPRE do lugar inteiro (as 802 avaliações), mesmo
+ * quando a lista de depoimentos está filtrada por nota em `pluginsConfig`.
+ * Mostrar aqui uma média recalculada só com as 5 estrelas seria inventar um
+ * número que o Google não publica.
+ *
+ * `tone="light"` é a versão para fundo escuro (a hero). O padrão é para fundo
+ * claro. A atribuição "Google Maps" segue o estilo exigido pela política, com
+ * o tom claro previsto para fundo escuro.
+ *
+ * Pode haver mais de um na mesma página: o fetch é único e compartilhado em
+ * `window.__grDados`, e o mesmo dado preenche todas as instâncias.
+ */
+interface Props { tone?: 'light' | 'dark'; class?: string }
+const { tone = 'dark', class: extra = '' } = Astro.props as Props;
+---
+
+<a
+  class:list={['gr-rating-badge', 'hidden', 'items-center', 'gap-2.5', 'no-underline', tone === 'light' && 'is-light', extra]}
+  href="#"
+  target="_blank"
+  rel="noopener noreferrer"
+>
+  <span data-grr="rating" class="gr-rr-nota font-semibold leading-none"></span>
+  <span data-grr="stars" class="gr-rr-estrelas leading-none" aria-hidden="true"></span>
+  <span data-grr="count" class="gr-rr-total"></span>
+  <span class="gmp-attribution" translate="no">Google Maps</span>
+</a>
+
+<style is:global>
+  /* Atribuição "Google Maps" no estilo exigido pela política do Places. */
+  .gmp-attribution {
+    font-family: Roboto, system-ui, sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 0.8125rem;
+    letter-spacing: normal;
+    white-space: nowrap;
+    color: #5e5e5e;
+  }
+  /* Fundo escuro: a política prevê o tom claro da atribuição. */
+  .gr-rating-badge.is-light .gmp-attribution { color: #e3e3e3; }
+
+  /* Uma linha so: os quatro itens no MESMO corpo, o da atribuicao "Google
+     Maps" (0.8125rem), que e' o unico com tamanho fixado por politica. Antes a
+     nota saia em 24px serifado e as estrelas em 18px — tres tamanhos na mesma
+     linha. So o peso distingue a nota agora. */
+  .gr-rating-badge { font-size: 0.8125rem; line-height: 1.2; }
+  .gr-rating-badge .gr-rr-nota { font-size: 0.9375rem; }
+  .gr-rating-badge .gr-rr-estrelas,
+  .gr-rating-badge .gr-rr-total { font-size: inherit; }
+
+  .gr-rating-badge .gr-rr-nota      { color: rgb(var(--c-ink)); }
+  .gr-rating-badge .gr-rr-estrelas  { position: relative; display: inline-flex; }
+  .gr-rating-badge .gr-rr-estrelas svg { width: 1.125rem; height: 1.125rem; flex-shrink: 0; }
+  .gr-rating-badge .gr-rr-fundo { display: inline-flex; fill: #DADCE0; }
+  .gr-rating-badge .gr-rr-frente { position: absolute; inset: 0 auto 0 0; display: inline-flex; overflow: hidden; fill: #FBBC04; }
+  .gr-rating-badge.is-light .gr-rr-fundo { fill: rgb(255 255 255 / 0.35); }
+  .gr-rating-badge .gr-rr-total     { color: rgb(var(--c-ink-muted)); }
+
+  .gr-rating-badge.is-light .gr-rr-nota     { color: #fff; }
+  .gr-rating-badge.is-light .gr-rr-total    { color: rgb(255 255 255 / 0.85); }
+</style>
+
+<script is:inline>
+  (function () {
+    // Uma única ida ao /api/reviews por página, compartilhada por todos os
+    // componentes que precisam do dado (esta linha e a seção de depoimentos).
+    if (!window.__grDados) {
+      window.__grDados = fetch('/api/reviews', { headers: { Accept: 'application/json' } })
+        .then(function (r) { return r.ok ? r.json() : null; })
+        .catch(function () { return null; });
+    }
+
+    // Estrelas como no Google: 5 cinzas por baixo e 5 amarelas por cima,
+    // cortadas na proporcao da nota (4,3 = 86%), entao a quinta sai parcial.
+    var ESTRELA = '<svg viewBox="0 0 24 24"><path d="M12 2.5l2.94 5.96 6.58.96-4.76 4.64 1.12 6.55L12 17.52l-5.88 3.09 1.12-6.55L2.48 9.42l6.58-.96L12 2.5z"/></svg>';
+    function estrelas(n) {
+      var pct = Math.max(0, Math.min(5, Number(n) || 0)) / 5 * 100;
+      var cinco = new Array(6).join(ESTRELA);
+      return '<span class="gr-rr-fundo">' + cinco + '</span><span class="gr-rr-frente" style="width:' + pct + '%">' + cinco + '</span>';
+    }
+
+    window.__grDados.then(function (d) {
+      var alvos = document.querySelectorAll('.gr-rating-badge');
+      if (!alvos.length) return;
+      // Sem dado utilizável, some de vez — nada de "0,0 ☆☆☆☆☆" na hero.
+      if (!d || !d.configured || !d.rating) {
+        for (var i = 0; i < alvos.length; i++) alvos[i].remove();
+        return;
+      }
+      for (var j = 0; j < alvos.length; j++) {
+        var el = alvos[j];
+        var q = function (k) { return el.querySelector('[data-grr="' + k + '"]'); };
+        q('rating').textContent = Number(d.rating).toFixed(1).replace('.', ',');
+        q('stars').innerHTML = estrelas(d.rating);
+        q('count').textContent = d.userRatingCount
+          ? d.userRatingCount + (d.userRatingCount === 1 ? ' avaliação' : ' avaliações')
+          : '';
+        if (d.googleMapsUri) el.href = d.googleMapsUri; else el.removeAttribute('href');
+        el.classList.remove('hidden');
+        el.classList.add('inline-flex');
+      }
+    });
+  })();
+</script>

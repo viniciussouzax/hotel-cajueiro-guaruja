@@ -17,7 +17,11 @@ export async function getStaticPaths() {
   const allPosts = await getCollection('blog');
   const postCats = [...new Set(allPosts.map((p: any) => p.data.category).filter(Boolean))];
   const orphans = collectOrphanCategories(postCats, registered);
-  const all: CategoryEntry[] = [...registered, ...orphans];
+  // Só gera página de categoria que tem artigo. Antes, as 9 categorias do
+  // categories.json viravam página (6 vazias) e entravam no sitemap.
+  const all: CategoryEntry[] = [...registered, ...orphans].filter((entry) =>
+    allPosts.some((p: any) => categoryMatches(p.data.category, entry))
+  );
   return all.map((entry) => ({
     params: { slug: entry.slug },
     props: { entry },

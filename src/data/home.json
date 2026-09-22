@@ -1,8 +1,8 @@
 {
   "hero": {
-    "image": "/images/hero-tombo.jpg",
+    "image": "/images/hero-mar.webp",
     "eyebrow": "",
-    "title": "Hospedagem no Guarujá",
+    "title": "Suítes no Guarujá",
     "lead": "A 100 metros da Praia do Tombo",
     "booking": {
       "labelDestino": "Destino",
@@ -27,23 +27,7 @@
       "image": ""
     }
   },
-  "features": [
-    {
-      "icon": "waves",
-      "title": "A 1 quadra da praia",
-      "text": "Apenas 100 metros da Praia do Tombo, uma das praias mais tranquilas do Guarujá."
-    },
-    {
-      "icon": "sun",
-      "title": "Piscina com bar",
-      "text": "Relaxe na piscina com um drink preparado na hora depois de um dia de praia."
-    },
-    {
-      "icon": "coffee",
-      "title": "Café da manhã artesanal",
-      "text": "Um café da manhã delicioso, preparado artesanalmente todos os dias."
-    }
-  ],
+  "features": [],
   "intro": {
     "title": "Hotel Cajueiro na Praia do Tombo, Guarujá",
     "text": "Na praia do Tombo, Guarujá, existe um destino ideal para os amantes de praia, belezas naturais e do puro prazer de desfrutar momentos de conforto em um hotel moderno.\n\nAqui você pode aproveitar a praia o ano todo. Casais encontram no Cajueiro um retiro perfeito para desfrutar de momentos a dois. Descanse em nossa piscina com drinks preparados na hora depois de um dia de praia e fique muito bem instalado em uma de nossas suítes, sempre impecáveis."
@@ -51,7 +35,7 @@
   "suitesTeaser": {
     "eyebrow": "Acomodações",
     "title": "Suítes pensadas para descansar de verdade",
-    "text": "O hotel conta com 62 suítes, todas com ar-condicionado, enxoval completo, Wi-Fi e frigobar. Escolha a acomodação ideal para a sua viagem, de casal a tripla.",
+    "text": "O hotel conta com 62 suítes, todas com ar-condicionado, enxoval completo, Wi-Fi e frigobar. As acomodações vão de individual a quádrupla, com e sem varanda, e a diária em quarto duplo começa em R$ 200, conforme a época do ano.",
     "cta": "Escolha a sua",
     "suites": [
       {
@@ -82,7 +66,7 @@
     ],
     "destaque": {
       "title": "Não encontrou a ideal?",
-      "text": "Temos suítes para todos os perfis, de casal a tripla, com e sem varanda. Fale com a gente e reserve a sua pelo melhor preço, direto pelo nosso site.",
+      "text": "Temos suítes para todos os perfis, de individual a quádrupla, com e sem varanda. Fale com a gente e reserve a sua pelo melhor preço, direto pelo nosso site.",
       "cta": "Reservar agora"
     }
   },
@@ -93,7 +77,7 @@
     "itens": [
       {
         "icon": "coffee",
-        "label": "Café da manhã completo"
+        "label": "Café da manhã artesanal, todos os dias"
       },
       {
         "icon": "dinner",
@@ -101,7 +85,7 @@
       },
       {
         "icon": "pool",
-        "label": "Piscina"
+        "label": "Piscina com bar"
       },
       {
         "icon": "wifi",
@@ -239,6 +223,26 @@
     {
       "q": "Como consigo o melhor preço?",
       "a": "Reservando direto pelo nosso site você sempre garante o melhor preço, sem intermediários."
+    },
+    {
+      "q": "Qual é a política de cancelamento?",
+      "a": "Depende da antecedência. Com 20 dias ou mais antes do check-in, há reembolso de 50% do valor pago. De 4 a 19 dias, emitimos carta de crédito para usar em até 60 dias, conforme disponibilidade. Com 3 dias ou menos, não há restituição. Não comparecer sem avisar (no-show) ou sair antes do previsto também não geram reembolso. A política completa está na página de Termos."
+    },
+    {
+      "q": "Quais são as formas de pagamento?",
+      "a": "Pix, com pagamento integral, ou cartão de crédito. Reservas acima de R$ 500 podem ser divididas em 2x sem juros e, acima de R$ 1.000, em 3x sem juros."
+    },
+    {
+      "q": "Crianças pagam? Vocês têm berço ou cama extra?",
+      "a": "Uma criança de até 5 anos, dormindo na mesma cama dos pais, é cortesia. Não trabalhamos com berço. Colchão extra tem custo de R$ 100 por pessoa, por noite."
+    },
+    {
+      "q": "Posso levar meu animal de estimação?",
+      "a": "Sim. Aceitamos animais de pequeno porte, com taxa de R$ 100 por estadia."
+    },
+    {
+      "q": "Quanto custa a diária?",
+      "a": "Em quarto duplo, a diária vai de R$ 200 a R$ 500, variando conforme a época do ano — as tarifas mais baixas ficam nos meses de menor movimento e durante a semana. No Réveillon, a diária é R$ 1.200. Para o valor exato das suas datas, consulte no buscador aqui no site, onde você garante sempre a melhor tarifa."
     }
   ],
   "galeria": {
@@ -258,7 +262,7 @@
       },
       {
         "n": 9,
-        "cap": "Suíte confortável",
+        "cap": "Café da manhã servido no bufê",
         "cls": ""
       },
       {
@@ -268,17 +272,17 @@
       },
       {
         "n": 11,
-        "cap": "A caminho da praia",
+        "cap": "Piscina com mesas e guarda-sóis",
         "cls": ""
       },
       {
         "n": 12,
-        "cap": "Suíte com varanda",
+        "cap": "Área de convivência com pergolado e jardim",
         "cls": ""
       },
       {
         "n": 13,
-        "cap": "Quartos para a família toda",
+        "cap": "Deck com espreguiçadeiras e vista para o morro",
         "cls": "col-span-2"
       }
     ]

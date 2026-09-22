@@ -141,6 +141,34 @@
     text-rendering: optimizeLegibility;
   }
 
+  /* ── Foco visível (acessibilidade) ────────────────────────────────────
+     O site não tinha nenhuma regra de foco: quem navega por teclado via
+     apenas o contorno padrão do navegador, que some em cima dos botões
+     coloridos da marca. Aqui um anel único, na cor terracota da marca, só
+     para navegação por teclado (:focus-visible não dispara no clique). */
+  :where(a, button, input, select, textarea, summary, [tabindex]):focus-visible {
+    outline: 2px solid #cf3a23;
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+  /* Sobre fundo escuro (hero, rodapé, lightbox) o terracota some — anel claro. */
+  :where(.site-header[data-transparent]:not(.is-solid), footer, #gallery-lightbox)
+    :where(a, button, input, select, textarea, [tabindex]):focus-visible {
+    outline-color: #FFEAB0;
+  }
+  /* Respeita quem pediu menos movimento. */
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+
+  /* Âncora /#reservar: desconta o header (68px) e a barra de campanha. */
+  #reservar { scroll-margin-top: calc(68px + var(--campaign-h, 0px)); }
+
   h1, h2, h3, h4, h5, h6 {
     color: rgb(var(--c-ink));
     margin: 0;

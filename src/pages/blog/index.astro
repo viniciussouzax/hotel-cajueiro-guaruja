@@ -1,8 +1,21 @@
 ---
+/**
+ * /blog — listagem de artigos.
+ *
+ * Usa a mesma linguagem visual das outras páginas do menu (cartão branco com
+ * foto no topo, título em Lora, texto de apoio em Geist, eyebrow em mono):
+ * antes era uma lista de links com miniatura de 96px, sem resumo e sem estado
+ * de hover — destoava do resto do site.
+ *
+ * FATOS: tudo vem do frontmatter dos artigos (title, description, heroImage,
+ * category, pubDate). Nada é inventado aqui.
+ */
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import CtaFinal from '../../components/CtaFinal.astro';
 import { getCollection } from 'astro:content';
 import { CATEGORY_ORDER } from '../../lib/categoryColors';
+import { readData } from '../../lib/readData';
+import { normalizeCategories, collectOrphanCategories, categoryMatches } from '../../lib/categorySlug';
 
 const allPosts = await getCollection('blog');
 
@@ -19,6 +32,14 @@ const posts = allPosts.sort((a: any, b: any) => {
   return new Date(b.data.pubDate).getTime() - new Date(a.data.pubDate).getTime();
 });
 
+// Atalhos por tópico — só categoria que tem artigo (mesma regra do rodapé).
+const registered = normalizeCategories(readData('categories.json', []));
+const postCats = [...new Set(posts.map((p: any) => p.data.category).filter(Boolean))];
+const orphans = collectOrphanCategories(postCats, registered);
+const categorias = [...registered, ...orphans].filter((cat) =>
+  posts.some((p: any) => categoryMatches(p.data.category, cat))
+);
+
 const MONTHS_PT = ['jan', 'fev', 'mar', 'abr', 'mai', 'jun', 'jul', 'ago', 'set', 'out', 'nov', 'dez'];
 function fmtDate(d: any): string {
   const dt = new Date(d);
@@ -32,46 +53,95 @@ function isoDate(d: any): string | undefined {
   const dt = new Date(d);
   return isNaN(dt.getTime()) ? undefined : dt.toISOString().slice(0, 10);
 }
+
+// Sem artigo em destaque: todos entram na mesma grade de tres colunas.
+// Antes o primeiro saia da lista e ganhava um bloco proprio de duas colunas.
+const demais = posts;
 ---
 
 <BaseLayout title="Blog" description="Dicas, praias e novidades do Guarujá pra aproveitar sua estadia no Hotel Cajueiro.">
+
+  <!-- ===== CABEÇALHO ===== -->
   <section>
-    <div class="container-x pt-12 md:pt-16 pb-6">
-      <h1 class="font-display text-3xl md:text-4xl font-normal tracking-tight text-ink leading-[1.1] mb-3">
-        Dicas, praias e novidades do Guarujá
-      </h1>
-      <p class="mono text-ink-faint">{posts.length} {posts.length === 1 ? 'publicado' : 'publicados'}</p>
+    <div class="container-x pt-12 md:pt-20 pb-8 md:pb-10">
+      <div class="max-w-2xl">
+        <p class="mono uppercase text-[#cf3a23] mb-3">Blog</p>
+        <h1 class="font-display text-3xl md:text-4xl font-normal tracking-tight text-ink leading-[1.1] mb-4">
+          Dicas, praias e novidades do Guarujá
+        </h1>
+        <p class="text-lg text-ink-muted leading-relaxed">
+          O que saber antes de chegar e o que aproveitar depois: praia, comida, passeios
+          e tudo o que fica a uma quadra do Hotel Cajueiro.
+        </p>
+      </div>
+
+      {categorias.length > 0 && (
+        <nav class="mt-8 flex flex-wrap items-center gap-2" aria-label="Tópicos do blog">
+          <span class="mono uppercase text-xs text-ink-faint mr-1">Tópicos</span>
+          {categorias.map((cat) => (
+            <a
+              href={`/categoria/${cat.slug}`}
+              class="inline-flex items-center min-h-[34px] px-3.5 rounded-[200px] border border-rule/70 bg-surface text-[13px] text-ink-muted no-underline hover:border-[#cf3a23] hover:text-[#cf3a23] transition-colors"
+            >
+              {cat.name}
+            </a>
+          ))}
+        </nav>
+      )}
     </div>
   </section>
 
-  <div class="container-x pb-20">
-    <div class="max-w-3xl flex flex-col">
-      {posts.map((post: any) => {
-        const data = post.data;
-        const slug = post.slug ?? post.id;
-        const img = data.heroImage || data.cover || data.coverImage || '';
-        return (
-          <a href={`/${slug}`} class="group flex items-start gap-4 sm:gap-6 py-3 no-underline -mx-3 px-3 rounded-md hover:bg-elev/60 transition-colors">
-            {img && (
-              <div class="shrink-0 w-24 h-16 sm:w-28 sm:h-[4.5rem] rounded overflow-hidden">
-                <img src={img} alt="" loading="lazy" class="w-full h-full object-cover transition-opacity group-hover:opacity-85" />
-              </div>
-            )}
-            <div class="flex-1 min-w-0">
-              <h2 class="font-display text-lg md:text-xl text-ink leading-snug group-hover:text-primary transition-colors">
-                {data.title}
-              </h2>
-              <div class="mono uppercase text-xs mt-2 flex items-center gap-2 flex-wrap">
-                {data.category && <span class="text-ink-muted">{data.category}</span>}
-                {data.category && <span class="text-ink-faint opacity-50" aria-hidden="true">·</span>}
-                <time datetime={isoDate(data.pubDate)} class="text-ink-faint tabular-nums">{fmtDate(data.pubDate)}</time>
-              </div>
-            </div>
-          </a>
-        );
-      })}
-    </div>
-  </div>
+  <!-- ===== ARTIGOS (grade de 3 colunas) ===== -->
+  {demais.length > 0 && (
+    <section class="bg-elev">
+      <div class="container-x py-14 md:py-20">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-7">
+          {demais.map((post: any) => {
+            const data = post.data;
+            const slug = post.slug ?? post.id;
+            return (
+              <article class="h-full">
+                <a
+                  href={`/${slug}`}
+                  class="group flex h-full flex-col bg-surface rounded-lg overflow-hidden border border-rule/40 shadow-sm no-underline hover:shadow-md transition-shadow"
+                >
+                  {data.heroImage && (
+                    <div class="overflow-hidden">
+                      <img
+                        src={data.heroImage}
+                        alt=""
+                        width="600"
+                        height="400"
+                        loading="lazy"
+                        class="w-full h-48 object-cover transition-transform duration-500 group-hover:scale-[1.04]"
+                      />
+                    </div>
+                  )}
+                  <div class="p-6 flex flex-col flex-1">
+                    <div class="mono uppercase text-xs flex items-center gap-2 flex-wrap mb-3">
+                      {data.category && <span class="text-[#cf3a23]">{data.category}</span>}
+                      {data.category && <span class="text-ink-faint opacity-50" aria-hidden="true">·</span>}
+                      <time datetime={isoDate(data.pubDate)} class="text-ink-faint tabular-nums">{fmtDate(data.pubDate)}</time>
+                    </div>
+                    <h3 class="font-display text-xl font-semibold text-ink leading-snug mb-3 group-hover:text-[#cf3a23] transition-colors">
+                      {data.title}
+                    </h3>
+                    {data.description && (
+                      <p class="text-sm text-ink-muted leading-relaxed line-clamp-3">{data.description}</p>
+                    )}
+                    <span class="mt-auto pt-5 inline-flex items-center gap-2 text-sm font-semibold text-ink group-hover:gap-3 transition-all">
+                      Ler artigo
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                    </span>
+                  </div>
+                </a>
+              </article>
+            );
+          })}
+        </div>
+      </div>
+    </section>
+  )}
 
   <CtaFinal />
 </BaseLayout>

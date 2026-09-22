@@ -4,6 +4,10 @@ import PostCard from '../components/ui/PostCard.astro';
 import Sidebar from '../components/sidebar/Sidebar.astro';
 import { getCollection } from 'astro:content';
 
+// A busca depende do ?q= da requisicao — com prerender ligado o parametro nunca
+// chega e a pagina devolve sempre "nenhum resultado". Roda on-demand.
+export const prerender = false;
+
 const url = new URL(Astro.request.url);
 const q = (url.searchParams.get('q') || '').trim().toLowerCase();
 

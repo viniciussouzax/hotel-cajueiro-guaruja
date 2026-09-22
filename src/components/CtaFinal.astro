@@ -3,6 +3,9 @@
  * CtaFinal.astro — bloco de CTA padrão do site (igual ao da home).
  * Conteúdo vem de home.json (cta.title / cta.subtitle / cta.button),
  * para ser único em todas as páginas. Fica logo acima do footer.
+ *
+ * O botão leva ao buscador de datas da home (`/#reservar`), que é o único
+ * caminho que consulta disponibilidade e preço no motor de reservas.
  */
 import { readData } from '../lib/readData';
 
@@ -10,10 +13,10 @@ const home = readData('home.json', {}) as any;
 const cta = home.cta || {};
 
 interface Props { href?: string }
-const { href = '/contato' } = Astro.props as Props;
+const { href = '/#reservar' } = Astro.props as Props;
 ---
 {(cta.title || cta.button) && (
-  <section id="reservar" class="bg-elev">
+  <section class="bg-elev">
     <div class="container-x py-20 md:py-28 text-center">
       <h2 class="font-display text-3xl md:text-5xl font-normal tracking-tight text-ink leading-[1.05] max-w-3xl mx-auto mb-5">{cta.title}</h2>
       {cta.subtitle && <p class="text-lg text-ink-muted leading-relaxed max-w-2xl mx-auto mb-8">{cta.subtitle}</p>}

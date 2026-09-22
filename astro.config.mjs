@@ -28,7 +28,7 @@ export default defineConfig({
         tailwind({ applyBaseStyles: false }),
         // Fora do sitemap: o painel (não indexável) e a busca (página utilitária,
         // sem conteúdo próprio).
-        ...(sitemap ? [sitemap({ filter: (page) => !/\/(admin|search)\/?/.test(page) })] : []),
+        ...(sitemap ? [sitemap({ filter: (page) => !/\/(admin|search|v2)\/?/.test(page) })] : []),
     ],
     vite: {
         optimizeDeps: {

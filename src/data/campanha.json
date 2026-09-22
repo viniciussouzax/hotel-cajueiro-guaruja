@@ -1,0 +1,12 @@
+{
+  "_nota": "Aviso da campanha do mes, na faixa acima do menu (formato da Announcement Bar 04). E so aviso: sem botao e sem X de fechar — o visitante NAO pode dispensa-lo. Vencida a data em terminaEm, a faixa some sozinha. ATENCAO: com enabled:true tudo aqui vai AO AR — confira titulo e oferta antes. Passo a passo em docs/CAMPANHA-DO-MES.md.",
+  "enabled": true,
+  "titulo": "Setembro",
+  "subtitulo": "Últimos dias",
+  "oferta": {
+    "antes": "Café da manhã com",
+    "destaque": "50% de desconto",
+    "depois": ""
+  },
+  "terminaEm": "2026-09-30T23:59:59-03:00"
+}

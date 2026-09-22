@@ -1,0 +1,88 @@
+---
+/**
+ * BotaoWhatsapp.astro — botão flutuante no canto inferior direito.
+ *
+ * O número sai de `siteConfig.contact.whatsapp` — não está escrito à mão aqui.
+ * Sem número configurado, o botão simplesmente não é renderizado.
+ *
+ * A MARCA: o glifo abaixo é o oficial do WhatsApp e o fundo é o verde da marca
+ * (#25D366). As diretrizes do WhatsApp pedem o ícone sem redesenho e sem
+ * recolorir — por isso ele não usa a paleta do hotel, que é a exceção
+ * deliberada ao design system do site.
+ *
+ * `bottom` usa `env(safe-area-inset-bottom)` para não ficar sob a barra de
+ * gestos do iPhone.
+ */
+import { readData } from '../lib/readData';
+
+interface Props {
+  /** Mensagem que já vai escrita na conversa. */
+  mensagem?: string;
+}
+const { mensagem = 'Olá! Vim pelo site e gostaria de tirar uma dúvida.' } =
+  Astro.props as Props;
+
+const siteConfig = readData('siteConfig.json');
+const numero = String(siteConfig?.contact?.whatsapp || '').replace(/\D/g, '');
+const href = numero
+  ? `https://wa.me/55${numero}?text=${encodeURIComponent(mensagem)}`
+  : '';
+---
+
+{href && (
+  <a
+    class="wa-flutuante"
+    href={href}
+    target="_blank"
+    rel="noopener noreferrer"
+    aria-label="Falar com a recepção no WhatsApp"
+    title="Falar com a recepção no WhatsApp"
+  >
+    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2zm5.8 14.16c-.24.68-1.42 1.3-1.96 1.35-.5.05-1.14.07-1.83-.11-.42-.13-.97-.31-1.67-.61-2.94-1.27-4.86-4.23-5-4.43-.15-.2-1.2-1.6-1.2-3.05s.76-2.16 1.03-2.46c.27-.3.59-.37.79-.37h.57c.18 0 .43-.07.67.51.24.59.83 2.04.9 2.19.07.15.12.32.02.52-.1.2-.15.32-.3.49-.15.17-.31.38-.45.51-.15.15-.3.31-.13.61.17.3.76 1.25 1.63 2.03 1.12 1 2.06 1.31 2.36 1.46.3.15.47.12.64-.07.17-.2.74-.86.94-1.16.2-.3.39-.25.66-.15.27.1 1.71.81 2.01.96.3.15.49.22.56.34.07.12.07.71-.17 1.39z"/>
+    </svg>
+  </a>
+)}
+
+<style>
+  .wa-flutuante {
+    position: fixed;
+    right: 1rem;
+    bottom: calc(1rem + env(safe-area-inset-bottom, 0px));
+    z-index: 45;                       /* abaixo do drawer (50) e da faixa (60) */
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 3.5rem;
+    height: 3.5rem;
+    border-radius: 9999px;
+
+    /* Verde oficial da marca. É a exceção deliberada à paleta do hotel: a
+       diretriz do WhatsApp não permite recolorir o ícone. */
+    background: #25D366;
+    color: #fff;
+
+    box-shadow: 0 10px 26px -8px rgb(20 20 24 / 0.45);
+    transition: transform .18s ease, box-shadow .18s ease;
+  }
+  .wa-flutuante:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 14px 30px -8px rgb(20 20 24 / 0.5);
+  }
+  .wa-flutuante:focus-visible {
+    outline: 3px solid #fff;
+    outline-offset: 3px;
+  }
+  .wa-flutuante svg { width: 1.875rem; height: 1.875rem; }
+
+  @media (min-width: 1024px) {
+    .wa-flutuante { right: 1.5rem; bottom: 1.5rem; width: 3.75rem; height: 3.75rem; }
+    .wa-flutuante svg { width: 2rem; height: 2rem; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .wa-flutuante { transition: none; }
+    .wa-flutuante:hover { transform: none; }
+  }
+</style>

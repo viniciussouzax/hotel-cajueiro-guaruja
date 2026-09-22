@@ -1,0 +1,486 @@
+---
+/**
+ * CampaignBar.astro — aviso da campanha do mês, acima do menu.
+ *
+ * VISUAL portado do bloco "Announcement Bar 04 - Black Friday Countdown" do
+ * shadcn space (lido no projeto licenciado em ~/Desktop/shadcn). A estrutura é
+ * a nossa: Astro + Tailwind 3 + JS vanilla. Sem React, sem shadcn, sem Radix,
+ * sem motion/react, sem NumberFlow.
+ *
+ * Composição mantida do bloco:
+ *   - faixa escura de largura total, conteúdo CENTRALIZADO (não distribuído nas
+ *     bordas), empilhado e virando uma linha só a partir de xl;
+ *   - oferta em corpo pequeno com o trecho de destaque MAIOR e em cor de acento;
+ *   - nome da campanha com degradê e subtítulo em acento logo abaixo;
+ *   - contador em quatro caixas de largura fixa, com borda, valor grande e
+ *     rótulo miúdo;
+ *   - os mesmos degraus de tamanho do original: sm (640) e xl (1280).
+ *
+ * O que MUDOU, por decisão do Bruno:
+ *   - É um AVISO FIXO: sem CTA, sem microcopy e sem botão de dispensar. Sem
+ *     dispensa não há localStorage nem chave por campanha.
+ *   - Mais fina que o bloco: um degrau a menos em cada tamanho.
+ *   - Cores: o bloco é preto + âmbar (Black Friday); aqui é a paleta
+ *     Café-da-Tarde (verde-oliva profundo, creme e dourado).
+ *   - NumberFlow virou uma animação CSS de um quadro na troca do dígito.
+ *   - A copy segue o COMPRIMENTO do original (frase curta, destaque de 2-3
+ *     palavras). Medida máxima e `text-wrap: balance` foram retirados: eram
+ *     remendo para uma frase longa que o componente não comporta.
+ *   - O contador é renderizado JÁ COM NÚMEROS no servidor; o original nasce
+ *     com valores, e "--" até o JS rodar aparecia como texto no lugar deles.
+ *
+ * A barra NÃO é um link. É um aviso, e logo abaixo dela ficam os dois caminhos
+ * de reserva do site (o botão "Reservar" do menu e o buscador de datas da
+ * hero) — nenhum clique se perde por ela não ser clicável.
+ *
+ * Some sozinha quando a campanha vence (isso não é dispensa, é fim de campanha).
+ * Conteúdo 100% em `src/data/campanha.json`. Entregue desativada.
+ */
+import { getCampanha } from '../../lib/campanha';
+
+/**
+ * `inline` — a MESMA faixa, no fluxo da pagina em vez de grudada no topo.
+ * Usada abaixo da hero. So a do topo mede a propria altura para o Header
+ * (`--campaign-h`); a inline nao encosta nessa variavel.
+ */
+interface Props { inline?: boolean }
+const { inline = false } = Astro.props as Props;
+
+const { ativa, campanha: c, fim: fimIso } = getCampanha();
+
+const fim = fimIso ? new Date(fimIso) : null;
+const fimValido = !!fim && !isNaN(fim.getTime());
+
+const oferta = c?.oferta || {};
+
+// O titulo sai em duas cores, como na referencia: a PRIMEIRA palavra em
+// branco e o resto em dourado ("Alta Temporada"). Titulo de uma palavra so
+// fica inteiro em dourado.
+const palavras = String(c?.titulo || '').trim().split(/\s+/).filter(Boolean);
+const tituloInicio = palavras.length > 1 ? palavras[0] : '';
+const tituloFim = palavras.length > 1 ? palavras.slice(1).join(' ') : palavras[0] || '';
+
+// Icone da oferta. Conjunto fechado: valor desconhecido nao desenha nada, em
+// vez de quebrar. Trocavel em `campanha.json -> icone`.
+const icone = String((c as any)?.icone || 'cafe');
+
+// Valores iniciais renderizados no servidor: o original ja nasce com numeros.
+// O JS corrige no primeiro tique; sem isto a barra pinta "--" ate hidratar.
+const restaMs = fimValido ? Math.max(0, fim!.getTime() - Date.now()) : 0;
+const totS = Math.floor(restaMs / 1000);
+const pad2 = (n: number) => String(n).padStart(2, '0');
+const ini = {
+  d: pad2(Math.floor(totS / 86400)),
+  h: pad2(Math.floor((totS % 86400) / 3600)),
+  m: pad2(Math.floor((totS % 3600) / 60)),
+  s: pad2(totS % 60),
+};
+
+const fimLegivel = fimValido
+  ? fim!.toLocaleDateString('pt-BR', { day: '2-digit', month: 'long', year: 'numeric', timeZone: 'America/Sao_Paulo' })
+  : '';
+---
+
+{ativa && (
+  <aside
+    class:list={['campaign-bar', inline && 'is-inline']}
+    data-fim={c.terminaEm}
+    data-inline={inline ? '1' : null}
+    aria-label="Aviso de campanha"
+  >
+    <div class="campaign-inner">
+
+      {/* Oferta: icone + filete + duas linhas (chamada em cima, destaque
+          embaixo). Vem de `oferta.antes` e `oferta.destaque`. */}
+      <div class="campaign-oferta">
+        {icone === 'cafe' && (
+          <svg class="campaign-icone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M17 8h1a4 4 0 1 1 0 8h-1" />
+            <path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4Z" />
+            <path d="M6 2v2M10 1v3M14 2v2" />
+          </svg>
+        )}
+        {icone === 'etiqueta' && (
+          <svg class="campaign-icone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M20.6 13.4 12 22l-9-9V3h10l7.6 7.6a2 2 0 0 1 0 2.8Z" />
+            <circle cx="7.5" cy="7.5" r="1.5" fill="currentColor" stroke="none" />
+          </svg>
+        )}
+        <span class="campaign-filete" aria-hidden="true"></span>
+        <p class="campaign-oferta-txt">
+          {oferta.antes && <span class="campaign-oferta-1">{oferta.antes}</span>}
+          {oferta.destaque && (
+            <strong class="campaign-oferta-2">
+              {oferta.destaque}{oferta.depois ? ` ${oferta.depois}` : ''}
+            </strong>
+          )}
+        </p>
+      </div>
+
+      {/* Nome da campanha: primeira palavra em branco, resto em dourado.
+          Subtitulo em versalete espacado, entre dois filetes. */}
+      {c.titulo && (
+        <div class="campaign-nome">
+          <p class="campaign-nome-t">
+            {tituloInicio && <span class="campaign-t1">{tituloInicio}</span>}
+            {tituloInicio && ' '}
+            <span class="campaign-t2">{tituloFim}</span>
+          </p>
+          {c.subtitulo && (
+            <p class="campaign-nome-s">
+              <span class="campaign-regua" aria-hidden="true"></span>
+              <span class="campaign-nome-s-txt">{c.subtitulo}</span>
+              <span class="campaign-regua" aria-hidden="true"></span>
+            </p>
+          )}
+        </div>
+      )}
+
+      {/* Contador em 4 caixas com borda. aria-hidden: quem usa leitor de tela
+          ouve a frase estática abaixo, e não números novos a cada segundo. */}
+      <div class="campaign-timer" aria-hidden="true">
+        <span class="campaign-bloco"><b data-unit="d">{ini.d}</b><i>Dias</i></span>
+        <span class="campaign-bloco"><b data-unit="h">{ini.h}</b><i>Horas</i></span>
+        <span class="campaign-bloco"><b data-unit="m">{ini.m}</b><i>Min</i></span>
+        <span class="campaign-bloco"><b data-unit="s">{ini.s}</b><i>Seg</i></span>
+      </div>
+      {fimLegivel && <p class="sr-only">Esta oferta vale até {fimLegivel}.</p>}
+    </div>
+  </aside>
+)}
+
+<style is:global>
+  /* UNICA regra global: o Header le --campaign-h para se deslocar. */
+  :root { --campaign-h: 0px; }
+</style>
+
+<!-- Tudo abaixo e ESCOPADO pelo Astro: o compilador carimba cada elemento
+     deste componente, entao nenhuma destas regras alcanca o resto do site.
+     Isolamento garantido pelo compilador, nao por prefixo de nome. -->
+<style>
+
+  .campaign-bar {
+    /* NAO e' fixa: ela mora no topo do documento e ROLA EMBORA com a pagina.
+       E' o que faz o aviso sumir ao rolar sem esconder nada por JS — e o menu,
+       que vem logo abaixo e e' `sticky`, assume o topo sozinho. Nao ha mais
+       duas posicoes para sincronizar, que era a origem do desalinhamento. */
+    position: static;
+    top: 0;
+    /* Acima do header (z-40) E do drawer da sidenav (z-50): o aviso nunca e'
+       coberto. O drawer, por sua vez, comeca abaixo dela (ver Header.astro,
+       .mobile-drawer com top: var(--campaign-h)), para o proprio botao de
+       fechar nao ficar escondido atras da faixa. */
+    z-index: 60;
+    /* O bloco original tem fundo quase-preto (Lab L=1.9). Usavamos #2f3d22, o
+       verde dos cards (L=22): a faixa ficava lavada, o texto e o acento sem
+       punch — era isso que se via como "distante do shadcn", nao a geometria.
+       Este e' o MESMO matiz, bem mais fundo: contraste do texto sobe de 10:1
+       para 13,8:1 (o bloco tem 16,5:1) e a faixa volta a ter presenca. */
+    /* Paleta da faixa num lugar so. */
+    --cb-fg: #F4EEDD;
+    --cb-acento: #F2CE6A;
+    background: #16210F;
+    color: var(--cb-fg);
+    /* 1px: e' o que `border-b` gera no Tailwind. Os 0.8px anteriores vinham de
+       uma medida tirada de preview com zoom (94,4px de altura da faixa e' 95px
+       a 0,99 de escala), nao de uma regra do bloco. */
+    border-bottom: 1px solid rgb(244 238 221 / 0.14);
+    overflow: hidden;
+  }
+
+  /* No celular a faixa EMPILHA em tres linhas e passa dos 180px. Grudada no
+     topo, ela mais o menu comiam ~255px de uma tela de 812 — um terco do
+     aparelho preso, e a pagina parecendo travada. Abaixo de lg ela deixa de
+     ser fixa e rola junto com a pagina; o menu assume o topo sozinho (o
+     medir() devolve 0 quando ela nao esta em sticky). */
+  /* Recolhimento no scroll — so a faixa do topo.
+     Ela e o menu disputam a mesma faixa de tela. Enquanto o buscador de datas
+     da hero estiver na tela, o aviso manda; quando ele passa por completo, o
+     aviso sai de cena e o menu sobe para o topo (o script zera --campaign-h).
+     A campanha continua no ar: ela reaparece ao voltar ao topo, e segue
+     visivel o tempo todo na faixa abaixo da hero. */
+  /* A faixa do topo NAO se esconde no scroll. Chegou a recolher quando o menu
+     pos-hero assumia, mas essa troca mexia em --campaign-h com a pagina ja
+     rolada e desalinhava o layout — revertido de proposito. Ela agora fica
+     (sticky no desktop, rolando junto no celular) e some so quando a campanha
+     vence. Se for para tentar de novo, o caminho e' faixa e menu dentro de um
+     MESMO container fixo, para nao haver duas posicoes a sincronizar. */
+
+  /* Versao no fluxo da pagina (abaixo da hero): mesma faixa, sem grudar no
+     topo e sem disputar camada com o menu. Ganha borda em cima tambem, para
+     fechar contra a secao anterior. */
+  .campaign-bar.is-inline {
+    position: static;
+    z-index: auto;
+    border-top: 1px solid rgb(244 238 221 / 0.14);
+  }
+
+  /* Empilhado ate xl, uma linha a partir dai — como no bloco original.
+     As medidas abaixo sao as do bloco (px-4 py-3 gap-4 / xl:px-12 gap-10.25),
+     so o padding vertical e um degrau menor, porque a barra pediu-se mais fina. */
+  .campaign-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1.25rem;
+    /* No CELULAR os tres grupos empilham, entao a faixa e' alta e precisa de
+       respiro em cima e embaixo — com os 12px do original ela ficava colada
+       nas bordas. A partir de xl, quando tudo volta a caber numa linha so, o
+       padding vertical encolhe de novo (ver o bloco de 1280px). */
+    padding: 1.25rem 1rem;
+    text-align: center;
+  }
+
+  /* text-sm, uma linha so — a copy tem de caber, como no original. */
+  /* ── Oferta: icone + filete + duas linhas ───────────────────────────── */
+  .campaign-oferta {
+    display: flex;
+    align-items: center;
+    gap: 0.875rem;
+  }
+  .campaign-icone {
+    width: 1.5rem;
+    height: 1.5rem;
+    flex-shrink: 0;
+    color: var(--cb-acento);
+  }
+  /* Filete vertical entre o icone e o texto. */
+  .campaign-filete {
+    width: 1px;
+    align-self: stretch;
+    min-height: 2.5rem;
+    background: rgb(244 238 221 / 0.22);
+    flex-shrink: 0;
+  }
+  .campaign-oferta-txt {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.125rem;
+    text-align: left;
+    line-height: 1.25;
+  }
+  /* Corpos da escala do projeto (text-sm / text-lg), nao valores avulsos. */
+  .campaign-oferta-1 {
+    font-size: 0.75rem;                /* text-xs — piso de 12px */
+    line-height: 1.5;
+    color: var(--cb-fg);
+  }
+  .campaign-oferta-2 {
+    font-size: 0.9375rem;
+    line-height: 1.3;
+    font-weight: 600;
+    color: var(--cb-acento);
+  }
+
+  /* ── Nome da campanha ───────────────────────────────────────────────── */
+  .campaign-nome {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.4375rem;
+  }
+  /* Serifa ATENUADA, como manda a DESIGN.md: weight 400 e tamanho abaixo do
+     h1 da pagina. A 44px/500 a faixa gritava mais alto que o titulo do site —
+     era o que fazia o aviso parecer fora do padrao. */
+  .campaign-nome-t {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+    white-space: nowrap;
+  }
+  /* Duas cores no titulo, como na referencia. */
+  .campaign-t1 { color: var(--cb-fg); }
+  .campaign-t2 { color: var(--cb-acento); }
+
+  /* Subtitulo em versalete espacado, entre dois filetes horizontais. */
+  .campaign-nome-s {
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    width: 100%;
+  }
+  /* Eyebrow do projeto: mono, 0.75rem, tracking 0.12em, weight 700.
+     NAO encolhe junto com o resto: 12px e' o piso da regra Floor-12, e vale
+     tambem para os rotulos do contador. */
+  .campaign-nome-s-txt {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;                /* text-xs — piso de 12px */
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--cb-acento);
+    white-space: nowrap;
+  }
+  .campaign-regua {
+    flex: 1 1 0;
+    min-width: 1.5rem;
+    height: 1px;
+    background: linear-gradient(to right, transparent, rgb(242 206 106 / 0.55), transparent);
+  }
+
+  /* ── Contador ───────────────────────────────────────────────────────── */
+  .campaign-timer {
+    display: flex;
+    align-items: center;
+    gap: 0.4375rem;
+    font-variant-numeric: tabular-nums;
+  }
+  .campaign-bloco {
+    width: 2.75rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 0.3125rem 0.25rem;
+    border-radius: 0.5rem;
+    border: 1px solid rgb(242 206 106 / 0.35);
+    background: rgb(244 238 221 / 0.04);
+  }
+  /* O numero e' DOURADO e o rotulo branco — o inverso do que estava. */
+  .campaign-bloco b {
+    display: inline-block;
+    font-size: 1rem;                   /* text-base */
+    font-weight: 600;
+    line-height: 1.3;
+    color: var(--cb-acento);
+  }
+  /* Rotulo = dado, entao mono, e nunca abaixo de 12px (regra Floor-12: o
+     publico do hotel tem 40+ e presbiopia). Estava em 10px. */
+  .campaign-bloco i {
+    font-family: var(--font-mono);
+    font-style: normal;
+    font-size: 0.75rem;                /* text-xs */
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    line-height: 1.5;
+    color: rgb(244 238 221 / 0.72);
+  }
+  /* Troca de digito: o "live countdown" do bloco sem NumberFlow. */
+  .campaign-bloco b.tick { animation: campaign-tick .28s ease-out; }
+  /* So desliza — NUNCA apaga. Com `opacity: 0` o numero dos segundos ficava
+     invisivel ~1/4 do tempo e a caixa "Seg" aparecia vazia na tela. */
+  @keyframes campaign-tick {
+    from { transform: translateY(-38%); }
+    to   { transform: translateY(0); }
+  }
+
+  /* sm (640px) em diante: tudo um degrau maior. */
+  @media (min-width: 640px) {
+    .campaign-oferta-1 { font-size: 0.8125rem; }
+    .campaign-oferta-2 { font-size: 1.0625rem; }
+    .campaign-icone    { width: 1.75rem; height: 1.75rem; }
+    .campaign-nome-t   { font-size: 1.625rem; }
+    .campaign-bloco    { width: 3.125rem; padding: 0.375rem 0.25rem; }
+    .campaign-bloco b  { font-size: 1.25rem; }
+  }
+
+  /* xl (1280px): os tres grupos numa linha so, como na referencia. */
+  @media (min-width: 1280px) {
+    .campaign-inner {
+      flex-direction: row;
+      gap: 2.5rem;
+      padding: 0.75rem 3rem;
+    }
+    .campaign-oferta, .campaign-nome, .campaign-timer { flex-shrink: 0; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .campaign-bloco b.tick { animation: none; }
+  }
+</style>
+
+<script is:inline>
+  (function () {
+    var barras = document.querySelectorAll('.campaign-bar');
+    if (!barras.length) return;
+
+    var root = document.documentElement;
+
+    function pad(n) { return n < 10 ? '0' + n : String(n); }
+
+    function ligar(bar) {
+      // So a faixa do topo empurra o menu. A inline vive no fluxo e nao mexe
+      // em --campaign-h (se mexesse, as duas brigariam pela mesma variavel).
+      var mede = bar.dataset.inline !== '1';
+
+      function zerar() { if (mede) root.style.setProperty('--campaign-h', '0px'); }
+      function sumirJa() { bar.remove(); zerar(); }
+
+      /** Fim de campanha: colapsa a altura, como o `motion` faz no bloco.
+       *  Não existe dispensa pelo visitante — o aviso é fixo. */
+      function sumirAnimado() {
+        var h = bar.offsetHeight;
+        var reduz = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (reduz) { sumirJa(); return; }
+        bar.style.height = h + 'px';
+        void bar.offsetWidth;
+        bar.classList.add('is-closing');
+        bar.style.height = '0px';
+        zerar();
+        setTimeout(function () { if (bar.isConnected) bar.remove(); }, 400);
+      }
+
+      function medir() {
+        if (!mede || !bar.isConnected || bar.classList.contains('is-closing')) return;
+        // Fora do modo sticky (celular/tablet) a faixa rola com a pagina: ela
+        // nao desloca o menu, entao a variavel tem de ficar em zero.
+        if (getComputedStyle(bar).position !== 'sticky') {
+          root.style.setProperty('--campaign-h', '0px');
+          return;
+        }
+        root.style.setProperty('--campaign-h', Math.round(bar.offsetHeight) + 'px');
+      }
+
+      // Data inválida → não arrisca.
+      var fim = new Date(bar.dataset.fim).getTime();
+      if (isNaN(fim)) { sumirJa(); return; }
+
+      var campos = bar.querySelectorAll('.campaign-timer [data-unit]');
+      var tick = null;
+
+      function atualizar() {
+        var resta = fim - Date.now();
+        if (resta <= 0) {                     // acabou: some, nunca negativo
+          if (tick) clearInterval(tick);
+          sumirAnimado();
+          return;
+        }
+        var s = Math.floor(resta / 1000);
+        var v = { d: Math.floor(s / 86400), h: Math.floor((s % 86400) / 3600), m: Math.floor((s % 3600) / 60), s: s % 60 };
+        for (var i = 0; i < campos.length; i++) {
+          var el = campos[i];
+          var novo = pad(v[el.getAttribute('data-unit')]);
+          if (el.textContent === novo) continue;   // só anima o que mudou
+          el.textContent = novo;
+          el.classList.remove('tick');
+          void el.offsetWidth;
+          el.classList.add('tick');
+        }
+      }
+
+      atualizar();
+      if (!bar.isConnected) return;
+      medir();
+      tick = setInterval(atualizar, 1000);
+      if (!mede) return;
+      // O observer cobre o caso geral; as outras medidas são o cinto e
+      // suspensório, porque é esta medida que segura o menu no lugar.
+      if (typeof ResizeObserver !== 'undefined') new ResizeObserver(medir).observe(bar);
+      window.addEventListener('resize', medir, { passive: true });
+      window.addEventListener('orientationchange', medir, { passive: true });
+      window.addEventListener('load', medir);
+      setTimeout(medir, 250);
+      setTimeout(medir, 1000);
+      if (document.fonts && document.fonts.ready) document.fonts.ready.then(medir).catch(function () {});
+    }
+
+    for (var k = 0; k < barras.length; k++) ligar(barras[k]);
+  })();
+</script>

@@ -1,0 +1,326 @@
+---
+/**
+ * GoogleReviews.astro — depoimentos reais de hóspedes, em marquee vertical.
+ *
+ * FONTE: `src/data/avaliacoes.json`, gerado a partir da exportação da **API
+ * oficial do Google Business Profile** do perfil do próprio hotel (bruto
+ * preservado em `data-fonte/gbp-reviews-2026-08-11.json`). Não é a Places API
+ * — que devolve no máximo 5 e proíbe cache — e não é raspagem. Por isso os
+ * dados ficam gravados no repositório e a seção é renderizada no SERVIDOR:
+ * sem chamada em tempo de execução e funcionando com o JavaScript desligado.
+ *
+ * Para atualizar: rodar `gbp/gbp.py` e regerar o `avaliacoes.json`.
+ *
+ * VISUAL portado do bloco "Testimonial 07 — Multi Platform Testimonials" do
+ * shadcn space. Astro + Tailwind 3 + CSS puro: sem React, shadcn, Radix ou
+ * motion/react.
+ *
+ * SEM DUPLICATA, por construção. Cada coluna recebe uma FATIA PRÓPRIA da lista
+ * (índices `j % 4 === c`), então a mesma pessoa nunca aparece em duas colunas
+ * ao mesmo tempo. Antes cada coluna carregava a lista inteira — com poucas
+ * avaliações isso punha o mesmo rosto duas vezes na tela.
+ *
+ * ATENÇÃO — não adicione `Review`/`AggregateRating` em JSON-LD a partir daqui.
+ * Avaliação sobre o próprio negócio é self-serving e inelegível para rich
+ * result; marcar assim mesmo é o que rende ação manual. Exibir, não.
+ */
+import { readData } from '../../lib/readData';
+
+interface Props {
+  bg?: string;
+  /** Cabeçalho da seção. Mesmo padrão das outras (eyebrow + h2 + apoio). */
+  eyebrow?: string;
+  titulo?: string;
+  descricao?: string;
+}
+const {
+  bg = '',
+  eyebrow = 'Avaliações',
+  titulo = 'Quem já ficou aqui',
+  descricao = 'Avaliações publicadas por hóspedes no perfil do hotel no Google. Exibimos aqui uma seleção e não editamos o texto.',
+} = Astro.props as Props;
+
+const dados = readData('avaliacoes.json', { itens: [] }) as any;
+const itens: any[] = Array.isArray(dados.itens) ? dados.itens : [];
+
+// 4 pistas montadas no servidor. O CSS mostra 1 no celular, 2 no tablet e as
+// 4 no desktop — as colunas escondidas levam junto a fatia delas, o que é
+// aceitável porque todos os depoimentos são equivalentes em qualidade.
+const PISTAS = 4;
+const pistas = Array.from({ length: PISTAS }, (_, c) =>
+  itens.filter((_: any, j: number) => j % PISTAS === c)
+).filter((lista) => lista.length > 0);
+
+const estrelas = (n: number) => '★'.repeat(n) + '☆'.repeat(5 - n);
+
+/** "há 2 meses" em vez do ano solto — é o que o Google mostra e é o que diz
+ *  se a avaliação é recente. Calculado no build; o script no fim do arquivo
+ *  recalcula no cliente, senão o texto envelhece junto com a página estática. */
+function haQuantoTempo(iso: string): string {
+  const d = new Date(iso);
+  if (!iso || isNaN(d.getTime())) return '';
+  const dias = Math.floor((Date.now() - d.getTime()) / 86400000);
+  if (dias < 7) return dias <= 1 ? 'há 1 dia' : `há ${dias} dias`;
+  if (dias < 30) { const n = Math.floor(dias / 7); return n === 1 ? 'há 1 semana' : `há ${n} semanas`; }
+  if (dias < 365) { const n = Math.max(1, Math.floor(dias / 30)); return n === 1 ? 'há 1 mês' : `há ${n} meses`; }
+  const n = Math.floor(dias / 365);
+  return n === 1 ? 'há 1 ano' : `há ${n} anos`;
+}
+
+// A API de Business Profile não devolve permalink público por avaliação (o
+// `reviewReplyUrl` é URL de GESTÃO do dono e nunca deve ir para uma página
+// pública), então a prova aponta para o perfil inteiro.
+const perfilUrl = dados.placeId
+  ? `https://search.google.com/local/reviews?placeid=${dados.placeId}`
+  : 'https://www.google.com/maps';
+---
+
+{pistas.length > 0 && (
+<section id="gr-section" class={bg}>
+  <div class="py-16 md:py-20">
+
+    {/* Cabeçalho no mesmo formato de `#estrutura`: eyebrow em mono terracota,
+        h2 serifado, apoio em corpo maior. O `h2` deixou de ser `sr-only` —
+        agora é o título de verdade da seção. */}
+    {(titulo || descricao) && (
+      <div class="container-x">
+        <div class="max-w-2xl mb-10 md:mb-12">
+          {eyebrow && <p class="mono uppercase text-[#cf3a23] mb-3">{eyebrow}</p>}
+          {titulo && <h2 id="gr-titulo" class="font-display text-3xl md:text-4xl font-normal tracking-tight text-ink leading-[1.1] mb-4">{titulo}</h2>}
+          {descricao && (
+            <p class="text-lg text-ink-muted leading-relaxed">
+              {descricao}{' '}
+              {/* O link de prova vive aqui, junto da descricao. Ficava repetido
+                  num rodape ao fim da secao, que dizia a mesma coisa de novo. */}
+              <a href={perfilUrl} target="_blank" rel="noopener noreferrer" class="underline underline-offset-2 hover:text-ink transition-colors">Ver todas no Google</a>.
+            </p>
+          )}
+        </div>
+      </div>
+    )}
+
+    <div class="gr-stage relative w-full overflow-hidden">
+      <div class="gr-pistas">
+        {pistas.map((lista, c) => (
+          <div class:list={['gr-col', c === 1 && 'gr-col-tablet', c >= 2 && 'gr-col-desktop']}>
+            {/* a lista sai duplicada: é o que faz o laço do marquee fechar sem
+                salto. A cópia é aria-hidden para o leitor de tela não ouvir o
+                mesmo depoimento duas vezes. */}
+            <div class:list={['gr-track', c % 2 === 1 && 'gr-reverse']}>
+              {[0, 1].map((volta) =>
+                lista.map((r: any) => (
+                  <article class="gr-card" aria-hidden={volta === 1 ? 'true' : undefined}>
+                    <div class="gr-topo">
+                      {r.foto && (
+                        <img
+                          src={r.foto}
+                          alt={`Foto de ${r.autor}`}
+                          width="48"
+                          height="48"
+                          loading="lazy"
+                          referrerpolicy="no-referrer"
+                          class="gr-avatar"
+                        />
+                      )}
+                      <div class="min-w-0 flex-1">
+                        <p class="gr-autor">{r.autor}</p>
+                        <p class="gr-quando" data-quando={r.data}>{haQuantoTempo(r.data)}</p>
+                      </div>
+                      {/* Marca do Google: origem de todo card, e atribuição visual */}
+                      <svg class="gr-marca" viewBox="0 0 24 24" aria-hidden="true">
+                        <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.76h3.57c2.08-1.92 3.27-4.74 3.27-8.09z"/>
+                        <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.76c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84A11 11 0 0 0 12 23z"/>
+                        <path fill="#FBBC05" d="M5.84 14.11a6.6 6.6 0 0 1 0-4.22V7.05H2.18a11 11 0 0 0 0 9.9l3.66-2.84z"/>
+                        <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.05l3.66 2.84C6.71 7.31 9.14 5.38 12 5.38z"/>
+                      </svg>
+                    </div>
+
+                    <hr class="gr-regua" />
+
+                    <div class="gr-estrelas" aria-hidden="true">
+                      <span class="gr-nota">{r.nota}/5</span>
+                      {[1, 2, 3, 4, 5].map((n) => (
+                        <svg viewBox="0 0 24 24" class={n <= r.nota ? 'gr-estrela' : 'gr-estrela gr-vazia'}>
+                          <path d="M12 2.5l2.94 5.96 6.58.96-4.76 4.64 1.12 6.55L12 17.52l-5.88 3.09 1.12-6.55L2.48 9.42l6.58-.96L12 2.5z" />
+                        </svg>
+                      ))}
+                    </div>
+                    <p class="sr-only">Nota {r.nota} de 5</p>
+                    <blockquote class="gr-texto">{r.texto}</blockquote>
+                  </article>
+                ))
+              )}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+
+  </div>
+</section>
+)}
+
+<style>
+  /* ── Palco ────────────────────────────────────────────────────────────── */
+  .gr-stage { max-height: 42rem; }
+
+  /* As colunas DIVIDEM a largura disponível em vez de ter largura fixa: é o
+     que permite duas colunas caberem num celular de 375px. */
+  .gr-pistas {
+    display: flex;
+    gap: 1rem;
+    width: 100%;
+    max-width: 1440px;
+    margin-inline: auto;
+    padding-inline: 1rem;
+    align-items: flex-start;
+  }
+  .gr-col { flex: 1 1 0; min-width: 0; overflow: hidden; }
+
+  /* 1 coluna no celular, 2 no tablet, 4 no desktop. */
+  .gr-col-tablet, .gr-col-desktop { display: none; }
+  @media (min-width: 640px)  { .gr-col-tablet { display: block; } }
+  @media (min-width: 1024px) {
+    .gr-col-desktop { display: block; }
+    .gr-pistas { gap: 1.25rem; padding-inline: 1.5rem; }
+  }
+
+  /* ── Marquee vertical ─────────────────────────────────────────────────── */
+  .gr-track {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    /* A duração real vem do script, calculada da ALTURA da coluna, para a
+       velocidade ficar constante em px/s em vez de variar com o conteúdo. */
+    animation: gr-marquee var(--gr-duracao, 60s) linear infinite;
+  }
+  .gr-track.gr-reverse { animation-direction: reverse; }
+  @keyframes gr-marquee {
+    from { transform: translateY(0); }
+    to   { transform: translateY(-50%); }
+  }
+  /* O `pauseOnHover` do bloco foi retirado de propósito: o mouse não
+     interrompe a rolagem. A pausa no FOCO fica — sem ela, quem navega por
+     teclado vê o link recém-focado sair da tela sozinho. */
+  .gr-stage:focus-within .gr-track { animation-play-state: paused; }
+
+  /* ── Card ─────────────────────────────────────────────────────────────── */
+  .gr-card {
+    background: rgb(var(--c-surface));
+    border: 1px solid rgb(var(--c-rule) / 0.5);
+    border-radius: 0.625rem;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  .gr-topo { display: flex; align-items: center; gap: 0.625rem; }
+  .gr-avatar {
+    width: 2rem; height: 2rem; border-radius: 9999px;
+    object-fit: cover; background: rgb(var(--c-elev)); flex-shrink: 0;
+  }
+  .gr-autor {
+    margin: 0; font-size: 0.8125rem; font-weight: 500; color: rgb(var(--c-ink));
+    overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  }
+  .gr-quando { margin: 0; font-size: 0.75rem; color: rgb(var(--c-ink-muted)); }
+  .gr-marca { width: 1rem; height: 1rem; flex-shrink: 0; }
+  .gr-regua { margin: 0; border: 0; border-top: 1px solid rgb(var(--c-rule) / 0.5); }
+  /* Estrelas como no Google: preenchidas em amarelo #FBBC04, vazias em cinza. */
+  .gr-estrelas { display: flex; align-items: center; gap: 0.125rem; }
+  .gr-nota { margin-right: 0.375rem; font-size: 0.875rem; font-weight: 500; line-height: 1; color: rgb(var(--c-ink)); }
+  .gr-estrela { width: 1.125rem; height: 1.125rem; fill: #FBBC04; flex-shrink: 0; }
+  .gr-estrela.gr-vazia { fill: #DADCE0; }
+  @media (min-width: 1024px) { .gr-estrela { width: 1.25rem; height: 1.25rem; } }
+
+  /* Altura padronizada. As avaliações reais variam muito de tamanho; sem
+     limite um card fica várias vezes maior que o vizinho e a coluna vira uma
+     parede de texto. Em duas colunas estreitas o corte é mais curto. */
+  .gr-texto {
+    margin: 0;
+    font-size: 0.8125rem;
+    line-height: 1.6;
+    color: rgb(var(--c-ink));
+    /* O clamp e' so um TETO, para um depoimento longo nao dominar a coluna.
+       Nao ha `min-height`: card curto fica curto. Igualar todos deixava sobra
+       de espaco embaixo dos curtos, e a coluna virava uma grade de caixas
+       vazias. */
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 9;
+    overflow: hidden;
+  }
+  /* Coluna unica no celular: o card ocupa a largura toda, entao pode ter
+     corpo e recheio maiores — nao ha mais duas colunas a dividir os 375px. */
+  @media (max-width: 639px) {
+    .gr-card { padding: 1.25rem; }
+    .gr-avatar { width: 2.5rem; height: 2.5rem; }
+    .gr-autor { font-size: 0.875rem; }
+    .gr-texto { font-size: 0.9375rem; -webkit-line-clamp: 8; }
+  }
+  @media (min-width: 1024px) {
+    .gr-card { padding: 1.25rem; gap: 0.875rem; }
+    .gr-avatar { width: 2.5rem; height: 2.5rem; }
+    .gr-autor { font-size: 0.875rem; }
+    .gr-marca { width: 1.25rem; height: 1.25rem; }
+    .gr-texto { font-size: 0.875rem; -webkit-line-clamp: 10; }
+  }
+
+  /* ── Desvanecimento no topo e na base ─────────────────────────────────
+     São os PRÓPRIOS depoimentos que desaparecem, por `mask-image` — não um
+     degradê pintado por cima deles. A diferença importa: o degradê era um
+     retângulo da cor do fundo da seção, então sobre qualquer outra coisa ele
+     aparecia como mancha clara, e a cor tinha de ser mantida em sincronia com
+     a seção. Com máscara o card fica transparente e vale o que estiver atrás.
+     Os dois lados somem: é o que diz que a coluna continua rolando. */
+  .gr-stage {
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 16%, #000 84%, transparent 100%);
+            mask-image: linear-gradient(to bottom, transparent 0, #000 16%, #000 84%, transparent 100%);
+  }
+
+  /* Sem movimento: vira lista rolável, e sem máscara cortando a leitura. */
+  @media (prefers-reduced-motion: reduce) {
+    .gr-track { animation: none; }
+    .gr-col { overflow-y: auto; max-height: 42rem; }
+    .gr-stage { -webkit-mask-image: none; mask-image: none; }
+  }
+</style>
+
+<script is:inline>
+  (function () {
+    // Velocidade constante: a duração sai da ALTURA da coluna, não da
+    // quantidade de cards — senão uma coluna alta passa voando.
+    var PX_POR_SEGUNDO = 22;
+    var faixas = document.querySelectorAll('#gr-section .gr-track');
+    if (!faixas.length) return;
+
+    function ajustar() {
+      for (var i = 0; i < faixas.length; i++) {
+        var t = faixas[i];
+        var distancia = t.scrollHeight / 2;   // a lista é duplicada; o laço fecha em -50%
+        if (!distancia) continue;
+        t.style.setProperty('--gr-duracao', Math.max(30, Math.round(distancia / PX_POR_SEGUNDO)) + 's');
+      }
+    }
+    // "há X meses" recalculado no cliente: a pagina e' estatica e o texto do
+    // build envelheceria ate o proximo deploy.
+    var agora = Date.now();
+    var campos = document.querySelectorAll('#gr-section [data-quando]');
+    for (var q = 0; q < campos.length; q++) {
+      var iso = campos[q].getAttribute('data-quando');
+      var t = iso ? new Date(iso).getTime() : NaN;
+      if (isNaN(t)) continue;
+      var dias = Math.floor((agora - t) / 86400000), txt;
+      if (dias < 7) txt = dias <= 1 ? 'há 1 dia' : 'há ' + dias + ' dias';
+      else if (dias < 30) { var sem = Math.floor(dias / 7); txt = sem === 1 ? 'há 1 semana' : 'há ' + sem + ' semanas'; }
+      else if (dias < 365) { var me = Math.max(1, Math.floor(dias / 30)); txt = me === 1 ? 'há 1 mês' : 'há ' + me + ' meses'; }
+      else { var an = Math.floor(dias / 365); txt = an === 1 ? 'há 1 ano' : 'há ' + an + ' anos'; }
+      campos[q].textContent = txt;
+    }
+
+    ajustar();
+    // As fotos dos autores chegam depois e mudam a altura da coluna.
+    window.addEventListener('load', ajustar);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(ajustar).catch(function () {});
+  })();
+</script>

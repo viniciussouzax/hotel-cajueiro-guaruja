@@ -15,10 +15,6 @@
         {
             "label": "Blog",
             "href": "/blog"
-        },
-        {
-            "label": "Contato",
-            "href": "/contato"
         }
     ]
 }

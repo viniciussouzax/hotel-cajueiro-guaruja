@@ -1,0 +1,392 @@
+Sim. Eu faria o prompt deixando o Claude Code **agir como alguém responsável por colocar o site de um hotel realmente no ar**, e não apenas como alguém procurando bugs ou criando páginas. O ponto principal é dar liberdade para ele **questionar o que já existe**, eliminar o que não faz sentido e reorganizar o conteúdo.
+
+Você pode usar este prompt:
+
+Quero que você assuma o papel de um **especialista em sites de hotéis, UX, conversão, SEO e arquitetura de informação**, com uma postura crítica e prática.
+
+O site do **Hotel Cajueiro Guarujá** já está em desenvolvimento neste projeto e preciso que você faça uma **auditoria completa do estado atual**, pensando como se você fosse o responsável por garantir que esse site esteja realmente pronto para ir ao ar.
+
+Não quero apenas que você identifique erros técnicos. Quero que você tenha **empatia com o usuário que está procurando um hotel**, entendendo o que uma pessoa espera encontrar, quais dúvidas ela precisa conseguir resolver e quais informações são essenciais para decidir pela hospedagem ou entrar em contato/reservar.
+
+## OBJETIVO
+
+Analise o site atual e determine:
+
+1. O que está faltando para o site ser considerado completo e profissional para um hotel.
+2. Quais páginas existentes devem continuar existindo.
+3. Quais páginas estão desnecessárias, mal estruturadas ou deveriam deixar de ser páginas independentes.
+4. Quais conteúdos deveriam ser transformados em artigos/matérias do Blog.
+5. Quais páginas novas precisam ser criadas.
+6. Quais seções das páginas atuais estão ruins, genéricas, redundantes ou não agregam valor e deveriam ser removidas, substituídas ou reorganizadas.
+7. Se a navegação e a arquitetura do site fazem sentido para um hóspede real.
+8. Se o conteúdo responde às principais dúvidas de quem está avaliando uma hospedagem.
+9. Se o site transmite confiança suficiente para uma pessoa entrar em contato ou reservar.
+10. O que precisa ser corrigido antes de colocar o site em produção.
+
+### IMPORTANTE
+
+Não trate a estrutura atual como definitiva.
+
+O fato de uma página ou seção já existir **não significa que ela deva permanecer**.
+
+Se você identificar que determinada seção foi criada apenas para preencher espaço, que está redundante, que poderia estar dentro de outra página ou que deveria virar conteúdo de Blog, proponha a mudança.
+
+Da mesma forma, se perceber que uma página importante para um hotel está faltando, proponha sua criação.
+
+Não invente informações sobre o hotel. Quando faltar uma informação importante, identifique claramente que ela precisa ser fornecida/preenchida.
+
+---
+
+# PÁGINAS PRINCIPAIS QUE DEVEM CONTINUAR EXISTINDO
+
+Estas páginas devem continuar existindo e funcionando:
+
+* `/` — Início
+* `/grupos-e-excursoes`
+* `/corporativo`
+* `/blog`
+* `/contato`
+
+Avalie profundamente cada uma delas.
+
+Para cada página, verifique:
+
+* objetivo da página;
+* público;
+* se o conteúdo atual cumpre esse objetivo;
+* estrutura;
+* ordem das seções;
+* informações faltantes;
+* informações desnecessárias;
+* CTAs;
+* clareza;
+* confiança;
+* experiência mobile;
+* SEO;
+* possibilidade de conversão;
+* se alguma seção deveria ser removida ou transferida para outra página.
+
+---
+
+# URLs QUE DEVEM CONTINUAR EXISTINDO, MAS DEVEM VIRAR CONTEÚDO DO BLOG
+
+Estas URLs precisam continuar acessíveis para preservar o endereço e o conteúdo/SEO existente, mas o conteúdo deve passar a ser tratado como **matéria/artigo do Blog**, e não como página institucional independente:
+
+* `/promocoes-hotel-cajueiro-guaruja`
+* `/cafe-da-manha-hotel-cajueiro-guaruja`
+* `/onde-comer-hotel-cajueiro-guaruja`
+* `/contato-hotel-cajueiro-guaruja`
+* `/o-que-fazer-hotel-cajueiro-guaruja`
+* `/suites-hotel-cajueiro-guaruja`
+
+Analise como cada uma deve ser incorporada ao Blog.
+
+Não altere essas URLs sem necessidade.
+
+A ideia é que elas continuem funcionando, mas tenham estrutura e comportamento de **artigo/matéria**, podendo aparecer na listagem/categorias do Blog.
+
+Avalie também se o conteúdo de cada uma precisa ser:
+
+* mantido;
+* atualizado;
+* reorganizado;
+* ampliado;
+* reduzido;
+* dividido;
+* complementado;
+* ou parcialmente reaproveitado em alguma página principal.
+
+---
+
+# PÁGINAS LEGAIS
+
+Verifique também as páginas:
+
+* Quem Somos
+* Privacidade
+* Termos
+
+Avalie se elas estão adequadas para um site de hotel real e se o conteúdo, estrutura e linguagem são suficientes.
+
+Não invente informações jurídicas.
+
+Caso alguma delas precise de informações que não estão disponíveis no projeto, sinalize claramente o que precisa ser confirmado/preenchido.
+
+---
+
+# O QUE UM SITE DE HOTEL PRECISA TER
+
+Faça a auditoria considerando a experiência completa de uma pessoa que está pensando em se hospedar.
+
+Pense especialmente nas perguntas:
+
+### Sobre o hotel
+
+* Quem é o hotel?
+* Onde fica?
+* Como é a experiência?
+* Por que escolher esse hotel?
+* Quais são os diferenciais?
+* O hotel parece confiável?
+
+### Sobre hospedagem
+
+* Quais tipos de acomodação existem?
+* Como são as suítes/quartos?
+* Quantas pessoas comportam?
+* Quais comodidades existem?
+* Quais informações são importantes antes da reserva?
+* Há fotos suficientes e adequadas?
+
+### Sobre localização
+
+* Onde o hotel está localizado?
+* O que existe próximo?
+* Praia, restaurantes, comércio, atrações etc.
+* Como chegar?
+* Há estacionamento?
+* Quais informações de localização são importantes para o hóspede?
+
+### Sobre alimentação
+
+* Há café da manhã?
+* Como funciona?
+* Horários?
+* O que é oferecido?
+* Há informações relevantes para o hóspede?
+
+### Sobre grupos e corporativo
+
+* O hotel atende grupos?
+* Excursões?
+* Empresas?
+* Eventos ou hospedagem corporativa?
+* Como entrar em contato?
+
+### Sobre contato/reserva
+
+* Como o usuário entra em contato?
+* WhatsApp?
+* Telefone?
+* Formulário?
+* Endereço?
+* Como chegar?
+* Existe um CTA claro para solicitar reserva/orçamento?
+
+Não invente respostas. Apenas verifique se o site responde essas perguntas e identifique lacunas.
+
+---
+
+# ANALISE TAMBÉM A HOME
+
+A Home é especialmente importante.
+
+Avalie se, em poucos segundos, um visitante consegue entender:
+
+* que é o Hotel Cajueiro Guarujá;
+* onde fica;
+* qual é a proposta;
+* por que deveria considerar o hotel;
+* quais são as opções de hospedagem;
+* como conhecer melhor o hotel;
+* como entrar em contato/reservar.
+
+Analise a sequência das seções.
+
+Não presuma que todas as seções existentes precisam permanecer.
+
+Se houver excesso de seções, conteúdo repetido, blocos genéricos ou elementos que poderiam ser resolvidos de maneira mais simples, proponha a remoção.
+
+---
+
+# BLOG
+
+Avalie o Blog não apenas como uma página de listagem, mas como uma ferramenta de conteúdo e SEO do hotel.
+
+Verifique:
+
+* estrutura da listagem;
+* categorias;
+* cards;
+* artigos existentes;
+* organização;
+* relação entre artigos e páginas institucionais;
+* links internos;
+* CTAs para hospedagem/contato;
+* informações que deveriam virar artigos;
+* possíveis conteúdos importantes que estão faltando.
+
+Não saia criando dezenas de artigos apenas para preencher o Blog.
+
+Priorize conteúdos realmente úteis para quem está planejando uma viagem ao Guarujá e considerando onde se hospedar.
+
+---
+
+# SEO E ESTRUTURA
+
+Faça também uma análise de SEO on-page e arquitetura.
+
+Verifique, entre outros:
+
+* títulos;
+* meta descriptions;
+* H1/H2/H3;
+* URLs;
+* links internos;
+* canonical;
+* sitemap;
+* robots;
+* indexação;
+* Open Graph;
+* dados estruturados quando aplicáveis;
+* informações locais;
+* consistência de nomes;
+* imagens e alt text;
+* páginas duplicadas;
+* conteúdo redundante;
+* páginas que poderiam competir entre si.
+
+Não faça SEO artificial.
+
+O objetivo é que a estrutura seja boa para usuários e mecanismos de busca ao mesmo tempo.
+
+---
+
+# EXPERIÊNCIA MOBILE E CONVERSÃO
+
+Analise o site principalmente como alguém usando o celular.
+
+Verifique:
+
+* navegação;
+* menus;
+* tamanho e posição dos CTAs;
+* WhatsApp;
+* formulários;
+* leitura;
+* imagens;
+* espaçamento;
+* velocidade percebida;
+* excesso de conteúdo;
+* facilidade para encontrar informações importantes.
+
+Pense especialmente no momento em que o visitante decide:
+
+**"Quero saber quanto custa / quero reservar / quero falar com o hotel."**
+
+Esse caminho precisa ser extremamente claro.
+
+---
+
+# NÃO CRIE COMPLEXIDADE DESNECESSÁRIA
+
+O objetivo não é transformar o site em um portal enorme.
+
+Prefira uma arquitetura:
+
+* simples;
+* clara;
+* profissional;
+* fácil de manter;
+* boa no celular;
+* boa para SEO;
+* orientada à conversão.
+
+Se uma informação puder ser resolvida dentro de uma página existente, não crie outra página apenas por criar.
+
+Se um conteúdo for mais adequado como matéria, coloque no Blog.
+
+Se uma seção não tiver função clara para o usuário, questione sua existência.
+
+---
+
+# ANTES DE ALTERAR O CÓDIGO
+
+Primeiro faça uma **auditoria do projeto atual**.
+
+Explore o código, as rotas, componentes, páginas, conteúdo, imagens e estrutura existente.
+
+Depois produza uma análise objetiva contendo:
+
+## 1. MAPA ATUAL
+
+Liste todas as páginas/rotas encontradas atualmente e diga para que cada uma serve.
+
+## 2. MAPA PROPOSTO
+
+Apresente a arquitetura que você considera ideal para colocar o site no ar.
+
+Separe:
+
+* páginas principais;
+* páginas secundárias;
+* páginas legais;
+* artigos do Blog;
+* páginas que devem ser removidas;
+* páginas que devem ser criadas.
+
+## 3. MATRIZ DE DECISÃO
+
+Para cada página existente, classifique:
+
+* MANTER
+* REESTRUTURAR
+* TRANSFORMAR EM ARTIGO
+* FUNDIR COM OUTRA
+* REMOVER
+* CRIAR NOVA
+
+Explique brevemente o motivo.
+
+## 4. CHECKLIST DE LANÇAMENTO
+
+Liste tudo que ainda precisa ser resolvido antes de colocar o site em produção.
+
+Separe em:
+
+* crítico;
+* importante;
+* melhoria posterior.
+
+Não considere "perfeito" como requisito para lançamento.
+
+Quero saber o que é realmente necessário para o site estar **bom, completo e profissional o suficiente para ir ao ar**.
+
+---
+
+# DEPOIS DA AUDITORIA
+
+Depois de apresentar a análise, **não fique apenas no diagnóstico**.
+
+Se você tiver contexto suficiente para fazer as alterações com segurança, implemente as correções necessárias no projeto.
+
+Priorize:
+
+1. arquitetura;
+2. páginas faltantes;
+3. reorganização das páginas;
+4. transformação das páginas indicadas em artigos;
+5. remoção de seções desnecessárias;
+6. melhoria da experiência do usuário;
+7. CTAs e caminhos de contato;
+8. SEO básico;
+9. responsividade;
+10. correções técnicas necessárias para produção.
+
+Não faça alterações cosméticas sem necessidade.
+
+Não invente informações do hotel.
+
+Quando depender de uma informação real que não existe no projeto, deixe um ponto claramente identificado para preenchimento e continue trabalhando no restante.
+
+---
+
+# CRITÉRIO FINAL
+
+Ao terminar, quero poder responder:
+
+**"Se um visitante chegar hoje a esse site procurando um hotel no Guarujá, ele encontrará tudo que precisa para entender o hotel, avaliar se faz sentido para ele e entrar em contato para reservar?"**
+
+Se a resposta for não, identifique exatamente o que está impedindo isso e resolva o que puder no código.
+
+Trabalhe como se o objetivo fosse **colocar o site no ar de verdade**, e não simplesmente completar uma lista de páginas.

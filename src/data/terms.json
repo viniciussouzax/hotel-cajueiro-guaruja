@@ -20,26 +20,34 @@
     },
     {
       "title": "5. Reservas e tarifas",
-      "text": "As reservas feitas por este site são processadas pelo sistema de reservas do hotel, operado por terceiro. Tarifas, disponibilidade e condições são as exibidas no momento da reserva e podem mudar sem aviso até a confirmação.\n\nRegras de check-in, check-out, cancelamento e política de crianças são informadas durante a reserva e prevalecem sobre qualquer informação de caráter geral publicada no site."
+      "text": "As reservas feitas por este site são processadas pelo sistema de reservas do hotel, operado por terceiro. Tarifas, disponibilidade e condições são as exibidas no momento da reserva e podem mudar sem aviso até a confirmação.\n\nAs regras de check-in e check-out, a política de cancelamento e as condições para crianças, cama extra e animais estão descritas nesta página e na seção de perguntas frequentes da página inicial. Em caso de divergência, prevalecem as condições exibidas e aceitas no momento da reserva."
     },
     {
-      "title": "6. Isenção de responsabilidade",
+      "title": "6. Cancelamento, no-show e saída antecipada",
+      "text": "Cancelamentos devem ser solicitados por escrito. A restituição varia conforme a antecedência em relação à data de check-in, sempre sobre o valor pago:\n\n- Com 20 (vinte) dias ou mais de antecedência: reembolso de 50% do valor pago.\n- Com 4 (quatro) a 19 (dezenove) dias de antecedência: emissão de carta de crédito, para usufruto dentro de 60 dias a partir da data da solicitação, mediante disponibilidade.\n- Com 3 (três) dias ou menos de antecedência: não haverá restituição do valor pago nem concessão de carta de crédito.\n\nDesistência sem cancelamento (no-show): o não comparecimento, sem comunicação prévia por escrito, é considerado no-show. A reserva fica disponível a partir da data e horário de check-in até a data e horário de check-out; após esse período, a reserva é cancelada, com retenção de 100% do valor total pago, e o quarto fica disponível para outro hóspede.\n\nDesistência após a entrada ou antecipação de saída: em caso de desistência após o check-in ou de saída antes da data de check-out, por qualquer motivo, não há direito a restituição, reembolso ou carta de crédito, ocasionando a retenção integral dos valores pagos."
+    },
+    {
+      "title": "7. Condições de estadia",
+      "text": "Check-in a partir das 14h e check-out até as 12h. A recepção funciona 24 horas; outros horários podem ser avaliados conforme a disponibilidade.\n\nFormas de pagamento: Pix, com pagamento integral, ou cartão de crédito. Reservas acima de R$ 500,00 podem ser parceladas em 2x sem juros; acima de R$ 1.000,00, em 3x sem juros.\n\nCrianças: 1 (uma) criança de até 5 anos, dormindo na mesma cama dos pais, é cortesia. O hotel não dispõe de berço. Colchão extra está sujeito a cobrança de R$ 100,00 por pessoa, por noite.\n\nAnimais: são aceitos animais de pequeno porte, com taxa de R$ 100,00 por estadia.\n\nOs valores citados nesta seção são referência e podem ser atualizados; as condições válidas são as exibidas no momento da reserva."
+    },
+    {
+      "title": "8. Isenção de responsabilidade",
       "text": "O conteúdo deste site tem caráter exclusivamente informativo e educativo. Fazemos o possível para manter as informações corretas e atualizadas, mas não garantimos que sejam completas, precisas ou adequadas a todos os casos.\n\nO conteúdo não substitui aconselhamento profissional especializado, seja ele médico, jurídico, financeiro ou de qualquer outra natureza. Consulte sempre um profissional qualificado antes de tomar decisões."
     },
     {
-      "title": "7. Limitação de responsabilidade",
+      "title": "9. Limitação de responsabilidade",
       "text": "Na máxima extensão permitida pela lei, não nos responsabilizamos por quaisquer danos diretos ou indiretos decorrentes do uso ou da impossibilidade de uso deste site, do conteúdo publicado ou de sites de terceiros acessados a partir dele."
     },
     {
-      "title": "8. Alterações nos termos",
+      "title": "10. Alterações nos termos",
       "text": "Podemos modificar estes Termos de Uso periodicamente. A data da última atualização aparece no topo desta página. Recomendamos que você revise estes termos sempre que utilizar o site, para se manter informado sobre as condições vigentes."
     },
     {
-      "title": "9. Legislação aplicável",
+      "title": "11. Legislação aplicável",
       "text": "Estes Termos de Uso são regidos pelas leis da República Federativa do Brasil. Qualquer questão relacionada ao uso do site será tratada conforme a legislação brasileira aplicável."
     },
     {
-      "title": "10. Contato",
+      "title": "12. Contato",
       "text": "Dúvidas sobre estes Termos: contato@hotelcajueiroguaruja.com.br ou (13) 3324-1331. A recepção funciona 24 horas."
     }
   ]

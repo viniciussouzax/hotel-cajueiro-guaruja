@@ -1,0 +1,146 @@
+{
+  "_nota": "Conteúdo da home v2 (rota /v2, noindex). Só os textos que a v2 reescreve; o resto (suítes, FAQ, galeria, arredores, como chegar, buscador) continua vindo de home.json, para não duplicar fato. Se a v2 for aprovada, isto migra para home.json.",
+  "hero": {
+    "eyebrow": "Hotel Cajueiro · Guarujá",
+    "title": "Hospedagem no Guarujá",
+    "lead": "A 100 metros da Praia do Tombo. Piscina com bar, café da manhã artesanal e recepção 24 horas."
+  },
+  "promessa": {
+    "eyebrow": "Localização",
+    "title": "Tudo começa pela localização.",
+    "text": "A Praia do Tombo fica entre a Praia das Astúrias e a Praia do Guaiúba, com uma faixa larga de areia branca e quiosques que oferecem cadeira, guarda-sol, banheiro e chuveiro. Estar a uma quadra do mar significa ir e voltar a pé, sem depender de carro e sem perder tempo no trânsito de fim de semana.",
+    "stats": [
+      {
+        "valor": "100 m",
+        "label": "até a areia"
+      },
+      {
+        "valor": "3 min",
+        "label": "a pé, da recepção à praia"
+      },
+      {
+        "valor": "16",
+        "label": "temporadas seguidas com selo Bandeira Azul"
+      }
+    ],
+    "cta": "Ver as suítes",
+    "image": "/images/hero-tombo.jpg",
+    "imageAlt": "Vista da Praia do Tombo, no Guarujá"
+  },
+  "suites": {
+    "eyebrow": "Acomodações",
+    "title": "Onde você vai dormir",
+    "lead": "62 suítes, de individual a quádrupla, com e sem varanda. Todas com ar-condicionado, frigobar, Smart TV, enxoval hoteleiro e limpeza diária.",
+    "precoNota": "Diárias a partir de R$ 200 em quarto duplo, conforme a época do ano.",
+    "destaqueNome": "Suíte com varanda",
+    "destaqueCaracteristicas": [
+      "Cama de casal",
+      "Varanda exclusiva",
+      "Ar-condicionado e frigobar",
+      "Smart TV e bancada"
+    ],
+    "cta": "Ver disponibilidade"
+  },
+  "experiencia": {
+    "eyebrow": "O hotel",
+    "title": "Tudo para uma estadia tranquila",
+    "destaques": [
+      {
+        "icon": "coffee",
+        "title": "Café da manhã artesanal",
+        "text": "Preparado todos os dias e incluso na diária. Há também jantar opcional, em meia pensão ou pensão completa."
+      },
+      {
+        "icon": "pool",
+        "title": "Piscina com bar",
+        "text": "Mesas à beira da piscina e drink preparado na hora — o melhor jeito de fechar um dia de praia."
+      },
+      {
+        "icon": "parking",
+        "title": "Estacionamento",
+        "text": "15 vagas rotativas na propriedade, vagas gratuitas na rua em frente e desconto no estacionamento ao lado."
+      },
+      {
+        "icon": "clock",
+        "title": "Recepção 24 horas",
+        "text": "Alguém na portaria a qualquer hora, todos os dias, e limpeza diária das suítes."
+      }
+    ],
+    "restanteLabel": "E também"
+  },
+  "porque": {
+    "eyebrow": "Por que Cajueiro",
+    "title": "Por que ficar aqui, e não em outro hotel do Guarujá",
+    "itens": [
+      {
+        "title": "O atendimento é o que os hóspedes mais elogiam",
+        "text": "É o assunto nº 1 nas avaliações de quem ficou aqui — e não em termos vagos: as pessoas citam a equipe da recepção pelo nome. Recepção 24 horas, todos os dias, para resolver o que precisar antes, durante e depois da estadia."
+      },
+      {
+        "title": "A praia é a uma quadra, não \"perto\"",
+        "text": "São 100 metros da recepção até a areia, cerca de 3 minutos a pé. Você vai de chinelo, volta para o banho e sai de novo, sem pegar o carro uma única vez."
+      },
+      {
+        "title": "O café da manhã é feito aqui, todo dia",
+        "text": "Nada de bufê industrializado: o preparo é artesanal e já está incluso na diária. Se quiser resolver o jantar também, há meia pensão e pensão completa."
+      },
+      {
+        "title": "Limpeza é assunto resolvido",
+        "text": "Limpeza diária das suítes e enxoval hoteleiro. É o terceiro elogio mais frequente nas avaliações, junto com o café da manhã — e o tipo de coisa que só se nota quando falta."
+      }
+    ],
+    "cta": "Ver disponibilidade",
+    "notaPreco": "Reservando direto pelo nosso site você fala com o hotel, sem a comissão que os intermediários embutem na tarifa."
+  },
+  "guaruja": {
+    "eyebrow": "Arredores",
+    "title": "O Guarujá começa na esquina",
+    "text": "A Praia do Tombo é uma área residencial arborizada, com serviço e comércio no mesmo quarteirão — e as outras praias da cidade a poucos minutos.",
+    "cta": "O que fazer no Guarujá",
+    "ctaHref": "/o-que-fazer-hotel-cajueiro-guaruja"
+  },
+  "avaliacoes": {
+    "eyebrow": "Avaliações",
+    "title": "O que diz quem já ficou aqui"
+  },
+  "faq": {
+    "eyebrow": "Dúvidas",
+    "title": "Antes de reservar",
+    "perguntas": [
+      "O hotel fica perto da praia?",
+      "O café da manhã está incluso?",
+      "Quanto custa a diária?",
+      "O hotel tem estacionamento?",
+      "Qual é a política de cancelamento?",
+      "Crianças pagam? Vocês têm berço ou cama extra?"
+    ],
+    "rodape": "Aceitamos animais de pequeno porte, com taxa de R$ 100 por estadia. Formas de pagamento, cancelamento e demais condições estão detalhadas na página de Termos."
+  },
+  "ctaFinal": {
+    "title": "Seu próximo dia de praia começa aqui.",
+    "subtitle": "Reserve sua estadia no Cajueiro, a 100 metros da Praia do Tombo, direto pelo nosso site e pelo melhor preço.",
+    "button": "Ver disponibilidade"
+  },
+  "depoimentos": [
+    {
+      "text": "Hotel muito bem localizado, funcionários atenciosos e excelente café da manhã !! Voltaremos mais vezes !!",
+      "author": "James P.",
+      "when": "fev 2026"
+    },
+    {
+      "text": "Me senti em casa, ambiente agradável e bem tranquilo. Melhor de tudo pertinho da praia",
+      "author": "Sabrina B.",
+      "when": "mar 2026"
+    },
+    {
+      "text": "Simplesmente sou apaixonada por esse hotel. Sempre fomos muito bem atendidos. Café da manhã delicioso e demais refeições.",
+      "author": "Roberta I.",
+      "when": "abr 2026"
+    },
+    {
+      "text": "Muito bom ! Nota 10 , inclusive os funcionários super atenciosos. O funcionário Lúcio um menino de ouro, super prestativo.",
+      "author": "Alcione G.",
+      "when": "fev 2026"
+    }
+  ]
+}

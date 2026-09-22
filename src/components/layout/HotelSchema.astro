@@ -1,0 +1,86 @@
+---
+/**
+ * HotelSchema.astro — dados estruturados do hotel (schema.org/Hotel).
+ *
+ * Só vai na home: é a página que representa o negócio. Usado pelo Google pra
+ * entender endereço, telefone, comodidades e horários de check-in — base dos
+ * resultados locais e do painel do Maps.
+ *
+ * REGRA: nada aqui é inventado. Todo campo vem de src/data (siteConfig.json,
+ * home.json). Se um dado não existe no projeto, o campo é omitido — schema com
+ * informação errada é pior que schema ausente.
+ */
+import { readData } from '../../lib/readData';
+
+const siteConfig = readData('siteConfig.json', {}) as any;
+const home = readData('home.json', {}) as any;
+
+const contact = siteConfig.contact || {};
+const rawUrl = String(siteConfig.url || '').trim().replace(/\/$/, '');
+const siteUrl = rawUrl && !/^https?:\/\//i.test(rawUrl) ? `https://${rawUrl}` : rawUrl;
+
+const abs = (path: string) => {
+  if (!path) return '';
+  if (/^https?:\/\//i.test(path)) return path;
+  try { return new URL(path, siteUrl).toString(); } catch { return ''; }
+};
+
+// Endereço: o JSON guarda uma linha só ("Rua X, 1177 - Bairro, Cidade/SP, CEP 00000-000").
+// Quebramos no que dá pra afirmar com segurança; o resto vai em streetAddress.
+const fullAddress = String(contact.address || '').trim();
+const cepMatch = fullAddress.match(/\b\d{5}-?\d{3}\b/);
+const street = fullAddress
+  .replace(/,?\s*CEP\s*\d{5}-?\d{3}\s*$/i, '')
+  .replace(/,?\s*Guaruj[áa]\/SP\s*$/i, '')
+  .trim();
+
+const telephone = String(contact.phone || '').trim();
+const waDigits = String(contact.whatsapp || '').replace(/\D/g, '');
+
+const sameAs = [siteConfig.social?.instagram, siteConfig.social?.facebook, siteConfig.social?.youtube]
+  .map((v: any) => String(v || '').trim())
+  .filter(Boolean);
+
+// Comodidades: reaproveita exatamente a lista que o visitante lê na seção Estrutura.
+const amenities = (home.estrutura?.itens || [])
+  .map((i: any) => String(i?.label || '').trim())
+  .filter(Boolean)
+  .map((name: string) => ({ '@type': 'LocationFeatureSpecification', name, value: true }));
+
+const image = [abs(siteConfig.seo?.ogImage || '/images/corp-1.jpg'), abs('/images/suite-2.jpg')].filter(Boolean);
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Hotel',
+  name: siteConfig.name,
+  ...(siteConfig.description ? { description: siteConfig.description } : {}),
+  ...(siteUrl ? { url: siteUrl, '@id': `${siteUrl}/#hotel` } : {}),
+  ...(image.length ? { image } : {}),
+  ...(telephone ? { telephone } : {}),
+  ...(contact.email ? { email: contact.email } : {}),
+  ...(fullAddress
+    ? {
+        address: {
+          '@type': 'PostalAddress',
+          ...(street ? { streetAddress: street } : {}),
+          addressLocality: 'Guarujá',
+          addressRegion: 'SP',
+          ...(cepMatch ? { postalCode: cepMatch[0] } : {}),
+          addressCountry: 'BR',
+        },
+      }
+    : {}),
+  // Horários publicados na FAQ da home.
+  checkinTime: '14:00',
+  checkoutTime: '12:00',
+  // Políticas confirmadas pelo hotel em 14/09/2026 (ver docs/PENDENCIAS-CONTEUDO.md).
+  // priceRange = diária em quarto duplo, fora de datas especiais.
+  petsAllowed: true,
+  priceRange: 'R$ 200 - R$ 500',
+  ...(amenities.length ? { amenityFeature: amenities } : {}),
+  ...(sameAs.length ? { sameAs } : {}),
+  ...(waDigits ? { potentialAction: { '@type': 'CommunicateAction', name: 'WhatsApp', target: `https://wa.me/55${waDigits}` } } : {}),
+};
+---
+
+<script type="application/ld+json" set:html={JSON.stringify(schema)} />
