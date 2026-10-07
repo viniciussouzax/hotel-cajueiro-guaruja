@@ -32,7 +32,6 @@ const allCategories = [...registered, ...orphans].filter((cat) =>
 const year = new Date().getFullYear();
 const legal = siteConfig.legal || {};
 const razaoSocial = legal.razaoSocial || siteConfig.footer?.copyright || siteConfig.name;
-const cnpj = legal.cnpj || '';
 
 const socials: Array<[string, string, string]> = [
   ['instagram', 'instagram', siteConfig.social?.instagram],
@@ -68,7 +67,7 @@ const igProfile = siteConfig.social?.instagram || '';
 
           <div class="mt-6 space-y-2 text-sm" style="color:rgba(255,255,255,0.85);">
             {cAddress && <p class="max-w-xs">{cAddress}</p>}
-            {cPhone && <p><a href={cPhoneHref} class="transition-colors hover:!text-[#FFEAB0]" style="color:inherit;">{cPhone}</a></p>}
+            {cPhone && <p><a href={cPhoneHref} class="transition-colors hover:!text-[#FFEAB0]" style="color:inherit;">Telefone {cPhone}</a></p>}
             {cWhats && <p><a href={cWaUrl} target="_blank" rel="noopener" class="transition-colors hover:!text-[#FFEAB0]" style="color:inherit;">WhatsApp {cWhats}</a></p>}
             {cEmail && <p><a href={`mailto:${cEmail}`} class="transition-colors hover:!text-[#FFEAB0]" style="color:inherit;">{cEmail}</a></p>}
             {(contato.horarios?.atendimentoExterno || contato.horarios?.recepcao) && (
@@ -131,7 +130,7 @@ const igProfile = siteConfig.social?.instagram || '';
   <!-- Faixa de baixo: verde-escuro (copyright) -->
   <div style="background:#26331C;">
     <div class="container-x py-6 flex items-center justify-between flex-wrap gap-3 text-xs">
-      <span class="mono" style="color:#9aa089;">© {year} {razaoSocial}.{cnpj && ` CNPJ ${cnpj}`} | Todos os direitos reservados.</span>
+      <span class="mono" style="color:#9aa089;">© {year} {razaoSocial}. | Todos os direitos reservados.</span>
       <div class="flex gap-5">
         <a href="/privacidade" class="transition-colors hover:!text-[#FFEAB0]" style="color:#9aa089;">Privacidade</a>
         <a href="/termos" class="transition-colors hover:!text-[#FFEAB0]" style="color:#9aa089;">Termos</a>
