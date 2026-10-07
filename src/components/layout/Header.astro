@@ -171,10 +171,12 @@ const { transparent = false } = Astro.props;
   .site-header[data-transparent]:not(.is-solid) .logo-light { display: block; }
   .site-header[data-transparent]:not(.is-solid) .logo-dark { display: none; }
 
-  /* Transparente sobre a hero (home no topo). */
+  /* Transparente sobre a hero (home no topo). NÃO é flutuante — `static`, no
+     fluxo normal da página: sobe e desce junto com o resto do conteúdo e sai
+     de tela ao rolar, como a foto atrás dele. Só a nav DEPOIS do scroll
+     (`.is-solid`, logo abaixo) é que gruda no topo — a flutuante é só essa. */
   .site-header[data-transparent]:not(.is-solid) {
-    position: sticky;
-    top: 0;
+    position: static;
     background: transparent;
     color: #fff;
     box-shadow: none;
