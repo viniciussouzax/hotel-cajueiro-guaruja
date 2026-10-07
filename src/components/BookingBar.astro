@@ -43,11 +43,11 @@ const booking = home.hero?.booking || {};
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-ink-faint shrink-0" aria-hidden="true"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
       <span class="bb-par flex flex-col w-full min-w-0 leading-none">
         <span class="bb-rotulo mono uppercase text-ink-faint text-[11px] tracking-wider mb-1">Hóspedes</span>
-        <span id="guests-label" class="bb-valor text-ink font-semibold text-[15px] leading-none truncate">2 adultos</span>
+        <span id="guests-label" class="bb-valor text-ink font-semibold text-[15px] leading-none truncate">1 adulto</span>
       </span>
     </button>
     <input id="rooms" type="hidden" value="1" />
-    <input id="adultos" type="hidden" value="2" />
+    <input id="adultos" type="hidden" value="1" />
     <input id="criancas" type="hidden" value="0" />
     <div id="guests-pop" class="guests-pop hidden">
       <div class="gp-row">
@@ -62,7 +62,7 @@ const booking = home.hero?.booking || {};
         <div><div class="gp-t">Adultos</div><div class="gp-s">18+ anos</div></div>
         <div class="gp-ctrl">
           <button type="button" class="gp-btn" data-act="dec" data-t="adults" aria-label="Menos adultos">&#8722;</button>
-          <span class="gp-n" id="gp-adults">2</span>
+          <span class="gp-n" id="gp-adults">1</span>
           <button type="button" class="gp-btn" data-act="inc" data-t="adults" aria-label="Mais adultos">+</button>
         </div>
       </div>
@@ -229,7 +229,7 @@ const booking = home.hero?.booking || {};
     var adultosInp = document.getElementById('adultos');
     var criancasInp = document.getElementById('criancas');
     var roomsInp = document.getElementById('rooms');
-    var counts = { rooms: 1, adults: 2, children: 0 };
+    var counts = { rooms: 1, adults: 1, children: 0 };
     var mins = { rooms: 1, adults: 1, children: 0 };
     var maxs = { rooms: 6, adults: 12, children: 6 };
     var childAges = [];
