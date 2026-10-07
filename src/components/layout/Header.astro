@@ -176,7 +176,7 @@ const { transparent = false } = Astro.props;
      de tela ao rolar, como a foto atrás dele. Só a nav DEPOIS do scroll
      (`.is-solid`, logo abaixo) é que gruda no topo — a flutuante é só essa. */
   .site-header[data-transparent]:not(.is-solid) {
-    position: static;
+    position: relative; /* não `static`: z-index só vale em elemento posicionado, senão a hero cobre o header e o clique no menu não chega */
     background: transparent;
     color: #fff;
     box-shadow: none;
