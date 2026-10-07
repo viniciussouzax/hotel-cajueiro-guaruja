@@ -111,6 +111,7 @@ const mapHref = `https://www.google.com/maps/search/?api=1&query=${mapQuery}`;
       <h1 class="font-display text-3xl md:text-4xl lg:text-[48px] font-bold tracking-tight text-white leading-[1.05] mb-4">
         {hero.title}
       </h1>
+      {hero.subtitle && <p class="font-display text-xl md:text-2xl font-semibold text-white leading-snug mb-3">{hero.subtitle}</p>}
       {hero.lead && <p class="text-lg md:text-xl text-white/90 leading-relaxed max-w-2xl mb-6 md:mb-9">{hero.lead}</p>}
 
       <BookingBar />

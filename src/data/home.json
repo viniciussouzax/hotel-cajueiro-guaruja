@@ -2,7 +2,8 @@
   "hero": {
     "image": "/images/hero-mar.webp",
     "eyebrow": "",
-    "title": "Hotel Cajueiro Guarujá | Suítes na Praia do Tombo",
+    "title": "Hotel Cajueiro Guarujá",
+    "subtitle": "Suítes na Praia do Tombo",
     "lead": "Hospede-se a poucos passos da Praia do Tombo, uma das praias Bandeira Azul mais reconhecidas do Brasil.",
     "booking": {
       "labelDestino": "Destino",
