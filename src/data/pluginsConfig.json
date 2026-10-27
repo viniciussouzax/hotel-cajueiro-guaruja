@@ -1,10 +1,11 @@
 {
   "googleAnalytics": {
-    "measurementId": ""
+    "measurementId": "G-BC0CT6PZ13"
   },
   "metaPixel": {
-    "pixelId": "",
-    "domainVerification": "q39xzj8lttbe24uhdna1sdez01cd63"
+    "pixelId": "1152302993902248",
+    "domainVerification": "q39xzj8lttbe24uhdna1sdez01cd63",
+    "trackingScript": "https://edge.brandpartner.team/s.js?site=cajueiro"
   },
   "socialShare": {
     "enabled": true,

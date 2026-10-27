@@ -316,6 +316,15 @@ const booking = home.hero?.booking || {};
       var query = params.toString().replace(/%2F/gi, '/');
       var url = base + '?' + query;
 
+      // InitiateCheckout no pixel e na API de Conversões (tracking-kit), se estiver ativo. A reserva
+      // em si acontece no hbook, fora do site: este é o último passo que o site enxerga.
+      if (typeof window.track === 'function') {
+        window.track('begin_checkout', {
+          checkin: ci.value, checkout: co.value, num_nights: nights(),
+          adults: counts.adults, children: counts.children, rooms: counts.rooms, coupon: cupom || undefined
+        });
+      }
+
       if (form.getAttribute('data-newtab') === '1') {
         window.open(url, '_blank', 'noopener');
       } else {
