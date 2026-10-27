@@ -11,6 +11,8 @@ import BotaoWhatsapp from '../components/BotaoWhatsapp.astro';
 const siteConfig = readData('siteConfig.json');
 const pluginsConfig = readData('pluginsConfig.json', {});
 const gscVerificationTag = (pluginsConfig as any)?.searchConsole?.verificationTag?.trim() || '';
+// Verificação de domínio da Meta (Business Manager). Só o valor do content, sem a tag.
+const fbDomainVerification = (pluginsConfig as any)?.metaPixel?.domainVerification?.trim() || '';
 
 const primaryHex = siteConfig.theme?.primary || '#1c64c8';
 // Combinações de fonte selecionáveis no admin (Configurações → Combinação de Fontes).
@@ -169,6 +171,10 @@ import CustomCodeBodyStart from '../plugins/custom-code/CustomCodeBodyStart.astr
     gscVerificationTag.startsWith('<')
       ? <Fragment set:html={gscVerificationTag} />
       : <meta name="google-site-verification" content={gscVerificationTag} />
+  )}
+
+  {fbDomainVerification && (
+    <meta name="facebook-domain-verification" content={fbDomainVerification} />
   )}
 
   <meta property="og:type" content={type} />
