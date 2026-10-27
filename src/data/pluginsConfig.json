@@ -2,6 +2,9 @@
   "googleAnalytics": {
     "measurementId": "G-BC0CT6PZ13"
   },
+  "googleTagManager": {
+    "containerId": "GTM-MQCFRPSB"
+  },
   "metaPixel": {
     "pixelId": "1152302993902248",
     "domainVerification": "q39xzj8lttbe24uhdna1sdez01cd63",
