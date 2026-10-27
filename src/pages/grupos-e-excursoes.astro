@@ -19,7 +19,9 @@ const mapHref = `https://www.google.com/maps/search/?api=1&query=${mapQuery}`;
 
 const company = siteConfig.name || 'Hotel Cajueiro';
 const email = siteConfig.contact?.email || 'contato@hotelcajueiroguaruja.com.br';
-const waNumber = '5513991439331';
+// WhatsApp COMERCIAL, não o da recepção: grupos e excursões falam com vendas.
+// Vem do siteConfig para não ficar hardcoded em duas páginas.
+const waNumber = '55' + (siteConfig.contact?.whatsappComercial || '').replace(/\D/g, '');
 const waMsg = encodeURIComponent('Olá! Quero uma proposta de hospedagem para grupo/excursão no Hotel Cajueiro (Guarujá).');
 const waUrl = `https://wa.me/${waNumber}?text=${waMsg}`;
 

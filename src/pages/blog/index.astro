@@ -14,8 +14,6 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import CtaFinal from '../../components/CtaFinal.astro';
 import { getCollection } from 'astro:content';
 import { CATEGORY_ORDER } from '../../lib/categoryColors';
-import { readData } from '../../lib/readData';
-import { normalizeCategories, collectOrphanCategories, categoryMatches } from '../../lib/categorySlug';
 
 const allPosts = await getCollection('blog');
 
@@ -31,14 +29,6 @@ const posts = allPosts.sort((a: any, b: any) => {
   if (oa !== ob) return oa - ob;
   return new Date(b.data.pubDate).getTime() - new Date(a.data.pubDate).getTime();
 });
-
-// Atalhos por tópico — só categoria que tem artigo (mesma regra do rodapé).
-const registered = normalizeCategories(readData('categories.json', []));
-const postCats = [...new Set(posts.map((p: any) => p.data.category).filter(Boolean))];
-const orphans = collectOrphanCategories(postCats, registered);
-const categorias = [...registered, ...orphans].filter((cat) =>
-  posts.some((p: any) => categoryMatches(p.data.category, cat))
-);
 
 const MONTHS_PT = ['jan', 'fev', 'mar', 'abr', 'mai', 'jun', 'jul', 'ago', 'set', 'out', 'nov', 'dez'];
 function fmtDate(d: any): string {
@@ -75,19 +65,6 @@ const demais = posts;
         </p>
       </div>
 
-      {categorias.length > 0 && (
-        <nav class="mt-8 flex flex-wrap items-center gap-2" aria-label="Tópicos do blog">
-          <span class="mono uppercase text-xs text-ink-faint mr-1">Tópicos</span>
-          {categorias.map((cat) => (
-            <a
-              href={`/categoria/${cat.slug}`}
-              class="inline-flex items-center min-h-[34px] px-3.5 rounded-[200px] border border-rule/70 bg-surface text-[13px] text-ink-muted no-underline hover:border-[#cf3a23] hover:text-[#cf3a23] transition-colors"
-            >
-              {cat.name}
-            </a>
-          ))}
-        </nav>
-      )}
     </div>
   </section>
 

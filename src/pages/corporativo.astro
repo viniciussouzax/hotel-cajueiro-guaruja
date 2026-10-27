@@ -20,7 +20,9 @@ const mapHref = `https://www.google.com/maps/search/?api=1&query=${mapQuery}`;
 const company = siteConfig.name || 'Hotel Cajueiro';
 const cityName = 'Guarujá';
 const email = 'corporativo@hotelcajueiroguaruja.com.br';
-const waNumber = '5513991439331';
+// WhatsApp COMERCIAL, não o da recepção: quem chega em Corporativo fala com
+// vendas. Vem do siteConfig para não ficar hardcoded em duas páginas.
+const waNumber = '55' + (siteConfig.contact?.whatsappComercial || '').replace(/\D/g, '');
 const waMsg = encodeURIComponent('Olá! Quero uma proposta de hospedagem corporativa para minha equipe no Hotel Cajueiro (Guarujá/Santos).');
 const waUrl = `https://wa.me/${waNumber}?text=${waMsg}`;
 const address = 'Rua Avedis Simonian, 1177, Tombo/Guaiúba, Guarujá/SP';
