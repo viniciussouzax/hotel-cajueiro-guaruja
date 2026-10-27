@@ -1,6 +1,6 @@
 {
   "hero": {
-    "image": "/images/hero-mar.webp",
+    "image": "/images/praia-do-tombo-mar-guaruja.webp",
     "eyebrow": "",
     "title": "Hotel Cajueiro Guarujá",
     "subtitle": "Suítes na Praia do Tombo",
@@ -41,27 +41,27 @@
     "suites": [
       {
         "nome": "Suíte com varanda",
-        "img": "/images/suite-2.jpg",
+        "img": "/images/suite-com-varanda-hotel-cajueiro-guaruja.jpg",
         "desc": "Cama de casal e uma varanda exclusiva, para quem prefere mais espaço e um ambiente para relaxar ao fim do dia."
       },
       {
         "nome": "Suíte casal",
-        "img": "/images/suite-3.jpg",
+        "img": "/images/suite-casal-hotel-cajueiro-guaruja.jpg",
         "desc": "Cama de casal em um ambiente aconchegante, ideal para uma estadia confortável e uma boa noite de sono."
       },
       {
         "nome": "Suíte dupla",
-        "img": "/images/suite-4.jpg",
+        "img": "/images/suite-dupla-hotel-cajueiro-guaruja.jpg",
         "desc": "Duas camas de solteiro, ideal para quem viaja acompanhado, prática e confortável para o dia a dia."
       },
       {
         "nome": "Suíte dupla com varanda",
-        "img": "/images/suite-5.jpg",
+        "img": "/images/suite-dupla-com-varanda-hotel-cajueiro-guaruja.jpg",
         "desc": "Duas camas de solteiro com a vantagem de uma varanda exclusiva, para relaxar ao ar livre."
       },
       {
         "nome": "Suíte tripla",
-        "img": "/images/suite-6.jpg",
+        "img": "/images/suite-tripla-hotel-cajueiro-guaruja.jpg",
         "desc": "Três camas em um ambiente amplo, ideal para acomodar todos juntos, com todo o conforto para o descanso."
       }
     ],
@@ -253,36 +253,43 @@
     "fotos": [
       {
         "n": 7,
+        "img": "piscina-com-bar-hotel-cajueiro-guaruja.jpg",
         "cap": "Piscina com bar",
         "cls": "col-span-2 row-span-2"
       },
       {
         "n": 8,
+        "img": "cafe-da-manha-artesanal-hotel-cajueiro-guaruja.jpg",
         "cap": "Café da manhã artesanal",
         "cls": ""
       },
       {
         "n": 9,
+        "img": "cafe-da-manha-bufe-hotel-cajueiro-guaruja.jpg",
         "cap": "Café da manhã servido no bufê",
         "cls": ""
       },
       {
         "n": 10,
+        "img": "espaco-do-cafe-da-manha-hotel-cajueiro-guaruja.jpg",
         "cap": "Espaço do café da manhã",
         "cls": "col-span-2"
       },
       {
         "n": 11,
+        "img": "piscina-com-mesas-hotel-cajueiro-guaruja.jpg",
         "cap": "Piscina com mesas e guarda-sóis",
         "cls": ""
       },
       {
         "n": 12,
+        "img": "area-de-convivencia-hotel-cajueiro-guaruja.jpg",
         "cap": "Área de convivência com pergolado e jardim",
         "cls": ""
       },
       {
         "n": 13,
+        "img": "deck-com-espreguicadeiras-hotel-cajueiro-guaruja.jpg",
         "cap": "Deck com espreguiçadeiras e vista para o morro",
         "cls": "col-span-2"
       }

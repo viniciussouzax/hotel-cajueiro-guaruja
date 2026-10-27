@@ -2,7 +2,7 @@
 title: "O que fazer no Guarujá: praias, passeios e dicas perto do Hotel Cajueiro"
 description: "Guia do que fazer no Guarujá a partir da Praia do Tombo: praias próximas, surfe, caminhadas e passeios em família, tudo a poucos minutos do Hotel Cajueiro."
 pubDate: "2026-09-02"
-heroImage: "/images/hero-tombo.jpg"
+heroImage: "/images/praia-do-tombo-vista-do-alto-guaruja.jpg"
 category: "Turismo e Destino"
 author: "Equipe Hotel Cajueiro"
 ---

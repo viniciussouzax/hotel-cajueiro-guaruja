@@ -2,7 +2,7 @@
 title: "Promoções e pacotes do Hotel Cajueiro Guarujá: melhor preço garantido"
 description: "Veja como garantir o melhor preço no Hotel Cajueiro Guarujá. Reserve direto pelo site, sem intermediários, e aproveite promoções e pacotes na Praia do Tombo."
 pubDate: "2026-09-02"
-heroImage: "/images/suite-3.jpg"
+heroImage: "/images/suite-casal-hotel-cajueiro-guaruja.jpg"
 category: "Hospedagem"
 author: "Equipe Hotel Cajueiro"
 ---

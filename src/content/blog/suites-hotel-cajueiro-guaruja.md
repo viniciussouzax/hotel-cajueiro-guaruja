@@ -2,7 +2,7 @@
 title: "Suítes do Hotel Cajueiro Guarujá: conforto a uma quadra da praia"
 description: "Conheça as suítes do Hotel Cajueiro, todas com ar-condicionado, frigobar e Wi-Fi. De individual a quádrupla, com ou sem varanda, perto da Praia do Tombo no Guarujá."
 pubDate: "2026-09-02"
-heroImage: "/images/suite-2.jpg"
+heroImage: "/images/suite-com-varanda-hotel-cajueiro-guaruja.jpg"
 category: "Hospedagem"
 author: "Equipe Hotel Cajueiro"
 ---

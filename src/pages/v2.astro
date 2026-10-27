@@ -89,7 +89,7 @@ const h2 = 'font-display text-3xl md:text-[2.75rem] font-normal tracking-tight t
   <section id="reservar" class="relative scroll-mt-[68px]">
     <div
       class="absolute inset-0 -z-10 bg-cover bg-center"
-      style={`background-image: linear-gradient(180deg, rgba(38,51,28,.35) 0%, rgba(38,51,28,.55) 55%, rgba(38,51,28,.78) 100%), url('${v2.promessa?.image || '/images/hero-tombo.jpg'}')`}
+      style={`background-image: linear-gradient(180deg, rgba(38,51,28,.35) 0%, rgba(38,51,28,.55) 55%, rgba(38,51,28,.78) 100%), url('${v2.promessa?.image || '/images/praia-do-tombo-vista-do-alto-guaruja.jpg'}')`}
     ></div>
 
     <div class="container-x pt-32 md:pt-44 pb-16 md:pb-24">
@@ -140,7 +140,7 @@ const h2 = 'font-display text-3xl md:text-[2.75rem] font-normal tracking-tight t
 
         <div class="lg:col-span-6">
           <img
-            src="/images/corp-11.jpg"
+            src="/images/piscina-com-mesas-hotel-cajueiro-guaruja.jpg"
             alt={v2.promessa?.imageAlt || 'A caminho da Praia do Tombo'}
             width="900" height="1100" loading="lazy"
             class="w-full h-[380px] md:h-[560px] object-cover rounded-lg"
@@ -262,7 +262,7 @@ const h2 = 'font-display text-3xl md:text-[2.75rem] font-normal tracking-tight t
               aria-label={`Ampliar foto: ${g.cap}`}
             >
               <img
-                src={`/images/corp-${g.n}.jpg`} alt={g.cap}
+                src={`/images/${g.img}`} alt={g.cap}
                 width="900" height="700" loading="lazy"
                 class={`w-full object-cover transition-transform duration-500 group-hover:scale-[1.03] ${i === 0 ? 'h-[320px] md:h-[560px]' : 'h-[155px] md:h-[275px]'}`}
               />

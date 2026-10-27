@@ -76,11 +76,11 @@ const perfis = [
 ];
 
 const suites = [
-  { nome: 'Suíte com varanda', img: '/images/corp-2.jpg', desc: 'Cama de casal e uma varanda exclusiva, para quem prefere mais espaço e um ambiente para relaxar ao fim do dia.' },
-  { nome: 'Suíte casal', img: '/images/corp-3.jpg', desc: 'Cama de casal em um ambiente aconchegante, ideal para uma estadia confortável e uma boa noite de sono.' },
-  { nome: 'Suíte dupla', img: '/images/corp-4.jpg', desc: 'Duas camas de solteiro, ideal para quem viaja acompanhado, prática e confortável para a rotina de trabalho.' },
-  { nome: 'Suíte dupla com varanda', img: '/images/corp-5.jpg', desc: 'Duas camas de solteiro com a vantagem de uma varanda exclusiva, para relaxar ao ar livre depois do trabalho.' },
-  { nome: 'Suíte tripla', img: '/images/corp-6.jpg', desc: 'Três camas em um ambiente amplo, ideal para acomodar a equipe junta, com todo o conforto para o descanso.' },
+  { nome: 'Suíte com varanda', img: '/images/suite-com-varanda-hotel-cajueiro-guaruja.jpg', desc: 'Cama de casal e uma varanda exclusiva, para quem prefere mais espaço e um ambiente para relaxar ao fim do dia.' },
+  { nome: 'Suíte casal', img: '/images/suite-casal-hotel-cajueiro-guaruja.jpg', desc: 'Cama de casal em um ambiente aconchegante, ideal para uma estadia confortável e uma boa noite de sono.' },
+  { nome: 'Suíte dupla', img: '/images/suite-dupla-hotel-cajueiro-guaruja.jpg', desc: 'Duas camas de solteiro, ideal para quem viaja acompanhado, prática e confortável para a rotina de trabalho.' },
+  { nome: 'Suíte dupla com varanda', img: '/images/suite-dupla-com-varanda-hotel-cajueiro-guaruja.jpg', desc: 'Duas camas de solteiro com a vantagem de uma varanda exclusiva, para relaxar ao ar livre depois do trabalho.' },
+  { nome: 'Suíte tripla', img: '/images/suite-tripla-hotel-cajueiro-guaruja.jpg', desc: 'Três camas em um ambiente amplo, ideal para acomodar a equipe junta, com todo o conforto para o descanso.' },
 ];
 
 const amenities = [
@@ -101,13 +101,13 @@ const amenities = [
 ];
 
 const galeria = [
-  { n: 7, cap: 'Piscina', cls: 'col-span-2 row-span-2' },
-  { n: 8, cap: 'Café da manhã completo', cls: '' },
-  { n: 9, cap: 'Acomodação confortável', cls: '' },
-  { n: 10, cap: 'Espaço do café da manhã', cls: 'col-span-2' },
-  { n: 11, cap: 'Chegada, na Guaiúba', cls: '' },
-  { n: 12, cap: 'Suíte com varanda', cls: '' },
-  { n: 13, cap: 'Quartos para equipes', cls: 'col-span-2' },
+  { n: 7, img: 'piscina-com-bar-hotel-cajueiro-guaruja.jpg', cap: 'Piscina', cls: 'col-span-2 row-span-2' },
+  { n: 8, img: 'cafe-da-manha-artesanal-hotel-cajueiro-guaruja.jpg', cap: 'Café da manhã completo', cls: '' },
+  { n: 9, img: 'cafe-da-manha-bufe-hotel-cajueiro-guaruja.jpg', cap: 'Café da manhã servido no bufê', cls: '' },
+  { n: 10, img: 'espaco-do-cafe-da-manha-hotel-cajueiro-guaruja.jpg', cap: 'Espaço do café da manhã', cls: 'col-span-2' },
+  { n: 11, img: 'piscina-com-mesas-hotel-cajueiro-guaruja.jpg', cap: 'Piscina com mesas e guarda-sóis', cls: '' },
+  { n: 12, img: 'area-de-convivencia-hotel-cajueiro-guaruja.jpg', cap: 'Área de convivência com pergolado e jardim', cls: '' },
+  { n: 13, img: 'deck-com-espreguicadeiras-hotel-cajueiro-guaruja.jpg', cap: 'Deck com espreguiçadeiras e vista para o morro', cls: 'col-span-2' },
 ];
 
 const entorno = [
@@ -146,7 +146,7 @@ const rotas = [
           </div>
         </div>
         <div class="relative">
-          <img src="/images/corporativo-hero.jpg" alt="Equipe conversando em um galpão com embarcações" width="716" height="630" loading="eager" class="w-full h-72 md:h-96 lg:h-[500px] object-cover rounded-lg shadow-[0_34px_64px_-30px_rgba(60,45,25,.55)]" />
+          <img src="/images/equipe-corporativa-guaruja.jpg" alt="Equipe conversando em um galpão com embarcações" width="716" height="630" loading="eager" class="w-full h-72 md:h-96 lg:h-[500px] object-cover rounded-lg shadow-[0_34px_64px_-30px_rgba(60,45,25,.55)]" />
         </div>
       </div>
     </div>
@@ -258,7 +258,7 @@ const rotas = [
         {galeria.map((g, i) => (
           <button type="button" data-gallery-open={i} aria-label={`Ampliar foto ${g.n}`}
             class={`group block m-0 p-0 border-0 bg-transparent cursor-pointer rounded-md overflow-hidden shadow-[0_18px_40px_-28px_rgba(60,45,25,.5)] ${g.cls}`}>
-            <img src={`/images/corp-${g.n}.jpg`} alt={g.cap} loading="lazy" class={`w-full h-full object-cover transition-transform duration-500 group-hover:scale-105 ${(g.n === 10 || g.n === 13) ? 'object-bottom' : ''}`} />
+            <img src={`/images/${g.img}`} alt={g.cap} loading="lazy" class={`w-full h-full object-cover transition-transform duration-500 group-hover:scale-105 ${(g.n === 10 || g.n === 13) ? 'object-bottom' : ''}`} />
           </button>
         ))}
       </div>
@@ -277,7 +277,7 @@ const rotas = [
         <TextoFoto
           title={intro.title}
           paragraphs={(intro.text || '').split('\n\n').filter(Boolean)}
-          image="/images/corp-1.jpg"
+          image="/images/fachada-hotel-cajueiro-guaruja.jpg"
           alt="Fachada do Hotel Cajueiro, na Praia do Tombo, Guarujá"
           lado="direita"
         />
@@ -287,7 +287,7 @@ const rotas = [
         <TextoFoto
           title={localizacao.title}
           paragraphs={(localizacao.text || '').split('\n\n').filter(Boolean)}
-          image="/images/hero-tombo.jpg"
+          image="/images/praia-do-tombo-vista-do-alto-guaruja.jpg"
           alt="Praia do Tombo vista do alto, no Guarujá"
           lado="esquerda"
         />

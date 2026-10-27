@@ -212,7 +212,7 @@ const mapHref = `https://www.google.com/maps/search/?api=1&query=${mapQuery}`;
               class={`group block m-0 p-0 border-0 bg-transparent cursor-pointer rounded-md overflow-hidden shadow-[0_18px_40px_-28px_rgba(60,45,25,.5)] ${g.cls}`}
             >
               <img
-                src={`/images/corp-${g.n}.jpg`}
+                src={`/images/${g.img}`}
                 alt={g.cap}
                 loading="lazy"
                 class={`w-full h-full object-cover transition-transform duration-500 group-hover:scale-105 ${(g.n === 10 || g.n === 13) ? 'object-bottom' : ''}`}
@@ -247,7 +247,7 @@ const mapHref = `https://www.google.com/maps/search/?api=1&query=${mapQuery}`;
         <TextoFoto
           title={intro.title}
           paragraphs={(intro.text || '').split('\n\n').filter(Boolean)}
-          image="/images/corp-1.jpg"
+          image="/images/fachada-hotel-cajueiro-guaruja.jpg"
           alt="Fachada do Hotel Cajueiro, na Praia do Tombo, Guarujá"
           lado="direita"
         />
@@ -257,7 +257,7 @@ const mapHref = `https://www.google.com/maps/search/?api=1&query=${mapQuery}`;
         <TextoFoto
           title={localizacao.title}
           paragraphs={(localizacao.text || '').split('\n\n').filter(Boolean)}
-          image="/images/hero-tombo.jpg"
+          image="/images/praia-do-tombo-vista-do-alto-guaruja.jpg"
           alt="Praia do Tombo vista do alto, no Guarujá"
           lado="esquerda"
         />

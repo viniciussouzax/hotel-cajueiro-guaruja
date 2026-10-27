@@ -47,7 +47,7 @@ const amenities = (home.estrutura?.itens || [])
   .filter(Boolean)
   .map((name: string) => ({ '@type': 'LocationFeatureSpecification', name, value: true }));
 
-const image = [abs(siteConfig.seo?.ogImage || '/images/corp-1.jpg'), abs('/images/suite-2.jpg')].filter(Boolean);
+const image = [abs(siteConfig.seo?.ogImage || '/images/fachada-hotel-cajueiro-guaruja.jpg'), abs('/images/suite-com-varanda-hotel-cajueiro-guaruja.jpg')].filter(Boolean);
 
 const schema = {
   '@context': 'https://schema.org',

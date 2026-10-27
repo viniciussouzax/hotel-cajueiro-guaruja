@@ -130,7 +130,7 @@ function toAbsoluteUrl(path: string, base: string): string {
 }
 // Sem imagem social o link compartilhado (WhatsApp, Instagram, Facebook) sai sem
 // foto. Cai para a imagem padrão do site quando a página não define uma.
-const socialImage = toAbsoluteUrl(image || siteConfig.seo?.ogImage || '/images/corp-1.jpg', siteUrl);
+const socialImage = toAbsoluteUrl(image || siteConfig.seo?.ogImage || '/images/fachada-hotel-cajueiro-guaruja.jpg', siteUrl);
 
 // URL canônica auto-referente. Sem ela, variações de endereço (com/sem www,
 // com/sem barra final, query de campanha) viram páginas distintas pro Google.
