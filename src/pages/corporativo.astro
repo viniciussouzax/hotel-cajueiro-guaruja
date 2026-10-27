@@ -454,6 +454,8 @@ const rotas = [
           if (tel) linhas.push('Telefone: ' + tel);
           if (mail) linhas.push('E-mail: ' + mail);
           var waLink = 'https://wa.me/' + wa + '?text=' + encodeURIComponent(linhas.join('\n'));
+          // Lead no pixel e na API de Conversões (tracking-kit), se estiver ativo.
+          if (typeof window.track === 'function') window.track('lead', { lead_source: 'corporativo' }, { user: { name: nome, email: mail, phone: tel } });
           if (submitBtn) { submitBtn.setAttribute('disabled', ''); submitBtn.style.opacity = '0.7'; }
           try {
             fetch('https://formsubmit.co/ajax/corporativo@hotelcajueiroguaruja.com.br', {
