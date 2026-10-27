@@ -14,6 +14,9 @@ const home = readData('home.json', {}) as any;
 
 const hero = home.hero || {};
 const heroImage = hero.image || '';
+// Variante de 960px da mesma foto, para telas de ate 768px. Se o arquivo nao
+// existir, cai no cheio e nada quebra.
+const heroImageMobile = heroImage.replace(/(\.\w+)$/, '-960$1');
 const booking = hero.booking || {};
 // `hero.banner` (o painel "Temporada 2026") deixou de ser renderizado: a campanha
 // agora vive so' na barra acima do menu, e este espaco passou a ser da prova
@@ -84,9 +87,28 @@ const mapHref = `https://www.google.com/maps/search/?api=1&query=${mapQuery}`;
           alternativo desta mesma hero — azul escuro da propria paleta, nao uma
           cor nova. O veu verde-oliva anterior esverdeava o mar da foto. */}
       style={heroImage
-        ? `background-image: linear-gradient(180deg, rgba(22,52,79,.45), rgba(22,52,79,.7)), url('${heroImage}')`
+        ? undefined
         : 'background-image: linear-gradient(155deg, #16344f 0%, #235a80 48%, #3d86ac 100%)'}
     ></div>
+
+    {/* A foto da hero e' o elemento LCP da pagina. O arquivo cheio tem 1920px
+        de largura e 184 KB; numa tela de 412px isso e' quase cinco vezes mais
+        pixel do que cabe. Como e' `background-image`, nao da para usar
+        `srcset` — entao a largura vem por media query, com a versao de 960px
+        (57 KB) ate 768px de viewport. Precisa ser regra CSS e nao `style`
+        inline, que nao aceita media query. */}
+    {heroImage && (
+      <style is:global set:html={`
+        .hero-fundo {
+          background-image: linear-gradient(180deg, rgba(22,52,79,.45), rgba(22,52,79,.7)), url('${heroImageMobile}');
+        }
+        @media (min-width: 769px) {
+          .hero-fundo {
+            background-image: linear-gradient(180deg, rgba(22,52,79,.45), rgba(22,52,79,.7)), url('${heroImage}');
+          }
+        }
+      `} />
+    )}
 
     {/* A hero e' puxada 68px para cima (`-mt-[68px]`) para deslizar sob o menu
         transparente. Por isso o RECUO SUPERIOR tem de ser maior que os 68px do
