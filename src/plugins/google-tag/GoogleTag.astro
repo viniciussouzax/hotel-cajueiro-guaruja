@@ -56,17 +56,8 @@ const requireConsent: boolean = pluginsConfig?.cookieConsent?.enabled !== false;
           j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
           'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
           })(window,document,'script','dataLayer',id);
-
-          // noscript fallback
-          var noscript = document.createElement('noscript');
-          var iframe = document.createElement('iframe');
-          iframe.src = 'https://www.googletagmanager.com/ns.html?id=' + id;
-          iframe.height = '0';
-          iframe.width = '0';
-          iframe.style.display = 'none';
-          iframe.style.visibility = 'hidden';
-          noscript.appendChild(iframe);
-          document.body.insertBefore(noscript, document.body.firstChild);
+          // Sem o <noscript> do GTM: criado por JavaScript ele nunca vale, e no <head> o document.body
+          // ainda é null, o que quebrava o resto da função (o gtag.js não carregava).
         })(gtmIds[g]);
       }
 
