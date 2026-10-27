@@ -106,7 +106,14 @@ const {
   noindex = false,
 } = Astro.props;
 
-const formattedTitle = title === defaultTitle ? title : `${title} | ${siteConfig.name}`;
+// Sufixo " | Hotel Cajueiro Guarujá" só quando o título ainda não cita o hotel.
+// Os artigos já trazem o nome no próprio título, e colar o sufixo levava a
+// títulos de 90 a 102 caracteres — o Google corta em torno de 60.
+const nomeNoTitulo = title.toLowerCase().includes(String(siteConfig.name || '').toLowerCase())
+  || /hotel cajueiro/i.test(title);
+const formattedTitle = title === defaultTitle || nomeNoTitulo
+  ? title
+  : `${title} | ${siteConfig.name}`;
 // Normaliza a base: domínio salvo no admin pode vir sem protocolo (ex.: "exemplo.com.br").
 // new URL() exige base absoluta — sem isso o build quebra com "Invalid URL" (BUILD-05).
 const rawSiteUrl = (siteConfig.url || Astro.url.origin || '').trim();
