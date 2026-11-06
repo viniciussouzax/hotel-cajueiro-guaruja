@@ -51,6 +51,13 @@ const pistas = Array.from({ length: PISTAS }, (_, c) =>
   itens.filter((_: any, j: number) => j % PISTAS === c)
 ).filter((lista) => lista.length > 0);
 
+// Foto do autor: o Google entrega 120 px (`=s120-c-...`) para um avatar de 32-40 px.
+// Trocando o `sNNN` da própria URL, cada tela baixa 1x/2x/3x. URL fora desse
+// formato fica sem srcset, só com o src original.
+const FOTO_RE = /=s\d+((?:-[a-z0-9]+)*)$/i;
+const fotoSrcset = (url: string) =>
+  FOTO_RE.test(url) ? [40, 80, 120].map((n, i) => `${url.replace(FOTO_RE, `=s${n}$1`)} ${i + 1}x`).join(', ') : undefined;
+
 const estrelas = (n: number) => '★'.repeat(n) + '☆'.repeat(5 - n);
 
 /** "há 2 meses" em vez do ano solto — é o que o Google mostra e é o que diz
@@ -114,6 +121,7 @@ const perfilUrl = dados.placeId
                       {r.foto && (
                         <img
                           src={r.foto}
+                          srcset={fotoSrcset(r.foto)}
                           alt={`Foto de ${r.autor}`}
                           width="48"
                           height="48"
