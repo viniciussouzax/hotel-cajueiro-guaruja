@@ -8,6 +8,7 @@ import GoogleRating from '../components/GoogleRating.astro';
 import SuitesDestaque from '../components/sections/SuitesDestaque.astro';
 import TextoFoto from '../components/sections/TextoFoto.astro';
 import { readData } from '../lib/readData';
+import { srcsetDe } from '../lib/srcsetImagem';
 
 const siteConfig = readData('siteConfig.json');
 const home = readData('home.json', {}) as any;
@@ -71,6 +72,17 @@ const mapHref = `https://www.google.com/maps/search/?api=1&query=${mapQuery}`;
 <BaseLayout description={siteConfig.description} transparentHeader={true} hideTopBars={true}>
 
   <HotelSchema />
+
+  {/* A foto da hero é o LCP, mas como background-image o navegador só a descobre
+      depois de baixar e aplicar o CSS. O preload antecipa o download; os dois
+      `media` batem com o @media (min-width: 769px) da regra .hero-fundo abaixo,
+      para cada tela baixar só a versão que vai usar. */}
+  {heroImage && (
+    <Fragment slot="head">
+      <link rel="preload" as="image" href={heroImageMobile} media="(max-width: 768px)" fetchpriority="high" />
+      <link rel="preload" as="image" href={heroImage} media="(min-width: 769px)" fetchpriority="high" />
+    </Fragment>
+  )}
 
   <!-- ===== HERO estilo Trip.com: imagem + headline + barra de busca + banner sobreposto ===== -->
   <!-- id="reservar": todo CTA de reserva do site aponta pra cá, onde fica o buscador
@@ -235,6 +247,8 @@ const mapHref = `https://www.google.com/maps/search/?api=1&query=${mapQuery}`;
             >
               <img
                 src={`/images/${g.img}`}
+                srcset={srcsetDe(`/images/${g.img}`)}
+                sizes={String(g.cls || '').includes('col-span-2') ? '(max-width: 767px) 100vw, 50vw' : '(max-width: 767px) 50vw, 25vw'}
                 alt={g.cap}
                 loading="lazy"
                 class={`w-full h-full object-cover transition-transform duration-500 group-hover:scale-105 ${(g.n === 10 || g.n === 13) ? 'object-bottom' : ''}`}

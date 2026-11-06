@@ -150,6 +150,10 @@ import CustomCodeBodyStart from '../plugins/custom-code/CustomCodeBodyStart.astr
   {noindex && <meta name="robots" content="noindex, nofollow" />}
   {!noindex && <link rel="canonical" href={canonicalUrl} />}
   <link rel="icon" href={siteConfig.favicon || '/favicon.svg'} />
+  {/* .ico com 48 e 96 px: o Google exige favicon em múltiplo de 48 px e o navegador pede /favicon.ico por padrão */}
+  <link rel="icon" href="/favicon.ico" sizes="48x48 96x96" />
+  {/* Preloads da página (ex.: a foto da hero, que é background-image e o navegador só descobre tarde) */}
+  <slot name="head" />
   {font.href && <link rel="stylesheet" href={font.href} />}
   {/* Fonte da marca (override dos títulos): Google Fonts ou arquivo self-hosted */}
   {brandActive && brand.source === 'google' && <link rel="stylesheet" href={brandGoogleUrl} />}

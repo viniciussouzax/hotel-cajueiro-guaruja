@@ -23,6 +23,8 @@
  *   - default  — conteúdo extra na coluna de texto (listas, endereço, um CTA
  *                próprio), abaixo dos parágrafos.
  */
+import { srcsetDe } from '../../lib/srcsetImagem';
+
 interface Props {
   eyebrow?: string;
   title: string;
@@ -63,6 +65,8 @@ const ordemTexto = lado === 'esquerda' ? 'lg:order-2' : 'lg:order-1';
       : image && (
           <img
             src={image}
+            srcset={srcsetDe(image)}
+            sizes="(max-width: 1023px) 100vw, 50vw"
             alt={alt}
             width="900"
             height="600"
