@@ -28,7 +28,9 @@ export default defineConfig({
     build: { inlineStylesheets: 'always' },
     integrations: [
         react(),
-        tailwind({ applyBaseStyles: false }),
+        // Padrão = config do painel (varre tudo). O site público usa a própria via
+        // @config em global.css, sem as classes do painel (CSS inline ~25% menor).
+        tailwind({ applyBaseStyles: false, configFile: './tailwind.admin.config.mjs' }),
         // Fora do sitemap: o painel (não indexável) e a busca (página utilitária,
         // sem conteúdo próprio).
         ...(sitemap ? [sitemap({ filter: (page) => !/\/(admin|search|v2)\/?/.test(page) })] : []),
