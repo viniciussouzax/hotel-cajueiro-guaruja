@@ -32,6 +32,7 @@
  * docs/PENDENCIAS-CONTEUDO.md e precisa da versão oficial do hotel.
  */
 import { readData } from '../../lib/readData';
+import { srcsetDe } from '../../lib/srcsetImagem';
 
 interface Props {
   /** Classe de fundo da seção (ex.: `bg-elev`), para a alternância da home. */
@@ -73,6 +74,8 @@ const suites = nomes?.length
           <div class="overflow-hidden">
             <img
               src={s.img}
+              srcset={srcsetDe(s.img)}
+              sizes="(max-width: 767px) 224px, (max-width: 1023px) 256px, 280px"
               alt={s.nome}
               width="600"
               height="400"
