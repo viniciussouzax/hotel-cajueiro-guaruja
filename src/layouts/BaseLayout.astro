@@ -152,6 +152,18 @@ import CustomCodeBodyStart from '../plugins/custom-code/CustomCodeBodyStart.astr
   <link rel="icon" href={siteConfig.favicon || '/favicon.svg'} />
   {/* .ico com 48 e 96 px: o Google exige favicon em múltiplo de 48 px e o navegador pede /favicon.ico por padrão */}
   <link rel="icon" href="/favicon.ico" sizes="48x48 96x96" />
+  {/* Âncora (/#como-chegar ou clique num link #algo): renderiza as seções `.cv-auto`
+      antes da rolagem; com as alturas estimadas o destino ficava ~800px fora. */}
+  <script is:inline>
+    (function (d) {
+      var off = function () { d.documentElement.classList.add('cv-off'); };
+      if (location.hash) off();
+      d.addEventListener('click', function (e) {
+        var a = e.target.closest && e.target.closest('a[href*="#"]');
+        if (a && a.pathname === location.pathname && a.hash) off();
+      }, true);
+    })(document);
+  </script>
   {/* Preloads da página (ex.: a foto da hero, que é background-image e o navegador só descobre tarde) */}
   <slot name="head" />
   {font.href && <link rel="stylesheet" href={font.href} />}

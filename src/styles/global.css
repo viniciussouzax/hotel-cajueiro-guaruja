@@ -416,3 +416,10 @@
     scroll-behavior: auto !important;
   }
 }
+
+/* Seções abaixo da dobra: o navegador pula estilo e layout delas até chegarem
+   perto da tela. A altura é uma estimativa (média medida das seções da home)
+   até a primeira renderização; depois o `auto` guarda a altura real. */
+.cv-auto { content-visibility: auto; contain-intrinsic-size: auto 1100px; }
+.cv-off .cv-auto { content-visibility: visible; }
+@media (min-width: 768px) { .cv-auto { contain-intrinsic-size: auto 760px; } }
