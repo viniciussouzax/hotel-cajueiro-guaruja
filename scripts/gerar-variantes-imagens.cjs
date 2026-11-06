@@ -1,4 +1,4 @@
-﻿// Gera -480.webp e -960.webp das fotos de public/images (sem sobrescrever nem ampliar)
+// Gera -320, -480, -960 e -1440.webp das fotos de public/images (sem sobrescrever nem ampliar)
 // e grava src/lib/imagensVariantes.json com a largura real de cada original e as variantes existentes.
 const path = require('path'), fs = require('fs');
 // Uso: node scripts/gerar-variantes-imagens.cjs  (rodar de novo ao trocar ou incluir foto em public/images)
@@ -8,11 +8,11 @@ const dir = path.join(proj, 'public', 'images');
 (async () => {
   const mapa = {};
   for (const f of fs.readdirSync(dir).sort()) {
-    if (!/\.(jpe?g|webp)$/i.test(f) || /-(480|960)\.webp$|-copia\.|^logo|^corp-/i.test(f)) continue;
+    if (!/\.(jpe?g|webp)$/i.test(f) || /-(320|480|960|1440)\.webp$|-copia\.|^logo|^corp-/i.test(f)) continue;
     const base = f.replace(/\.\w+$/, '');
     const meta = await sharp(path.join(dir, f)).metadata();
     const variantes = [];
-    for (const w of [480, 960]) {
+    for (const w of [320, 480, 960, 1440]) {
       const out = path.join(dir, `${base}-${w}.webp`);
       if (meta.width <= w) continue;
       if (!fs.existsSync(out)) await sharp(path.join(dir, f)).resize({ width: w }).webp({ quality: 72 }).toFile(out);
