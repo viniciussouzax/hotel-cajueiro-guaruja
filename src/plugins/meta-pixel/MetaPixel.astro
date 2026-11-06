@@ -31,11 +31,24 @@ const requireConsent: boolean = pluginsConfig?.cookieConsent?.enabled !== false;
       document.head.appendChild(s);
     }
 
-    if (!requireConsent || localStorage.getItem('cookies-accepted') === 'true') {
-      loadKit();
-    } else {
-      window.addEventListener('cookies-accepted', loadKit, { once: true });
-    }
+    // Mesmo adiamento do GoogleTag.astro (load + ocioso ou primeira interação):
+    // o kit puxa o fbevents.js e a config do pixel (~275 KB), que disputavam banda com a hero.
+    // shortcut: visita que sai antes disso (~1-2 s) não gera PageView.
+    var depois = window.__depoisDoLoad = window.__depoisDoLoad || function (fn) {
+      var feito = false, ev = ['pointerdown', 'keydown', 'touchstart', 'scroll'];
+      function go() { if (feito) return; feito = true; ev.forEach(function (e) { removeEventListener(e, go, true); }); fn(); }
+      ev.forEach(function (e) { addEventListener(e, go, { capture: true, passive: true }); });
+      function ocioso() { if ('requestIdleCallback' in window) requestIdleCallback(go, { timeout: 2000 }); else setTimeout(go, 1500); }
+      if (document.readyState === 'complete') ocioso(); else addEventListener('load', ocioso, { once: true });
+    };
+
+    depois(function () {
+      if (!requireConsent || localStorage.getItem('cookies-accepted') === 'true') {
+        loadKit();
+      } else {
+        window.addEventListener('cookies-accepted', loadKit, { once: true });
+      }
+    });
   })();
   </script>
 )}
@@ -58,11 +71,21 @@ const requireConsent: boolean = pluginsConfig?.cookieConsent?.enabled !== false;
       fbq('track', 'PageView');
     }
 
-    if (!requireConsent || localStorage.getItem('cookies-accepted') === 'true') {
-      loadPixel();
-    } else {
-      window.addEventListener('cookies-accepted', loadPixel, { once: true });
-    }
+    // Mesmo adiamento do bloco acima.
+    var depois = window.__depoisDoLoad = window.__depoisDoLoad || function (fn) {
+      var feito = false, ev = ['pointerdown', 'keydown', 'touchstart', 'scroll'];
+      function go() { if (feito) return; feito = true; ev.forEach(function (e) { removeEventListener(e, go, true); }); fn(); }
+      ev.forEach(function (e) { addEventListener(e, go, { capture: true, passive: true }); });
+      function ocioso() { if ('requestIdleCallback' in window) requestIdleCallback(go, { timeout: 2000 }); else setTimeout(go, 1500); }
+      if (document.readyState === 'complete') ocioso(); else addEventListener('load', ocioso, { once: true });
+    };
+    depois(function () {
+      if (!requireConsent || localStorage.getItem('cookies-accepted') === 'true') {
+        loadPixel();
+      } else {
+        window.addEventListener('cookies-accepted', loadPixel, { once: true });
+      }
+    });
   })();
   </script>
 )}
