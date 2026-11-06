@@ -75,8 +75,14 @@ const { tone = 'dark', class: extra = '' } = Astro.props as Props;
   (function () {
     // Uma única ida ao /api/reviews por página, compartilhada por todos os
     // componentes que precisam do dado (esta linha e a seção de depoimentos).
+    // Só depois do load: o selo nasce escondido, então não há pressa, e o pedido
+    // saía junto com a hero e entrava no caminho crítico (Lighthouse: network tree).
     if (!window.__grDados) {
-      window.__grDados = fetch('/api/reviews', { headers: { Accept: 'application/json' } })
+      window.__grDados = new Promise(function (ok) {
+        if (document.readyState === 'complete') ok(); else window.addEventListener('load', function () { ok(); }, { once: true });
+      }).then(function () {
+        return fetch('/api/reviews', { headers: { Accept: 'application/json' } });
+      })
         .then(function (r) { return r.ok ? r.json() : null; })
         .catch(function () { return null; });
     }

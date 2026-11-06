@@ -302,13 +302,13 @@ const perfilUrl = dados.placeId
     var faixas = document.querySelectorAll('#gr-section .gr-track');
     if (!faixas.length) return;
 
-    function ajustar() {
-      for (var i = 0; i < faixas.length; i++) {
-        var t = faixas[i];
-        var distancia = t.scrollHeight / 2;   // a lista é duplicada; o laço fecha em -50%
-        if (!distancia) continue;
-        t.style.setProperty('--gr-duracao', Math.max(30, Math.round(distancia / PX_POR_SEGUNDO)) + 's');
-      }
+    // A altura vem do ResizeObserver, que mede depois do layout sem forçar um
+    // (ler scrollHeight aqui gerava reflow forçado). Ele também avisa quando fotos
+    // e fontes chegam e mudam a altura da coluna.
+    function ajustar(t, altura) {
+      var distancia = altura / 2;   // a lista é duplicada; o laço fecha em -50%
+      if (!distancia) return;
+      t.style.setProperty('--gr-duracao', Math.max(30, Math.round(distancia / PX_POR_SEGUNDO)) + 's');
     }
     // "há X meses" recalculado no cliente: a pagina e' estatica e o texto do
     // build envelheceria ate o proximo deploy.
@@ -326,12 +326,14 @@ const perfilUrl = dados.placeId
       campos[q].textContent = txt;
     }
 
-    // Sem chamada imediata: ler scrollHeight logo depois de trocar os textos acima
-    // forçava um layout síncrono no meio do carregamento (Lighthouse: forced reflow).
-    // Até o load a animação usa o padrão de 60s do CSS.
-    // As fotos dos autores chegam depois e mudam a altura da coluna.
-    if (document.readyState === 'complete') ajustar();
-    else window.addEventListener('load', ajustar);
-    if (document.fonts && document.fonts.ready) document.fonts.ready.then(ajustar).catch(function () {});
+    // Sem ResizeObserver (navegador muito antigo) fica o padrão de 60s do CSS.
+    if (!('ResizeObserver' in window)) return;
+    var ro = new ResizeObserver(function (entradas) {
+      for (var k = 0; k < entradas.length; k++) {
+        var e = entradas[k], caixa = e.borderBoxSize && e.borderBoxSize[0];
+        ajustar(e.target, caixa ? caixa.blockSize : e.contentRect.height);
+      }
+    });
+    for (var f = 0; f < faixas.length; f++) ro.observe(faixas[f]);
   })();
 </script>
