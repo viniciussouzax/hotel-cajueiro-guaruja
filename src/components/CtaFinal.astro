@@ -16,7 +16,7 @@ interface Props { href?: string }
 const { href = '/#reservar' } = Astro.props as Props;
 ---
 {(cta.title || cta.button) && (
-  <section class="bg-elev">
+  <section class="bg-elev cv-auto">
     <div class="container-x py-20 md:py-28 text-center">
       <h2 class="font-display text-3xl md:text-5xl font-normal tracking-tight text-ink leading-[1.05] max-w-3xl mx-auto mb-5">{cta.title}</h2>
       {cta.subtitle && <p class="text-lg text-ink-muted leading-relaxed max-w-2xl mx-auto mb-8">{cta.subtitle}</p>}

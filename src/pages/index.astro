@@ -197,7 +197,7 @@ const mapHref = `https://www.google.com/maps/search/?api=1&query=${mapQuery}`;
 
   <!-- ===== ESTRUTURA (o que o hotel oferece) ===== -->
   {estrutura.itens && estrutura.itens.length > 0 && (
-    <section id="estrutura" class=" scroll-mt-24">
+    <section id="estrutura" class="cv-auto scroll-mt-24">
       <div class="container-x py-16 md:py-24">
         <div class="max-w-2xl mb-10 md:mb-12">
           {estrutura.eyebrow && <p class="mono uppercase text-[#cf3a23] mb-3">{estrutura.eyebrow}</p>}
@@ -221,7 +221,7 @@ const mapHref = `https://www.google.com/maps/search/?api=1&query=${mapQuery}`;
 
   <!-- ===== 3 FEATURES (icone + texto) ===== -->
   {features.length > 0 && (
-    <section class="">
+    <section class="cv-auto">
       <div class="container-x py-14 md:py-20">
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-10">
           {features.map((f: any) => (
@@ -242,7 +242,7 @@ const mapHref = `https://www.google.com/maps/search/?api=1&query=${mapQuery}`;
 
   <!-- ===== GALERIA (mesmo padrão de Corporativo e Grupos) ===== -->
   {galeria.fotos && galeria.fotos.length > 0 && (
-    <section class="bg-elev">
+    <section class="bg-elev cv-auto">
       <div class="container-x py-16 md:py-24">
         <div class="max-w-2xl mb-10 md:mb-12">
           {galeria.eyebrow && <p class="mono uppercase text-[#cf3a23] mb-3">{galeria.eyebrow}</p>}
@@ -284,7 +284,7 @@ const mapHref = `https://www.google.com/maps/search/?api=1&query=${mapQuery}`;
        seção "intro", que tinha duas colunas de texto e deixava metade da tela
        vazia). O bloco da piscina foi removido; ao mexer aqui, conferir que a
        alternância continua fechando, incluindo o "Como chegar". -->
-  <section class="">
+  <section class="cv-auto">
     {/* Sem recuo INFERIOR: a secao seguinte ("Como chegar") ja traz o
         proprio `py-16 md:py-24`, e os dois somavam 192px — mais que o
         dobro dos 96px que separam os blocos aqui dentro. O ritmo entre
@@ -321,7 +321,7 @@ const mapHref = `https://www.google.com/maps/search/?api=1&query=${mapQuery}`;
       ESQUERDA, continuando o zigue-zague. O endereco, a lista de acessos e o
       botao do mapa entram pelo slot de conteudo da coluna de texto. */}
   {(comoChegar.title || endereco) && (
-    <section id="como-chegar" class=" scroll-mt-24">
+    <section id="como-chegar" class="cv-auto scroll-mt-24">
       <div class="container-x py-16 md:py-24">
         <TextoFoto
           eyebrow={comoChegar.eyebrow}
