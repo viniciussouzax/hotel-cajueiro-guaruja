@@ -279,7 +279,11 @@ const { transparent = false } = Astro.props;
       requestAnimationFrame(avaliar);
     };
 
-    avaliar();
+    // Primeira avaliação só no load: medir a página durante o carregamento forçava um
+    // layout síncrono de ~100 ms (Lighthouse: forced reflow) e atrasava a hero (LCP).
+    // Até lá vale o estado inicial (transparente, topo da página); rolagem dispara antes.
+    if (document.readyState === 'complete') aoRolar();
+    else window.addEventListener('load', aoRolar, { once: true });
     window.addEventListener('scroll', aoRolar, { passive: true });
     window.addEventListener('resize', aoRolar, { passive: true });
   })();
