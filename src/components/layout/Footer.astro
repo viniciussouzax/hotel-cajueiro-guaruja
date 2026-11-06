@@ -59,9 +59,9 @@ const igProfile = siteConfig.social?.instagram || '';
       <div class="grid grid-cols-1 md:grid-cols-12 gap-10">
         <div class="md:col-span-5">
           <a href="/" class="inline-block mb-4 no-underline" aria-label="Home">
-            <img src="/images/logo-branco-sm.png" alt={siteConfig.name} width="268" height="120" class="w-auto" style="height: 46px" />
+            <img src="/images/logo-branco-xs.png" srcset="/images/logo-branco-xs.png 1x, /images/logo-branco-sm.png 2x" alt={siteConfig.name} width="103" height="46" class="w-auto" style="height: 46px" />
           </a>
-          <p class="text-sm leading-relaxed max-w-sm" style="color:rgba(255,255,255,0.8);">
+          <p class="text-sm leading-relaxed max-w-sm" style="color:rgba(255,255,255,0.9);">
             {siteConfig.footer?.description || siteConfig.description}
           </p>
 
@@ -71,7 +71,7 @@ const igProfile = siteConfig.social?.instagram || '';
             {cWhats && <p><a href={cWaUrl} target="_blank" rel="noopener" class="transition-colors hover:!text-[#FFEAB0]" style="color:inherit;">WhatsApp {cWhats}</a></p>}
             {cEmail && <p><a href={`mailto:${cEmail}`} class="transition-colors hover:!text-[#FFEAB0]" style="color:inherit;">{cEmail}</a></p>}
             {(contato.horarios?.atendimentoExterno || contato.horarios?.recepcao) && (
-              <p class="pt-1" style="color:rgba(255,255,255,0.65);">
+              <p class="pt-1" style="color:rgba(255,255,255,0.85);">
                 {contato.horarios?.atendimentoExterno}{contato.horarios?.atendimentoExterno && contato.horarios?.recepcao ? ' · ' : ''}{contato.horarios?.recepcao}
               </p>
             )}
@@ -79,7 +79,7 @@ const igProfile = siteConfig.social?.instagram || '';
         </div>
 
         <div class="md:col-span-3">
-          <div class="mono uppercase mb-4 pb-3" style="color:rgba(255,255,255,0.6);">navegação</div>
+          <div class="mono uppercase mb-4 pb-3" style="color:rgba(255,255,255,0.85);">navegação</div>
           <ul class="space-y-2.5 text-sm">
             {menuItems.map((item: any) => (
               <li><a href={item.href} class="transition-colors hover:!text-[#FFEAB0]" style="color:rgba(255,255,255,0.9);">{item.label}</a></li>
@@ -89,7 +89,7 @@ const igProfile = siteConfig.social?.instagram || '';
 
         {allCategories.length > 0 && (
           <div class="md:col-span-2">
-            <div class="mono uppercase mb-4 pb-3" style="color:rgba(255,255,255,0.6);">tópicos</div>
+            <div class="mono uppercase mb-4 pb-3" style="color:rgba(255,255,255,0.85);">tópicos</div>
             <ul class="space-y-2.5 text-sm">
               {allCategories.map((cat) => (
                 <li><a href={`/categoria/${cat.slug}`} class="transition-colors hover:!text-[#FFEAB0]" style="color:rgba(255,255,255,0.9);">{cat.name}</a></li>
@@ -100,7 +100,7 @@ const igProfile = siteConfig.social?.instagram || '';
 
         {socials.length > 0 && (
           <div class="md:col-span-2">
-            <div class="mono uppercase mb-4" style="color:rgba(255,255,255,0.6);">mídias sociais</div>
+            <div class="mono uppercase mb-4" style="color:rgba(255,255,255,0.85);">mídias sociais</div>
             <div class="flex flex-wrap gap-2.5">
               {socials.map(([key, label, href]: any) => (
                 <a href={href} target="_blank" rel="noopener" aria-label={label} class="w-10 h-10 rounded-full flex items-center justify-center transition-[filter] hover:brightness-125" style="background:#26331C; color:#e8ead9;">
@@ -114,7 +114,7 @@ const igProfile = siteConfig.social?.instagram || '';
 
       {igItems.length > 0 && (
         <div class="pt-10 mt-4">
-          <div class="mono uppercase mb-4" style="color:rgba(255,255,255,0.6);">instagram</div>
+          <div class="mono uppercase mb-4" style="color:rgba(255,255,255,0.85);">instagram</div>
           <div class="grid grid-cols-3 sm:grid-cols-6 gap-2 md:gap-3">
             {igItems.map((item: any) => (
               <a href={item.link || igProfile || '#'} target="_blank" rel="noopener" class="block aspect-square overflow-hidden rounded-md group" style="background:rgba(0,0,0,0.15);" aria-label="Ver no Instagram">

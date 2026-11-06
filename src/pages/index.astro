@@ -9,6 +9,7 @@ import SuitesDestaque from '../components/sections/SuitesDestaque.astro';
 import TextoFoto from '../components/sections/TextoFoto.astro';
 import { readData } from '../lib/readData';
 import { srcsetDe } from '../lib/srcsetImagem';
+import variantesImagens from '../lib/imagensVariantes.json';
 
 const siteConfig = readData('siteConfig.json');
 const home = readData('home.json', {}) as any;
@@ -18,6 +19,11 @@ const heroImage = hero.image || '';
 // Variante de 960px da mesma foto, para telas de ate 768px. Se o arquivo nao
 // existir, cai no cheio e nada quebra.
 const heroImageMobile = heroImage.replace(/(\.\w+)$/, '-960$1');
+// 1440px para telas de 769 a 1440px (o cheio, 1920px, tinha ~120 KB sobrando no desktop).
+// So usa se o script de variantes gerou o arquivo; senao fica o cheio.
+const heroImageDesk = (variantesImagens as Record<string, { variantes: number[] }>)[heroImage]?.variantes.includes(1440)
+  ? heroImage.replace(/\.\w+$/, '-1440.webp')
+  : heroImage;
 const booking = hero.booking || {};
 // `hero.banner` (o painel "Temporada 2026") deixou de ser renderizado: a campanha
 // agora vive so' na barra acima do menu, e este espaco passou a ser da prova
@@ -80,7 +86,8 @@ const mapHref = `https://www.google.com/maps/search/?api=1&query=${mapQuery}`;
   {heroImage && (
     <Fragment slot="head">
       <link rel="preload" as="image" href={heroImageMobile} media="(max-width: 768px)" fetchpriority="high" />
-      <link rel="preload" as="image" href={heroImage} media="(min-width: 769px)" fetchpriority="high" />
+      <link rel="preload" as="image" href={heroImageDesk} media="(min-width: 769px) and (max-width: 1440px)" fetchpriority="high" />
+      <link rel="preload" as="image" href={heroImage} media="(min-width: 1441px)" fetchpriority="high" />
     </Fragment>
   )}
 
@@ -115,6 +122,11 @@ const mapHref = `https://www.google.com/maps/search/?api=1&query=${mapQuery}`;
           background-image: linear-gradient(180deg, rgba(22,52,79,.45), rgba(22,52,79,.7)), url('${heroImageMobile}');
         }
         @media (min-width: 769px) {
+          .hero-fundo {
+            background-image: linear-gradient(180deg, rgba(22,52,79,.45), rgba(22,52,79,.7)), url('${heroImageDesk}');
+          }
+        }
+        @media (min-width: 1441px) {
           .hero-fundo {
             background-image: linear-gradient(180deg, rgba(22,52,79,.45), rgba(22,52,79,.7)), url('${heroImage}');
           }

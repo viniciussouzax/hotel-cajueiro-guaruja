@@ -221,6 +221,10 @@
     letter-spacing: 0;
   }
 
+  /* O vermelho da marca (#cf3a23) na faixa areia dá contraste 4,17 (mínimo 4,5).
+     Mesmo tom, um pouco mais escuro, só ali: 5,08. */
+  .bg-elev .text-\[\#cf3a23\] { color: #b8321e; }
+
   /* ===== COLOR BLOCK — o post como porta colorida =====
      Em light theme os blocos ganham CONTRASTE máximo. Mais vibrante. */
   .color-block {

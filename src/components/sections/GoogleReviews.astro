@@ -326,9 +326,12 @@ const perfilUrl = dados.placeId
       campos[q].textContent = txt;
     }
 
-    ajustar();
+    // Sem chamada imediata: ler scrollHeight logo depois de trocar os textos acima
+    // forçava um layout síncrono no meio do carregamento (Lighthouse: forced reflow).
+    // Até o load a animação usa o padrão de 60s do CSS.
     // As fotos dos autores chegam depois e mudam a altura da coluna.
-    window.addEventListener('load', ajustar);
+    if (document.readyState === 'complete') ajustar();
+    else window.addEventListener('load', ajustar);
     if (document.fonts && document.fonts.ready) document.fonts.ready.then(ajustar).catch(function () {});
   })();
 </script>

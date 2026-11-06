@@ -141,6 +141,14 @@ export const GET: APIRoute = async () => {
       headers: { 'Content-Type': 'application/json', 'Cache-Control': cache },
     });
 
+  // Falha do Google (chave sem permissão, cota, rede): 200 com configured:false, igual a
+  // "sem chave". Com 502 o navegador registrava erro no console de toda página
+  // (Lighthouse: errors-in-console) e o site já cai no fallback do mesmo jeito.
+  // O motivo segue em `error` para diagnóstico; cache de 5 min na borda poupa o Google.
+  const falhou = (error: string, extra: Record<string, string> = {}) =>
+    json({ configured: false, reason: 'upstream-error', error, ...extra }, 200,
+      'public, max-age=0, s-maxage=300, stale-while-revalidate=600');
+
   const cfg = readPluginsConfig()?.googleReviews || {};
   const placeId = String(cfg.placeId || '').trim();
   // `import.meta.env` é o que o Astro popula a partir do .env em dev; na Vercel a
@@ -184,10 +192,7 @@ export const GET: APIRoute = async () => {
 
     if (!res.ok) {
       const detail = await res.text().catch(() => '');
-      return json(
-        { configured: true, error: `places-${res.status}`, detail: detail.slice(0, 300) },
-        502
-      );
+      return falhou(`places-${res.status}`, { detail: detail.slice(0, 300) });
     }
 
     const place = await res.json();
@@ -232,6 +237,6 @@ export const GET: APIRoute = async () => {
     const hint = msg.includes('403')
       ? 'Chave válida, mas o projeto do Google Cloud provavelmente está sem a "Places API (New)" habilitada, sem conta de faturamento vinculada, ou a chave está restrita por referer/API errada. Ver docs/PENDENCIAS-CONTEUDO.md §3.'
       : undefined;
-    return json({ configured: true, error: msg, ...(hint ? { hint } : {}) }, 502);
+    return falhou(msg, hint ? { hint } : {});
   }
 };
