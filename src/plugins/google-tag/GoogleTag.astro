@@ -77,11 +77,24 @@ const requireConsent: boolean = pluginsConfig?.cookieConsent?.enabled !== false;
       }
     }
 
-    if (!requireConsent || localStorage.getItem('cookies-accepted') === 'true') {
-      loadAllTags();
-    } else {
-      window.addEventListener('cookies-accepted', loadAllTags, { once: true });
-    }
+    // Só depois que a página aparece: no load + ocioso, ou na primeira interação, o que vier antes.
+    // No 4G o gtag.js (~190 KB) disputava banda com a foto da hero (LCP).
+    // shortcut: visita que sai antes disso (~1-2 s) não é contada.
+    var depois = window.__depoisDoLoad = window.__depoisDoLoad || function (fn) {
+      var feito = false, ev = ['pointerdown', 'keydown', 'touchstart', 'scroll'];
+      function go() { if (feito) return; feito = true; ev.forEach(function (e) { removeEventListener(e, go, true); }); fn(); }
+      ev.forEach(function (e) { addEventListener(e, go, { capture: true, passive: true }); });
+      function ocioso() { if ('requestIdleCallback' in window) requestIdleCallback(go, { timeout: 2000 }); else setTimeout(go, 1500); }
+      if (document.readyState === 'complete') ocioso(); else addEventListener('load', ocioso, { once: true });
+    };
+
+    depois(function () {
+      if (!requireConsent || localStorage.getItem('cookies-accepted') === 'true') {
+        loadAllTags();
+      } else {
+        window.addEventListener('cookies-accepted', loadAllTags, { once: true });
+      }
+    });
   })();
   </script>
 )}
