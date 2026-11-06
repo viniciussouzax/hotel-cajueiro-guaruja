@@ -64,6 +64,9 @@
   size-adjust: 115.2%;
 }
 
+/* Config só do site público (sem o painel). Tem que ser assim, e não o contrário:
+   com o @config no admin.css, o Tailwind vazava as classes do painel para cá. */
+@config "../../tailwind.config.mjs";
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

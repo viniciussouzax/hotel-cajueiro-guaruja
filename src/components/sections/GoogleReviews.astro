@@ -135,23 +135,18 @@ const perfilUrl = dados.placeId
                         <p class="gr-quando" data-quando={r.data}>{haQuantoTempo(r.data)}</p>
                       </div>
                       {/* Marca do Google: origem de todo card, e atribuição visual */}
-                      <svg class="gr-marca" viewBox="0 0 24 24" aria-hidden="true">
-                        <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.76h3.57c2.08-1.92 3.27-4.74 3.27-8.09z"/>
-                        <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.76c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84A11 11 0 0 0 12 23z"/>
-                        <path fill="#FBBC05" d="M5.84 14.11a6.6 6.6 0 0 1 0-4.22V7.05H2.18a11 11 0 0 0 0 9.9l3.66-2.84z"/>
-                        <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.05l3.66 2.84C6.71 7.31 9.14 5.38 12 5.38z"/>
-                      </svg>
+                      {/* Um <img> do mesmo arquivo em todo card: o SVG inline repetia
+                          5 nós x 96 cards no DOM (Lighthouse: DOM grande). */}
+                      <img class="gr-marca" src="/images/google-g.svg" width="24" height="24" alt="" aria-hidden="true" />
+
                     </div>
 
                     <hr class="gr-regua" />
 
                     <div class="gr-estrelas" aria-hidden="true">
                       <span class="gr-nota">{r.nota}/5</span>
-                      {[1, 2, 3, 4, 5].map((n) => (
-                        <svg viewBox="0 0 24 24" class={n <= r.nota ? 'gr-estrela' : 'gr-estrela gr-vazia'}>
-                          <path d="M12 2.5l2.94 5.96 6.58.96-4.76 4.64 1.12 6.55L12 17.52l-5.88 3.09 1.12-6.55L2.48 9.42l6.58-.96L12 2.5z" />
-                        </svg>
-                      ))}
+                      {/* 5 estrelas num só elemento (fundo em CSS), em vez de 5 SVGs por card. */}
+                      <span class="gr-estrelas-img" style={`--nota:${Math.max(0, Math.min(5, Number(r.nota) || 0))}`}></span>
                     </div>
                     <p class="sr-only">Nota {r.nota} de 5</p>
                     <blockquote class="gr-texto">{r.texto}</blockquote>
@@ -237,9 +232,21 @@ const perfilUrl = dados.placeId
   /* Estrelas como no Google: preenchidas em amarelo #FBBC04, vazias em cinza. */
   .gr-estrelas { display: flex; align-items: center; gap: 0.125rem; }
   .gr-nota { margin-right: 0.375rem; font-size: 0.875rem; font-weight: 500; line-height: 1; color: rgb(var(--c-ink)); }
-  .gr-estrela { width: 1.125rem; height: 1.125rem; fill: #FBBC04; flex-shrink: 0; }
-  .gr-estrela.gr-vazia { fill: #DADCE0; }
-  @media (min-width: 1024px) { .gr-estrela { width: 1.25rem; height: 1.25rem; } }
+  /* Cada "ladrilho" do fundo é uma estrela de 24 + 2 de respiro (viewBox 26x24),
+     repetido 5 vezes. Cinza por baixo; o amarelo por cima, cortado em --nota ladrilhos. */
+  .gr-estrelas-img {
+    --s: 1.125rem;
+    --ladrilho: calc(var(--s) * 26 / 24);
+    position: relative; flex-shrink: 0;
+    width: calc(var(--ladrilho) * 5); height: var(--s);
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 26 24'%3E%3Cpath fill='%23DADCE0' d='M12 2.5l2.94 5.96 6.58.96-4.76 4.64 1.12 6.55L12 17.52l-5.88 3.09 1.12-6.55L2.48 9.42l6.58-.96L12 2.5z'/%3E%3C/svg%3E") 0 0 / var(--ladrilho) var(--s) repeat-x;
+  }
+  .gr-estrelas-img::before {
+    content: ''; position: absolute; inset: 0 auto 0 0;
+    width: calc(var(--ladrilho) * var(--nota, 0));
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 26 24'%3E%3Cpath fill='%23FBBC04' d='M12 2.5l2.94 5.96 6.58.96-4.76 4.64 1.12 6.55L12 17.52l-5.88 3.09 1.12-6.55L2.48 9.42l6.58-.96L12 2.5z'/%3E%3C/svg%3E") 0 0 / var(--ladrilho) var(--s) repeat-x;
+  }
+  @media (min-width: 1024px) { .gr-estrelas-img { --s: 1.25rem; } }
 
   /* Altura padronizada. As avaliações reais variam muito de tamanho; sem
      limite um card fica várias vezes maior que o vizinho e a coluna vira uma

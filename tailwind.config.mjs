@@ -2,7 +2,18 @@ import typography from '@tailwindcss/typography';
 
 /** @type {import('tailwindcss').Config} */
 export default {
-  content: ['./src/**/*.{astro,html,js,jsx,ts,tsx,md,mdx}'],
+  // Só o site público. O painel (/admin, componentes React em .tsx) gera o próprio CSS
+  // por tailwind.admin.config.mjs: antes as classes dele iam embutidas em toda página
+  // pública (CSS inline de ~130 KB, ~85% sem uso). Pasta nova com página pública: incluir aqui.
+  content: [
+    './src/{content,layouts,lib}/**/*.{astro,html,js,ts,md,mdx}',
+    './src/components/*.{astro,js,ts}',
+    './src/components/{layout,local,sections,sidebar,ui}/**/*.{astro,js,ts}',
+    './src/plugins/**/*.{astro,js,ts}',
+    './src/pages/*.{astro,md,mdx,js,ts}',
+    './src/pages/{blog,categoria}/**/*.{astro,md,mdx,js,ts}',
+    './src/pages/admin/local/preview.astro', // usa o BaseLayout público
+  ],
   // Safelist — classes geradas dinamicamente via `bg-cat-${c}` interpolation
   // que JIT não detecta no scan. Aqui forçamos a inclusão no build.
   safelist: [
