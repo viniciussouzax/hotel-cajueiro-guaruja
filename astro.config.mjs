@@ -23,6 +23,9 @@ export default defineConfig({
     site: siteUrl,
     output: 'static',
     adapter: vercel(),
+    // CSS dentro do HTML: o arquivo de CSS (~19 KB gzip) bloqueava a renderização
+    // por ~150 ms no 4G (Lighthouse). Custo: cada página traz o próprio CSS, sem cache entre páginas.
+    build: { inlineStylesheets: 'always' },
     integrations: [
         react(),
         tailwind({ applyBaseStyles: false }),
