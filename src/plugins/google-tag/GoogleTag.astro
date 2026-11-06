@@ -77,14 +77,14 @@ const requireConsent: boolean = pluginsConfig?.cookieConsent?.enabled !== false;
       }
     }
 
-    // Só depois que a página aparece: 3 s depois do load, ou na primeira interação, o que vier antes.
+    // Só depois que a página aparece: 6 s depois do load, ou na primeira interação, o que vier antes.
     // No 4G o gtag.js (~190 KB) disputava banda com a foto da hero (LCP).
-    // shortcut: visita que sai em menos de 3 s sem tocar nem rolar não é contada.
+    // shortcut: visita que sai em menos de 6 s sem tocar nem rolar não é contada.
     var depois = window.__depoisDoLoad = window.__depoisDoLoad || function (fn) {
       var feito = false, ev = ['pointerdown', 'keydown', 'touchstart', 'scroll'];
       function go() { if (feito) return; feito = true; ev.forEach(function (e) { removeEventListener(e, go, true); }); fn(); }
       ev.forEach(function (e) { addEventListener(e, go, { capture: true, passive: true }); });
-      function ocioso() { setTimeout(go, 3000); }
+      function ocioso() { setTimeout(go, 6000); }
       if (document.readyState === 'complete') ocioso(); else addEventListener('load', ocioso, { once: true });
     };
 
